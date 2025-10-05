@@ -1,7 +1,0 @@
-[ 66%] [32mBuilding CXX object CMakeFiles/PyKDL.dir/PyKDL/framevel.cpp.o[0m
-[ 66%] [32mBuilding CXX object CMakeFiles/PyKDL.dir/PyKDL/kinfam.cpp.o[0m
-[ 66%] [32mBuilding CXX object CMakeFiles/PyKDL.dir/PyKDL/PyKDL.cpp.o[0m
-[ 66%] [32mBuilding CXX object CMakeFiles/PyKDL.dir/PyKDL/frames.cpp.o[0m
-[ 83%] [32mBuilding CXX object CMakeFiles/PyKDL.dir/PyKDL/dynamics.cpp.o[0m
-[100%] [32m[1mLinking CXX shared module PyKDL.cpython-312-x86_64-linux-gnu.so[0m
-[100%] Built target PyKDL

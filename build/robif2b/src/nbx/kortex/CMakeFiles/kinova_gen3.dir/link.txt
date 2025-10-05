@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -g -shared -Wl,-soname,libkinova_gen3.so -o libkinova_gen3.so CMakeFiles/kinova_gen3.dir/kinova_gen3.cpp.o  /home/wasim/r4s/install/robif2b/lib/libKortexApiCpp.a /home/wasim/r4s/install/robif2b/lib/libKortexApiCpp_without_protobuf.a -lpthread 

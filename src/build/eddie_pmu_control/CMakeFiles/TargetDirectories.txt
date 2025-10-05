@@ -1,7 +1,0 @@
-/home/wasim/r4s/src/build/eddie_pmu_control/CMakeFiles/eddie_pmu_control.dir
-/home/wasim/r4s/src/build/eddie_pmu_control/CMakeFiles/edit_cache.dir
-/home/wasim/r4s/src/build/eddie_pmu_control/CMakeFiles/rebuild_cache.dir
-/home/wasim/r4s/src/build/eddie_pmu_control/CMakeFiles/list_install_components.dir
-/home/wasim/r4s/src/build/eddie_pmu_control/CMakeFiles/install.dir
-/home/wasim/r4s/src/build/eddie_pmu_control/CMakeFiles/install/local.dir
-/home/wasim/r4s/src/build/eddie_pmu_control/CMakeFiles/install/strip.dir

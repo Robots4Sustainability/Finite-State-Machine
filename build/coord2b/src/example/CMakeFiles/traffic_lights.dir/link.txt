@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/traffic_lights.dir/traffic_lights.c.o -o traffic_lights  -Wl,-rpath,/home/wasim/r4s/build/coord2b/src/nbx ../nbx/libcoord2b.so 

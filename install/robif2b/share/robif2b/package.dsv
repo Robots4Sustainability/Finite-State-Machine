@@ -1,6 +1,0 @@
-source;share/robif2b/hook/cmake_prefix_path.ps1
-source;share/robif2b/hook/cmake_prefix_path.dsv
-source;share/robif2b/hook/cmake_prefix_path.sh
-source;share/robif2b/hook/ld_library_path_lib.ps1
-source;share/robif2b/hook/ld_library_path_lib.dsv
-source;share/robif2b/hook/ld_library_path_lib.sh

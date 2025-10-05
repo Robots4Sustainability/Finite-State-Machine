@@ -1,1 +1,0 @@
-/usr/bin/cc -g CMakeFiles/eddie_example.dir/eddie_example.c.o -o eddie_example  -Wl,-rpath,/home/wasim/r4s/build/robif2b/src/nbx/kelo:/home/wasim/r4s/build/robif2b/src/nbx/ethercat:/usr/local/lib ../nbx/kelo/libkelo.so ../nbx/ethercat/libethercat.so -Wl,-rpath-link,/usr/local/lib 

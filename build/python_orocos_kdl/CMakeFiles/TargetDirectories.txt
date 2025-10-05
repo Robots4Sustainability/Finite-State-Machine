@@ -1,7 +1,0 @@
-/home/wasim/r4s/build/python_orocos_kdl/CMakeFiles/PyKDL.dir
-/home/wasim/r4s/build/python_orocos_kdl/CMakeFiles/edit_cache.dir
-/home/wasim/r4s/build/python_orocos_kdl/CMakeFiles/rebuild_cache.dir
-/home/wasim/r4s/build/python_orocos_kdl/CMakeFiles/list_install_components.dir
-/home/wasim/r4s/build/python_orocos_kdl/CMakeFiles/install.dir
-/home/wasim/r4s/build/python_orocos_kdl/CMakeFiles/install/local.dir
-/home/wasim/r4s/build/python_orocos_kdl/CMakeFiles/install/strip.dir

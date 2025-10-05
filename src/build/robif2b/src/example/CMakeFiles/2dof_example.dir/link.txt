@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/2dof_example.dir/2dof_example.c.o -o 2dof_example  -Wl,-rpath,/home/wasim/r4s/src/build/robif2b/src/nbx/2dof ../nbx/2dof/lib2dof.so 

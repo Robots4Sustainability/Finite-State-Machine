@@ -1,4 +1,0 @@
-source;share/eddie_ros/environment/ament_prefix_path.sh
-source;share/eddie_ros/environment/library_path.sh
-source;share/eddie_ros/environment/path.sh
-source;share/eddie_ros/environment/pythonpath.sh

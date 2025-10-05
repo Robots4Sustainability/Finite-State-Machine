@@ -1,1 +1,0 @@
-/usr/bin/cc -fPIC -g -shared -Wl,-soname,libethercat.so -o libethercat.so CMakeFiles/ethercat.dir/ethercat.c.o  -Wl,-rpath,/usr/local/lib: /usr/local/lib/libsoem.so.1.4.0 -lpthread -lrt 

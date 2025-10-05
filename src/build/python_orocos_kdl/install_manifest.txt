@@ -1,1 +1,0 @@
-/home/wasim/r4s/src/install/python_orocos_kdl/lib/python3.12/dist-packages/PyKDL.cpython-312-x86_64-linux-gnu.so
