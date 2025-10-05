@@ -1,0 +1,652 @@
+[0.205s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[0.205s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=16, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x7f5927dae0f0>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f5927daddf0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f5927daddf0>>, mixin_verb=('build',))
+[0.274s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.276s] INFO:colcon.colcon_metadata.package_discovery.colcon_meta:Using configuration from '/home/wasim/r4s/colcon.meta'
+[0.276s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.276s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.276s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.276s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.276s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.276s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/wasim/r4s'
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.320s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.320s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.320s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.321s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.321s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.321s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.321s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.321s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.322s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.322s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.322s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.322s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.322s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.322s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.323s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.323s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.323s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.323s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.323s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.323s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.323s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.323s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.323s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.323s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.323s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.324s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.324s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.324s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.324s] Level 1:colcon.colcon_core.package_identification:_identify(src/build) by extensions ['ignore', 'ignore_ament_install']
+[0.324s] Level 1:colcon.colcon_core.package_identification:_identify(src/build) by extension 'ignore'
+[0.324s] Level 1:colcon.colcon_core.package_identification:_identify(src/build) ignored
+[0.324s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl) by extensions ['ignore', 'ignore_ament_install']
+[0.324s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl) by extension 'ignore'
+[0.325s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl) by extension 'ignore_ament_install'
+[0.325s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl) by extensions ['colcon_pkg']
+[0.325s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl) by extension 'colcon_pkg'
+[0.325s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl) by extensions ['colcon_meta']
+[0.325s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl) by extension 'colcon_meta'
+[0.325s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl) by extensions ['ros']
+[0.325s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl) by extension 'ros'
+[0.325s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl) by extensions ['cmake', 'python']
+[0.325s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl) by extension 'cmake'
+[0.325s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl) by extension 'python'
+[0.325s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl) by extensions ['python_setup_py']
+[0.325s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl) by extension 'python_setup_py'
+[0.326s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models) by extensions ['ignore', 'ignore_ament_install']
+[0.326s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models) by extension 'ignore'
+[0.326s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models) by extension 'ignore_ament_install'
+[0.326s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models) by extensions ['colcon_pkg']
+[0.326s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models) by extension 'colcon_pkg'
+[0.326s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models) by extensions ['colcon_meta']
+[0.326s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models) by extension 'colcon_meta'
+[0.326s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models) by extensions ['ros']
+[0.326s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models) by extension 'ros'
+[0.326s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models) by extensions ['cmake', 'python']
+[0.326s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models) by extension 'cmake'
+[0.327s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models) by extension 'python'
+[0.327s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models) by extensions ['python_setup_py']
+[0.327s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models) by extension 'python_setup_py'
+[0.327s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models/fsm) by extensions ['ignore', 'ignore_ament_install']
+[0.327s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models/fsm) by extension 'ignore'
+[0.327s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models/fsm) by extension 'ignore_ament_install'
+[0.327s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models/fsm) by extensions ['colcon_pkg']
+[0.327s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models/fsm) by extension 'colcon_pkg'
+[0.327s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models/fsm) by extensions ['colcon_meta']
+[0.327s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models/fsm) by extension 'colcon_meta'
+[0.327s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models/fsm) by extensions ['ros']
+[0.327s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models/fsm) by extension 'ros'
+[0.328s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models/fsm) by extensions ['cmake', 'python']
+[0.328s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models/fsm) by extension 'cmake'
+[0.328s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models/fsm) by extension 'python'
+[0.328s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models/fsm) by extensions ['python_setup_py']
+[0.328s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/models/fsm) by extension 'python_setup_py'
+[0.328s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src) by extensions ['ignore', 'ignore_ament_install']
+[0.328s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src) by extension 'ignore'
+[0.328s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src) by extension 'ignore_ament_install'
+[0.328s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src) by extensions ['colcon_pkg']
+[0.328s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src) by extension 'colcon_pkg'
+[0.328s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src) by extensions ['colcon_meta']
+[0.328s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src) by extension 'colcon_meta'
+[0.329s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src) by extensions ['ros']
+[0.329s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src) by extension 'ros'
+[0.329s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src) by extensions ['cmake', 'python']
+[0.329s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src) by extension 'cmake'
+[0.329s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src) by extension 'python'
+[0.329s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src) by extensions ['python_setup_py']
+[0.329s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src) by extension 'python_setup_py'
+[0.329s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl) by extensions ['ignore', 'ignore_ament_install']
+[0.329s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl) by extension 'ignore'
+[0.329s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl) by extension 'ignore_ament_install'
+[0.329s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl) by extensions ['colcon_pkg']
+[0.330s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl) by extension 'colcon_pkg'
+[0.330s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl) by extensions ['colcon_meta']
+[0.330s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl) by extension 'colcon_meta'
+[0.330s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl) by extensions ['ros']
+[0.330s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl) by extension 'ros'
+[0.330s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl) by extensions ['cmake', 'python']
+[0.330s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl) by extension 'cmake'
+[0.330s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl) by extension 'python'
+[0.330s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl) by extensions ['python_setup_py']
+[0.330s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl) by extension 'python_setup_py'
+[0.330s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/generators) by extensions ['ignore', 'ignore_ament_install']
+[0.331s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/generators) by extension 'ignore'
+[0.331s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/generators) by extension 'ignore_ament_install'
+[0.331s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/generators) by extensions ['colcon_pkg']
+[0.331s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/generators) by extension 'colcon_pkg'
+[0.331s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/generators) by extensions ['colcon_meta']
+[0.331s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/generators) by extension 'colcon_meta'
+[0.331s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/generators) by extensions ['ros']
+[0.331s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/generators) by extension 'ros'
+[0.331s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/generators) by extensions ['cmake', 'python']
+[0.331s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/generators) by extension 'cmake'
+[0.331s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/generators) by extension 'python'
+[0.332s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/generators) by extensions ['python_setup_py']
+[0.332s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/generators) by extension 'python_setup_py'
+[0.332s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/metamodels) by extensions ['ignore', 'ignore_ament_install']
+[0.332s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/metamodels) by extension 'ignore'
+[0.332s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/metamodels) by extension 'ignore_ament_install'
+[0.332s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/metamodels) by extensions ['colcon_pkg']
+[0.332s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/metamodels) by extension 'colcon_pkg'
+[0.332s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/metamodels) by extensions ['colcon_meta']
+[0.332s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/metamodels) by extension 'colcon_meta'
+[0.332s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/metamodels) by extensions ['ros']
+[0.332s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/metamodels) by extension 'ros'
+[0.332s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/metamodels) by extensions ['cmake', 'python']
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/metamodels) by extension 'cmake'
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/metamodels) by extension 'python'
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/metamodels) by extensions ['python_setup_py']
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/metamodels) by extension 'python_setup_py'
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/templates) by extensions ['ignore', 'ignore_ament_install']
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/templates) by extension 'ignore'
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/templates) by extension 'ignore_ament_install'
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/templates) by extensions ['colcon_pkg']
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/templates) by extension 'colcon_pkg'
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/templates) by extensions ['colcon_meta']
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/templates) by extension 'colcon_meta'
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/templates) by extensions ['ros']
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/templates) by extension 'ros'
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/templates) by extensions ['cmake', 'python']
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/templates) by extension 'cmake'
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/templates) by extension 'python'
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/templates) by extensions ['python_setup_py']
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord-dsl/src/coord_dsl/templates) by extension 'python_setup_py'
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord2b) by extensions ['ignore', 'ignore_ament_install']
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord2b) by extension 'ignore'
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord2b) by extension 'ignore_ament_install'
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord2b) by extensions ['colcon_pkg']
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord2b) by extension 'colcon_pkg'
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord2b) by extensions ['colcon_meta']
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord2b) by extension 'colcon_meta'
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord2b) by extensions ['ros']
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord2b) by extension 'ros'
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord2b) by extensions ['cmake', 'python']
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord2b) by extension 'cmake'
+[0.338s] Level 1:colcon.colcon_core.package_identification:_identify(src/coord2b) by extension 'python'
+[0.338s] DEBUG:colcon.colcon_core.package_identification:Package 'src/coord2b' with type 'cmake' and name 'coord2b'
+[0.338s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie-ros) by extensions ['ignore', 'ignore_ament_install']
+[0.338s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie-ros) by extension 'ignore'
+[0.338s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie-ros) by extension 'ignore_ament_install'
+[0.338s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie-ros) by extensions ['colcon_pkg']
+[0.339s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie-ros) by extension 'colcon_pkg'
+[0.339s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie-ros) by extensions ['colcon_meta']
+[0.339s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie-ros) by extension 'colcon_meta'
+[0.339s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie-ros) by extensions ['ros']
+[0.339s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie-ros) by extension 'ros'
+[0.343s] DEBUG:colcon.colcon_core.package_identification:Package 'src/eddie-ros' with type 'ros.ament_cmake' and name 'eddie_ros'
+[0.343s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie_pmu_control) by extensions ['ignore', 'ignore_ament_install']
+[0.344s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie_pmu_control) by extension 'ignore'
+[0.344s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie_pmu_control) by extension 'ignore_ament_install'
+[0.344s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie_pmu_control) by extensions ['colcon_pkg']
+[0.344s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie_pmu_control) by extension 'colcon_pkg'
+[0.344s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie_pmu_control) by extensions ['colcon_meta']
+[0.344s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie_pmu_control) by extension 'colcon_meta'
+[0.344s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie_pmu_control) by extensions ['ros']
+[0.344s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie_pmu_control) by extension 'ros'
+[0.344s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie_pmu_control) by extensions ['cmake', 'python']
+[0.344s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie_pmu_control) by extension 'cmake'
+[0.345s] Level 1:colcon.colcon_core.package_identification:_identify(src/eddie_pmu_control) by extension 'python'
+[0.345s] DEBUG:colcon.colcon_core.package_identification:Package 'src/eddie_pmu_control' with type 'cmake' and name 'eddie_pmu_control'
+[0.345s] Level 1:colcon.colcon_core.package_identification:_identify(src/install) by extensions ['ignore', 'ignore_ament_install']
+[0.345s] Level 1:colcon.colcon_core.package_identification:_identify(src/install) by extension 'ignore'
+[0.345s] Level 1:colcon.colcon_core.package_identification:_identify(src/install) ignored
+[0.345s] Level 1:colcon.colcon_core.package_identification:_identify(src/log) by extensions ['ignore', 'ignore_ament_install']
+[0.346s] Level 1:colcon.colcon_core.package_identification:_identify(src/log) by extension 'ignore'
+[0.346s] Level 1:colcon.colcon_core.package_identification:_identify(src/log) ignored
+[0.346s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics) by extensions ['ignore', 'ignore_ament_install']
+[0.346s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics) by extension 'ignore'
+[0.346s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics) by extension 'ignore_ament_install'
+[0.346s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics) by extensions ['colcon_pkg']
+[0.346s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics) by extension 'colcon_pkg'
+[0.346s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics) by extensions ['colcon_meta']
+[0.346s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics) by extension 'colcon_meta'
+[0.347s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics) by extensions ['ros']
+[0.347s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics) by extension 'ros'
+[0.347s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics) by extensions ['cmake', 'python']
+[0.347s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics) by extension 'cmake'
+[0.347s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics) by extension 'python'
+[0.347s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics) by extensions ['python_setup_py']
+[0.347s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics) by extension 'python_setup_py'
+[0.347s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/orocos_kdl) by extensions ['ignore', 'ignore_ament_install']
+[0.348s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/orocos_kdl) by extension 'ignore'
+[0.348s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/orocos_kdl) by extension 'ignore_ament_install'
+[0.348s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/orocos_kdl) by extensions ['colcon_pkg']
+[0.348s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/orocos_kdl) by extension 'colcon_pkg'
+[0.348s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/orocos_kdl) by extensions ['colcon_meta']
+[0.348s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/orocos_kdl) by extension 'colcon_meta'
+[0.348s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/orocos_kdl) by extensions ['ros']
+[0.348s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/orocos_kdl) by extension 'ros'
+[0.349s] DEBUG:colcon.colcon_core.package_identification:Package 'src/orocos_kinematics_dynamics/orocos_kdl' with type 'ros.cmake' and name 'orocos_kdl'
+[0.349s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/python_orocos_kdl) by extensions ['ignore', 'ignore_ament_install']
+[0.349s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/python_orocos_kdl) by extension 'ignore'
+[0.349s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/python_orocos_kdl) by extension 'ignore_ament_install'
+[0.349s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/python_orocos_kdl) by extensions ['colcon_pkg']
+[0.349s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/python_orocos_kdl) by extension 'colcon_pkg'
+[0.349s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/python_orocos_kdl) by extensions ['colcon_meta']
+[0.350s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/python_orocos_kdl) by extension 'colcon_meta'
+[0.350s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/python_orocos_kdl) by extensions ['ros']
+[0.350s] Level 1:colcon.colcon_core.package_identification:_identify(src/orocos_kinematics_dynamics/python_orocos_kdl) by extension 'ros'
+[0.351s] DEBUG:colcon.colcon_core.package_identification:Package 'src/orocos_kinematics_dynamics/python_orocos_kdl' with type 'ros.catkin' and name 'python_orocos_kdl'
+[0.351s] Level 1:colcon.colcon_core.package_identification:_identify(src/robif2b) by extensions ['ignore', 'ignore_ament_install']
+[0.351s] Level 1:colcon.colcon_core.package_identification:_identify(src/robif2b) by extension 'ignore'
+[0.351s] Level 1:colcon.colcon_core.package_identification:_identify(src/robif2b) by extension 'ignore_ament_install'
+[0.351s] Level 1:colcon.colcon_core.package_identification:_identify(src/robif2b) by extensions ['colcon_pkg']
+[0.351s] Level 1:colcon.colcon_core.package_identification:_identify(src/robif2b) by extension 'colcon_pkg'
+[0.351s] Level 1:colcon.colcon_core.package_identification:_identify(src/robif2b) by extensions ['colcon_meta']
+[0.351s] Level 1:colcon.colcon_core.package_identification:_identify(src/robif2b) by extension 'colcon_meta'
+[0.351s] Level 1:colcon.colcon_core.package_identification:_identify(src/robif2b) by extensions ['ros']
+[0.352s] Level 1:colcon.colcon_core.package_identification:_identify(src/robif2b) by extension 'ros'
+[0.352s] Level 1:colcon.colcon_core.package_identification:_identify(src/robif2b) by extensions ['cmake', 'python']
+[0.352s] Level 1:colcon.colcon_core.package_identification:_identify(src/robif2b) by extension 'cmake'
+[0.355s] Level 1:colcon.colcon_core.package_identification:_identify(src/robif2b) by extension 'python'
+[0.355s] DEBUG:colcon.colcon_core.package_identification:Package 'src/robif2b' with type 'cmake' and name 'robif2b'
+[0.355s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_kortex_vision) by extensions ['ignore', 'ignore_ament_install']
+[0.355s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_kortex_vision) by extension 'ignore'
+[0.355s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_kortex_vision) by extension 'ignore_ament_install'
+[0.356s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_kortex_vision) by extensions ['colcon_pkg']
+[0.356s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_kortex_vision) by extension 'colcon_pkg'
+[0.356s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_kortex_vision) by extensions ['colcon_meta']
+[0.356s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_kortex_vision) by extension 'colcon_meta'
+[0.356s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_kortex_vision) by extensions ['ros']
+[0.356s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_kortex_vision) by extension 'ros'
+[0.357s] DEBUG:colcon.colcon_core.package_identification:Package 'src/ros2_kortex_vision' with type 'ros.ament_cmake' and name 'kinova_vision'
+[0.357s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.358s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.358s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.358s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.358s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.390s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.390s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.393s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 8 installed packages in /home/wasim/r4s/src/install
+[0.397s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 443 installed packages in /opt/ros/jazzy
+[0.399s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.498s] WARNING:colcon.colcon_core.package_selection:Some selected packages are already built in one or more underlay workspaces:
+	'orocos_kdl' is in: /home/wasim/r4s/src/install/orocos_kdl
+	'coord2b' is in: /home/wasim/r4s/src/install/coord2b
+	'robif2b' is in: /home/wasim/r4s/src/install/robif2b
+If a package in a merged underlay workspace is overridden and it installs headers, then all packages in the overlay must sort their include directories by workspace order. Failure to do so may result in build failures or undefined behavior at run time.
+If the overridden package is used by another package in any underlay, then the overriding package in the overlay must be API and ABI compatible or undefined behavior at run time may occur.
+
+If you understand the risks and want to override a package anyways, add the following to the command line:
+	--allow-overriding coord2b orocos_kdl robif2b
+
+This may be promoted to an error in a future release of colcon-override-check.
+[0.500s] Level 5:colcon.colcon_core.verb:set package 'coord2b' build argument 'cmake_args' from command line to 'None'
+[0.500s] Level 5:colcon.colcon_core.verb:set package 'coord2b' build argument 'cmake_target' from command line to 'None'
+[0.500s] Level 5:colcon.colcon_core.verb:set package 'coord2b' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.500s] Level 5:colcon.colcon_core.verb:set package 'coord2b' build argument 'cmake_clean_cache' from command line to 'False'
+[0.500s] Level 5:colcon.colcon_core.verb:set package 'coord2b' build argument 'cmake_clean_first' from command line to 'False'
+[0.500s] Level 5:colcon.colcon_core.verb:set package 'coord2b' build argument 'cmake_force_configure' from command line to 'False'
+[0.500s] Level 5:colcon.colcon_core.verb:set package 'coord2b' build argument 'ament_cmake_args' from command line to 'None'
+[0.500s] Level 5:colcon.colcon_core.verb:set package 'coord2b' build argument 'catkin_cmake_args' from command line to 'None'
+[0.500s] Level 5:colcon.colcon_core.verb:set package 'coord2b' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.500s] DEBUG:colcon.colcon_core.verb:Building package 'coord2b' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/wasim/r4s/build/coord2b', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/wasim/r4s/install/coord2b', 'merge_install': False, 'path': '/home/wasim/r4s/src/coord2b', 'symlink_install': False, 'test_result_base': None}
+[0.501s] Level 5:colcon.colcon_core.verb:set package 'eddie_pmu_control' build argument 'cmake_args' from command line to 'None'
+[0.501s] Level 5:colcon.colcon_core.verb:set package 'eddie_pmu_control' build argument 'cmake_target' from command line to 'None'
+[0.501s] Level 5:colcon.colcon_core.verb:set package 'eddie_pmu_control' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.501s] Level 5:colcon.colcon_core.verb:set package 'eddie_pmu_control' build argument 'cmake_clean_cache' from command line to 'False'
+[0.501s] Level 5:colcon.colcon_core.verb:set package 'eddie_pmu_control' build argument 'cmake_clean_first' from command line to 'False'
+[0.501s] Level 5:colcon.colcon_core.verb:set package 'eddie_pmu_control' build argument 'cmake_force_configure' from command line to 'False'
+[0.501s] Level 5:colcon.colcon_core.verb:set package 'eddie_pmu_control' build argument 'ament_cmake_args' from command line to 'None'
+[0.501s] Level 5:colcon.colcon_core.verb:set package 'eddie_pmu_control' build argument 'catkin_cmake_args' from command line to 'None'
+[0.501s] Level 5:colcon.colcon_core.verb:set package 'eddie_pmu_control' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.501s] DEBUG:colcon.colcon_core.verb:Building package 'eddie_pmu_control' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/wasim/r4s/build/eddie_pmu_control', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/wasim/r4s/install/eddie_pmu_control', 'merge_install': False, 'path': '/home/wasim/r4s/src/eddie_pmu_control', 'symlink_install': False, 'test_result_base': None}
+[0.502s] Level 5:colcon.colcon_core.verb:set package 'kinova_vision' build argument 'cmake_args' from command line to 'None'
+[0.502s] Level 5:colcon.colcon_core.verb:set package 'kinova_vision' build argument 'cmake_target' from command line to 'None'
+[0.502s] Level 5:colcon.colcon_core.verb:set package 'kinova_vision' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.502s] Level 5:colcon.colcon_core.verb:set package 'kinova_vision' build argument 'cmake_clean_cache' from command line to 'False'
+[0.502s] Level 5:colcon.colcon_core.verb:set package 'kinova_vision' build argument 'cmake_clean_first' from command line to 'False'
+[0.502s] Level 5:colcon.colcon_core.verb:set package 'kinova_vision' build argument 'cmake_force_configure' from command line to 'False'
+[0.502s] Level 5:colcon.colcon_core.verb:set package 'kinova_vision' build argument 'ament_cmake_args' from command line to 'None'
+[0.502s] Level 5:colcon.colcon_core.verb:set package 'kinova_vision' build argument 'catkin_cmake_args' from command line to 'None'
+[0.502s] Level 5:colcon.colcon_core.verb:set package 'kinova_vision' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.502s] DEBUG:colcon.colcon_core.verb:Building package 'kinova_vision' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/wasim/r4s/build/kinova_vision', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/wasim/r4s/install/kinova_vision', 'merge_install': False, 'path': '/home/wasim/r4s/src/ros2_kortex_vision', 'symlink_install': False, 'test_result_base': None}
+[0.503s] Level 5:colcon.colcon_core.verb:set package 'orocos_kdl' build argument 'cmake_args' from command line to 'None'
+[0.503s] Level 5:colcon.colcon_core.verb:set package 'orocos_kdl' build argument 'cmake_target' from command line to 'None'
+[0.503s] Level 5:colcon.colcon_core.verb:set package 'orocos_kdl' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.503s] Level 5:colcon.colcon_core.verb:set package 'orocos_kdl' build argument 'cmake_clean_cache' from command line to 'False'
+[0.503s] Level 5:colcon.colcon_core.verb:set package 'orocos_kdl' build argument 'cmake_clean_first' from command line to 'False'
+[0.503s] Level 5:colcon.colcon_core.verb:set package 'orocos_kdl' build argument 'cmake_force_configure' from command line to 'False'
+[0.503s] Level 5:colcon.colcon_core.verb:set package 'orocos_kdl' build argument 'ament_cmake_args' from command line to 'None'
+[0.503s] Level 5:colcon.colcon_core.verb:set package 'orocos_kdl' build argument 'catkin_cmake_args' from command line to 'None'
+[0.503s] Level 5:colcon.colcon_core.verb:set package 'orocos_kdl' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.503s] DEBUG:colcon.colcon_core.verb:Building package 'orocos_kdl' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/wasim/r4s/build/orocos_kdl', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/wasim/r4s/install/orocos_kdl', 'merge_install': False, 'path': '/home/wasim/r4s/src/orocos_kinematics_dynamics/orocos_kdl', 'symlink_install': False, 'test_result_base': None}
+[0.503s] Level 5:colcon.colcon_core.verb:set package 'robif2b' build argument 'cmake_args' from command line to 'None'
+[0.503s] Level 5:colcon.colcon_core.verb:overwrite package 'robif2b' build argument 'cmake_args' from package metadata with '['-DENABLE_ETHERCAT=ON', '-DENABLE_KELO=ON', '-DENABLE_KORTEX=ON', '-DCMAKE_BUILD_TYPE=Debug', '-DENABLE_KORTEX_API_AUTO_DOWNLOAD=ON']' (before: 'None')
+[0.503s] Level 5:colcon.colcon_core.verb:set package 'robif2b' build argument 'cmake_target' from command line to 'None'
+[0.503s] Level 5:colcon.colcon_core.verb:set package 'robif2b' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.504s] Level 5:colcon.colcon_core.verb:set package 'robif2b' build argument 'cmake_clean_cache' from command line to 'False'
+[0.504s] Level 5:colcon.colcon_core.verb:set package 'robif2b' build argument 'cmake_clean_first' from command line to 'False'
+[0.504s] Level 5:colcon.colcon_core.verb:set package 'robif2b' build argument 'cmake_force_configure' from command line to 'False'
+[0.504s] Level 5:colcon.colcon_core.verb:set package 'robif2b' build argument 'ament_cmake_args' from command line to 'None'
+[0.504s] Level 5:colcon.colcon_core.verb:set package 'robif2b' build argument 'catkin_cmake_args' from command line to 'None'
+[0.504s] Level 5:colcon.colcon_core.verb:set package 'robif2b' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.504s] DEBUG:colcon.colcon_core.verb:Building package 'robif2b' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/wasim/r4s/build/robif2b', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DENABLE_ETHERCAT=ON', '-DENABLE_KELO=ON', '-DENABLE_KORTEX=ON', '-DCMAKE_BUILD_TYPE=Debug', '-DENABLE_KORTEX_API_AUTO_DOWNLOAD=ON'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/wasim/r4s/install/robif2b', 'merge_install': False, 'path': '/home/wasim/r4s/src/robif2b', 'symlink_install': False, 'test_result_base': None}
+[0.504s] Level 5:colcon.colcon_core.verb:set package 'eddie_ros' build argument 'cmake_args' from command line to 'None'
+[0.504s] Level 5:colcon.colcon_core.verb:set package 'eddie_ros' build argument 'cmake_target' from command line to 'None'
+[0.504s] Level 5:colcon.colcon_core.verb:set package 'eddie_ros' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.504s] Level 5:colcon.colcon_core.verb:set package 'eddie_ros' build argument 'cmake_clean_cache' from command line to 'False'
+[0.504s] Level 5:colcon.colcon_core.verb:set package 'eddie_ros' build argument 'cmake_clean_first' from command line to 'False'
+[0.504s] Level 5:colcon.colcon_core.verb:set package 'eddie_ros' build argument 'cmake_force_configure' from command line to 'False'
+[0.504s] Level 5:colcon.colcon_core.verb:set package 'eddie_ros' build argument 'ament_cmake_args' from command line to 'None'
+[0.504s] Level 5:colcon.colcon_core.verb:set package 'eddie_ros' build argument 'catkin_cmake_args' from command line to 'None'
+[0.504s] Level 5:colcon.colcon_core.verb:set package 'eddie_ros' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.505s] DEBUG:colcon.colcon_core.verb:Building package 'eddie_ros' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/wasim/r4s/build/eddie_ros', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/wasim/r4s/install/eddie_ros', 'merge_install': False, 'path': '/home/wasim/r4s/src/eddie-ros', 'symlink_install': False, 'test_result_base': None}
+[0.505s] Level 5:colcon.colcon_core.verb:set package 'python_orocos_kdl' build argument 'cmake_args' from command line to 'None'
+[0.505s] Level 5:colcon.colcon_core.verb:set package 'python_orocos_kdl' build argument 'cmake_target' from command line to 'None'
+[0.505s] Level 5:colcon.colcon_core.verb:set package 'python_orocos_kdl' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.505s] Level 5:colcon.colcon_core.verb:set package 'python_orocos_kdl' build argument 'cmake_clean_cache' from command line to 'False'
+[0.505s] Level 5:colcon.colcon_core.verb:set package 'python_orocos_kdl' build argument 'cmake_clean_first' from command line to 'False'
+[0.505s] Level 5:colcon.colcon_core.verb:set package 'python_orocos_kdl' build argument 'cmake_force_configure' from command line to 'False'
+[0.505s] Level 5:colcon.colcon_core.verb:set package 'python_orocos_kdl' build argument 'ament_cmake_args' from command line to 'None'
+[0.505s] Level 5:colcon.colcon_core.verb:set package 'python_orocos_kdl' build argument 'catkin_cmake_args' from command line to 'None'
+[0.505s] Level 5:colcon.colcon_core.verb:set package 'python_orocos_kdl' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.505s] DEBUG:colcon.colcon_core.verb:Building package 'python_orocos_kdl' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/wasim/r4s/build/python_orocos_kdl', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/wasim/r4s/install/python_orocos_kdl', 'merge_install': False, 'path': '/home/wasim/r4s/src/orocos_kinematics_dynamics/python_orocos_kdl', 'symlink_install': False, 'test_result_base': None}
+[0.506s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.507s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.507s] INFO:colcon.colcon_ros.task.cmake.build:Building ROS package in '/home/wasim/r4s/src/orocos_kinematics_dynamics/orocos_kdl' with build type 'cmake'
+[0.507s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/wasim/r4s/src/orocos_kinematics_dynamics/orocos_kdl'
+[0.511s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.511s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.511s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.518s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/wasim/r4s/src/coord2b'
+[0.519s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.519s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.526s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/wasim/r4s/src/robif2b'
+[0.526s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.526s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.535s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/wasim/r4s/src/eddie_pmu_control'
+[0.536s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.536s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.543s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/wasim/r4s/src/ros2_kortex_vision' with build type 'ament_cmake'
+[0.544s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/wasim/r4s/src/ros2_kortex_vision'
+[0.544s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.544s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.559s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/wasim/r4s/build/orocos_kdl': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/orocos_kdl -- -j16 -l16
+[0.563s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/wasim/r4s/build/coord2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/coord2b -- -j16 -l16
+[0.566s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/wasim/r4s/build/robif2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/robif2b -- -j16 -l16
+[0.593s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/wasim/r4s/build/eddie_pmu_control': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/eddie_pmu_control -- -j16 -l16
+[0.601s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/wasim/r4s/build/kinova_vision': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/kinova_vision -- -j16 -l16
+[0.691s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/wasim/r4s/build/eddie_pmu_control' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/eddie_pmu_control -- -j16 -l16
+[0.710s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/wasim/r4s/build/eddie_pmu_control': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/eddie_pmu_control
+[0.728s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(eddie_pmu_control)
+[0.729s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/wasim/r4s/build/eddie_pmu_control' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/eddie_pmu_control
+[0.733s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_pmu_control' for CMake module files
+[0.734s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_pmu_control' for CMake config files
+[0.734s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_pmu_control/bin'
+[0.735s] Level 1:colcon.colcon_core.shell:create_environment_hook('eddie_pmu_control', 'path')
+[0.735s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_pmu_control/share/eddie_pmu_control/hook/path.ps1'
+[0.736s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/eddie_pmu_control/share/eddie_pmu_control/hook/path.dsv'
+[0.737s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_pmu_control/share/eddie_pmu_control/hook/path.sh'
+[0.738s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_pmu_control/lib/pkgconfig/eddie_pmu_control.pc'
+[0.738s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_pmu_control/lib/python3.12/site-packages'
+[0.739s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_pmu_control/bin'
+[0.739s] Level 1:colcon.colcon_core.shell:create_environment_hook('eddie_pmu_control', 'pythonscriptspath')
+[0.739s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_pmu_control/share/eddie_pmu_control/hook/pythonscriptspath.ps1'
+[0.740s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/eddie_pmu_control/share/eddie_pmu_control/hook/pythonscriptspath.dsv'
+[0.740s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_pmu_control/share/eddie_pmu_control/hook/pythonscriptspath.sh'
+[0.741s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/eddie_pmu_control/share/eddie_pmu_control/package.ps1'
+[0.742s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/wasim/r4s/install/eddie_pmu_control/share/eddie_pmu_control/package.dsv'
+[0.743s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/eddie_pmu_control/share/eddie_pmu_control/package.sh'
+[0.744s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/eddie_pmu_control/share/eddie_pmu_control/package.bash'
+[0.745s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/eddie_pmu_control/share/eddie_pmu_control/package.zsh'
+[0.746s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/wasim/r4s/install/eddie_pmu_control/share/colcon-core/packages/eddie_pmu_control)
+[0.750s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/wasim/r4s/build/coord2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/coord2b -- -j16 -l16
+[0.751s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/wasim/r4s/build/coord2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/coord2b
+[0.753s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/wasim/r4s/build/robif2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/robif2b -- -j16 -l16
+[0.755s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/wasim/r4s/build/robif2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/robif2b
+[0.763s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/wasim/r4s/build/orocos_kdl' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/orocos_kdl -- -j16 -l16
+[0.765s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/wasim/r4s/build/orocos_kdl': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/orocos_kdl
+[0.776s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(coord2b)
+[0.776s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/coord2b' for CMake module files
+[0.778s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/coord2b' for CMake config files
+[0.780s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/wasim/r4s/build/coord2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/coord2b
+[0.786s] Level 1:colcon.colcon_core.shell:create_environment_hook('coord2b', 'cmake_prefix_path')
+[0.787s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/coord2b/share/coord2b/hook/cmake_prefix_path.ps1'
+[0.789s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/coord2b/share/coord2b/hook/cmake_prefix_path.dsv'
+[0.792s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/coord2b/share/coord2b/hook/cmake_prefix_path.sh'
+[0.795s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/coord2b/lib'
+[0.796s] Level 1:colcon.colcon_core.shell:create_environment_hook('coord2b', 'ld_library_path_lib')
+[0.797s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/coord2b/share/coord2b/hook/ld_library_path_lib.ps1'
+[0.800s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/coord2b/share/coord2b/hook/ld_library_path_lib.dsv'
+[0.803s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/coord2b/share/coord2b/hook/ld_library_path_lib.sh'
+[0.807s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/coord2b/bin'
+[0.807s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/coord2b/lib/pkgconfig/coord2b.pc'
+[0.808s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/coord2b/lib/python3.12/site-packages'
+[0.808s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/coord2b/bin'
+[0.809s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/coord2b/share/coord2b/package.ps1'
+[0.810s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/wasim/r4s/install/coord2b/share/coord2b/package.dsv'
+[0.811s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/coord2b/share/coord2b/package.sh'
+[0.811s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/coord2b/share/coord2b/package.bash'
+[0.812s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/coord2b/share/coord2b/package.zsh'
+[0.813s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/wasim/r4s/install/coord2b/share/colcon-core/packages/coord2b)
+[0.816s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/wasim/r4s/build/orocos_kdl' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/orocos_kdl
+[0.817s] Level 1:colcon.colcon_core.shell:create_environment_hook('orocos_kdl', 'pkg_config_path')
+[0.817s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/pkg_config_path.ps1'
+[0.818s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/pkg_config_path.dsv'
+[0.819s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/pkg_config_path.sh'
+[0.823s] Level 1:colcon.colcon_core.shell:create_environment_hook('orocos_kdl', 'pkg_config_path_multiarch')
+[0.824s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/pkg_config_path_multiarch.ps1'
+[0.824s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/pkg_config_path_multiarch.dsv'
+[0.825s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/pkg_config_path_multiarch.sh'
+[0.826s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(orocos_kdl)
+[0.826s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/orocos_kdl' for CMake module files
+[0.827s] Level 1:colcon.colcon_core.shell:create_environment_hook('orocos_kdl', 'cmake_module_path')
+[0.827s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/cmake_module_path.ps1'
+[0.828s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/cmake_module_path.dsv'
+[0.828s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/cmake_module_path.sh'
+[0.829s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/orocos_kdl' for CMake config files
+[0.829s] Level 1:colcon.colcon_core.shell:create_environment_hook('orocos_kdl', 'cmake_prefix_path')
+[0.829s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/cmake_prefix_path.ps1'
+[0.830s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/cmake_prefix_path.dsv'
+[0.831s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/cmake_prefix_path.sh'
+[0.832s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/orocos_kdl/lib'
+[0.832s] Level 1:colcon.colcon_core.shell:create_environment_hook('orocos_kdl', 'ld_library_path_lib')
+[0.832s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/ld_library_path_lib.ps1'
+[0.833s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/ld_library_path_lib.dsv'
+[0.834s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/ld_library_path_lib.sh'
+[0.834s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/orocos_kdl/bin'
+[0.834s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig/orocos_kdl.pc'
+[0.834s] Level 1:colcon.colcon_core.shell:create_environment_hook('orocos_kdl', 'pkg_config')
+[0.835s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/pkg_config.ps1'
+[0.835s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/pkg_config.dsv'
+[0.836s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/hook/pkg_config.sh'
+[0.837s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/orocos_kdl/lib/python3.12/site-packages'
+[0.837s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/orocos_kdl/bin'
+[0.838s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/package.ps1'
+[0.839s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/package.dsv'
+[0.840s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/package.sh'
+[0.841s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/package.bash'
+[0.841s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/package.zsh'
+[0.842s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/wasim/r4s/install/orocos_kdl/share/colcon-core/packages/orocos_kdl)
+[0.844s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/wasim/r4s/build/kinova_vision' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/kinova_vision -- -j16 -l16
+[0.845s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(robif2b)
+[0.846s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/robif2b' for CMake module files
+[0.846s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/wasim/r4s/build/kinova_vision': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/kinova_vision
+[0.847s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/wasim/r4s/build/robif2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/robif2b
+[0.847s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/robif2b' for CMake config files
+[0.849s] Level 1:colcon.colcon_core.shell:create_environment_hook('robif2b', 'cmake_prefix_path')
+[0.849s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/robif2b/share/robif2b/hook/cmake_prefix_path.ps1'
+[0.850s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/robif2b/share/robif2b/hook/cmake_prefix_path.dsv'
+[0.850s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/robif2b/share/robif2b/hook/cmake_prefix_path.sh'
+[0.852s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/robif2b/lib'
+[0.852s] Level 1:colcon.colcon_core.shell:create_environment_hook('robif2b', 'ld_library_path_lib')
+[0.852s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/robif2b/share/robif2b/hook/ld_library_path_lib.ps1'
+[0.853s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/robif2b/share/robif2b/hook/ld_library_path_lib.dsv'
+[0.854s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/robif2b/share/robif2b/hook/ld_library_path_lib.sh'
+[0.854s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/robif2b/bin'
+[0.855s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/robif2b/lib/pkgconfig/robif2b.pc'
+[0.855s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/robif2b/lib/python3.12/site-packages'
+[0.855s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/robif2b/bin'
+[0.856s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/robif2b/share/robif2b/package.ps1'
+[0.857s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/wasim/r4s/install/robif2b/share/robif2b/package.dsv'
+[0.858s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/robif2b/share/robif2b/package.sh'
+[0.858s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/robif2b/share/robif2b/package.bash'
+[0.859s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/robif2b/share/robif2b/package.zsh'
+[0.860s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/wasim/r4s/install/robif2b/share/colcon-core/packages/robif2b)
+[0.860s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/wasim/r4s/src/eddie-ros' with build type 'ament_cmake'
+[0.862s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/wasim/r4s/src/eddie-ros'
+[0.862s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.862s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.870s] INFO:colcon.colcon_ros.task.catkin.build:Building ROS package in '/home/wasim/r4s/src/orocos_kinematics_dynamics/python_orocos_kdl' with build type 'catkin'
+[0.870s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/wasim/r4s/src/orocos_kinematics_dynamics/python_orocos_kdl'
+[0.871s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.871s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.892s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(kinova_vision)
+[0.892s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/kinova_vision' for CMake module files
+[0.893s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/wasim/r4s/build/eddie_ros': CMAKE_MODULE_PATH=/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/cmake:${CMAKE_MODULE_PATH} CMAKE_PREFIX_PATH=/home/wasim/r4s/install/robif2b:/home/wasim/r4s/install/orocos_kdl:/home/wasim/r4s/install/coord2b:/home/wasim/r4s/src/install/robif2b:/home/wasim/r4s/src/install/orocos_kdl:/home/wasim/r4s/src/install/coord2b:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/robif2b/lib:/home/wasim/r4s/install/orocos_kdl/lib:/home/wasim/r4s/install/coord2b/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig:${PKG_CONFIG_PATH} /usr/bin/cmake --build /home/wasim/r4s/build/eddie_ros -- -j16 -l16
+[0.894s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/wasim/r4s/build/kinova_vision' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/kinova_vision
+[0.894s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/kinova_vision' for CMake config files
+[0.895s] Level 1:colcon.colcon_core.shell:create_environment_hook('kinova_vision', 'cmake_prefix_path')
+[0.895s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/hook/cmake_prefix_path.ps1'
+[0.896s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/hook/cmake_prefix_path.dsv'
+[0.897s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/hook/cmake_prefix_path.sh'
+[0.898s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/kinova_vision/lib'
+[0.898s] Level 1:colcon.colcon_core.shell:create_environment_hook('kinova_vision', 'ld_library_path_lib')
+[0.898s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/hook/ld_library_path_lib.ps1'
+[0.899s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/hook/ld_library_path_lib.dsv'
+[0.900s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/hook/ld_library_path_lib.sh'
+[0.900s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/kinova_vision/bin'
+[0.900s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/kinova_vision/lib/pkgconfig/kinova_vision.pc'
+[0.901s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/kinova_vision/lib/python3.12/site-packages'
+[0.901s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/kinova_vision/bin'
+[0.902s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/package.ps1'
+[0.903s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/package.dsv'
+[0.903s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/package.sh'
+[0.904s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/package.bash'
+[0.905s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/package.zsh'
+[0.906s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/wasim/r4s/install/kinova_vision/share/colcon-core/packages/kinova_vision)
+[0.907s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(kinova_vision)
+[0.907s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/kinova_vision' for CMake module files
+[0.908s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/kinova_vision' for CMake config files
+[0.908s] Level 1:colcon.colcon_core.shell:create_environment_hook('kinova_vision', 'cmake_prefix_path')
+[0.909s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/hook/cmake_prefix_path.ps1'
+[0.909s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/hook/cmake_prefix_path.dsv'
+[0.910s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/hook/cmake_prefix_path.sh'
+[0.911s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/kinova_vision/lib'
+[0.912s] Level 1:colcon.colcon_core.shell:create_environment_hook('kinova_vision', 'ld_library_path_lib')
+[0.912s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/hook/ld_library_path_lib.ps1'
+[0.913s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/hook/ld_library_path_lib.dsv'
+[0.914s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/hook/ld_library_path_lib.sh'
+[0.914s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/kinova_vision/bin'
+[0.915s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/kinova_vision/lib/pkgconfig/kinova_vision.pc'
+[0.915s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/kinova_vision/lib/python3.12/site-packages'
+[0.915s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/kinova_vision/bin'
+[0.916s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/package.ps1'
+[0.917s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/package.dsv'
+[0.918s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/package.sh'
+[0.919s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/package.bash'
+[0.919s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/kinova_vision/share/kinova_vision/package.zsh'
+[0.920s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/wasim/r4s/install/kinova_vision/share/colcon-core/packages/kinova_vision)
+[0.925s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/wasim/r4s/build/python_orocos_kdl': CMAKE_MODULE_PATH=/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/cmake:${CMAKE_MODULE_PATH} CMAKE_PREFIX_PATH=/home/wasim/r4s/install/orocos_kdl:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/orocos_kdl/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig:${PKG_CONFIG_PATH} /usr/bin/cmake --build /home/wasim/r4s/build/python_orocos_kdl -- -j16 -l16
+[1.071s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/wasim/r4s/build/python_orocos_kdl' returned '0': CMAKE_MODULE_PATH=/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/cmake:${CMAKE_MODULE_PATH} CMAKE_PREFIX_PATH=/home/wasim/r4s/install/orocos_kdl:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/orocos_kdl/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig:${PKG_CONFIG_PATH} /usr/bin/cmake --build /home/wasim/r4s/build/python_orocos_kdl -- -j16 -l16
+[1.073s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/wasim/r4s/build/python_orocos_kdl': CMAKE_MODULE_PATH=/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/cmake:${CMAKE_MODULE_PATH} CMAKE_PREFIX_PATH=/home/wasim/r4s/install/orocos_kdl:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/orocos_kdl/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig:${PKG_CONFIG_PATH} /usr/bin/cmake --install /home/wasim/r4s/build/python_orocos_kdl
+[1.094s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/wasim/r4s/build/python_orocos_kdl' returned '0': CMAKE_MODULE_PATH=/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/cmake:${CMAKE_MODULE_PATH} CMAKE_PREFIX_PATH=/home/wasim/r4s/install/orocos_kdl:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/orocos_kdl/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig:${PKG_CONFIG_PATH} /usr/bin/cmake --install /home/wasim/r4s/build/python_orocos_kdl
+[1.094s] Level 1:colcon.colcon_core.shell:create_environment_hook('python_orocos_kdl', 'ros_package_path')
+[1.094s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/python_orocos_kdl/share/python_orocos_kdl/hook/ros_package_path.ps1'
+[1.095s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/python_orocos_kdl/share/python_orocos_kdl/hook/ros_package_path.dsv'
+[1.096s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/python_orocos_kdl/share/python_orocos_kdl/hook/ros_package_path.sh'
+[1.097s] Level 1:colcon.colcon_core.shell:create_environment_hook('python_orocos_kdl', 'pkg_config_path')
+[1.097s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/python_orocos_kdl/share/python_orocos_kdl/hook/pkg_config_path.ps1'
+[1.098s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/python_orocos_kdl/share/python_orocos_kdl/hook/pkg_config_path.dsv'
+[1.099s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/python_orocos_kdl/share/python_orocos_kdl/hook/pkg_config_path.sh'
+[1.100s] Level 1:colcon.colcon_core.shell:create_environment_hook('python_orocos_kdl', 'pkg_config_path_multiarch')
+[1.100s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/python_orocos_kdl/share/python_orocos_kdl/hook/pkg_config_path_multiarch.ps1'
+[1.101s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/python_orocos_kdl/share/python_orocos_kdl/hook/pkg_config_path_multiarch.dsv'
+[1.102s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/python_orocos_kdl/share/python_orocos_kdl/hook/pkg_config_path_multiarch.sh'
+[1.104s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(python_orocos_kdl)
+[1.104s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/python_orocos_kdl' for CMake module files
+[1.105s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/python_orocos_kdl' for CMake config files
+[1.108s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/python_orocos_kdl/lib'
+[1.108s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/python_orocos_kdl/bin'
+[1.108s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/python_orocos_kdl/lib/pkgconfig/python_orocos_kdl.pc'
+[1.109s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/python_orocos_kdl/lib/python3.12/site-packages'
+[1.109s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/python_orocos_kdl/bin'
+[1.110s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/python_orocos_kdl/share/python_orocos_kdl/package.ps1'
+[1.111s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/wasim/r4s/install/python_orocos_kdl/share/python_orocos_kdl/package.dsv'
+[1.112s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/python_orocos_kdl/share/python_orocos_kdl/package.sh'
+[1.113s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/python_orocos_kdl/share/python_orocos_kdl/package.bash'
+[1.113s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/python_orocos_kdl/share/python_orocos_kdl/package.zsh'
+[1.114s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/wasim/r4s/install/python_orocos_kdl/share/colcon-core/packages/python_orocos_kdl)
+[9.885s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/wasim/r4s/build/eddie_ros' returned '0': CMAKE_MODULE_PATH=/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/cmake:${CMAKE_MODULE_PATH} CMAKE_PREFIX_PATH=/home/wasim/r4s/install/robif2b:/home/wasim/r4s/install/orocos_kdl:/home/wasim/r4s/install/coord2b:/home/wasim/r4s/src/install/robif2b:/home/wasim/r4s/src/install/orocos_kdl:/home/wasim/r4s/src/install/coord2b:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/robif2b/lib:/home/wasim/r4s/install/orocos_kdl/lib:/home/wasim/r4s/install/coord2b/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig:${PKG_CONFIG_PATH} /usr/bin/cmake --build /home/wasim/r4s/build/eddie_ros -- -j16 -l16
+[9.887s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/wasim/r4s/build/eddie_ros': CMAKE_MODULE_PATH=/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/cmake:${CMAKE_MODULE_PATH} CMAKE_PREFIX_PATH=/home/wasim/r4s/install/robif2b:/home/wasim/r4s/install/orocos_kdl:/home/wasim/r4s/install/coord2b:/home/wasim/r4s/src/install/robif2b:/home/wasim/r4s/src/install/orocos_kdl:/home/wasim/r4s/src/install/coord2b:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/robif2b/lib:/home/wasim/r4s/install/orocos_kdl/lib:/home/wasim/r4s/install/coord2b/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig:${PKG_CONFIG_PATH} /usr/bin/cmake --install /home/wasim/r4s/build/eddie_ros
+[9.951s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(eddie_ros)
+[9.951s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_ros' for CMake module files
+[9.951s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/wasim/r4s/build/eddie_ros' returned '0': CMAKE_MODULE_PATH=/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/cmake:${CMAKE_MODULE_PATH} CMAKE_PREFIX_PATH=/home/wasim/r4s/install/robif2b:/home/wasim/r4s/install/orocos_kdl:/home/wasim/r4s/install/coord2b:/home/wasim/r4s/src/install/robif2b:/home/wasim/r4s/src/install/orocos_kdl:/home/wasim/r4s/src/install/coord2b:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/robif2b/lib:/home/wasim/r4s/install/orocos_kdl/lib:/home/wasim/r4s/install/coord2b/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig:${PKG_CONFIG_PATH} /usr/bin/cmake --install /home/wasim/r4s/build/eddie_ros
+[9.952s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_ros' for CMake config files
+[9.952s] Level 1:colcon.colcon_core.shell:create_environment_hook('eddie_ros', 'cmake_prefix_path')
+[9.952s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/cmake_prefix_path.ps1'
+[9.953s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/cmake_prefix_path.dsv'
+[9.953s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/cmake_prefix_path.sh'
+[9.953s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_ros/lib'
+[9.953s] Level 1:colcon.colcon_core.shell:create_environment_hook('eddie_ros', 'ld_library_path_lib')
+[9.954s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/ld_library_path_lib.ps1'
+[9.954s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/ld_library_path_lib.dsv'
+[9.955s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/ld_library_path_lib.sh'
+[9.955s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_ros/bin'
+[9.955s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_ros/lib/pkgconfig/eddie_ros.pc'
+[9.955s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages'
+[9.956s] Level 1:colcon.colcon_core.shell:create_environment_hook('eddie_ros', 'pythonpath')
+[9.956s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/pythonpath.ps1'
+[9.956s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/pythonpath.dsv'
+[9.956s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/pythonpath.sh'
+[9.957s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_ros/bin'
+[9.957s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/package.ps1'
+[9.957s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/package.dsv'
+[9.958s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/package.sh'
+[9.958s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/package.bash'
+[9.958s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/package.zsh'
+[9.959s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/wasim/r4s/install/eddie_ros/share/colcon-core/packages/eddie_ros)
+[9.959s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(eddie_ros)
+[9.959s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_ros' for CMake module files
+[9.960s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_ros' for CMake config files
+[9.960s] Level 1:colcon.colcon_core.shell:create_environment_hook('eddie_ros', 'cmake_prefix_path')
+[9.960s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/cmake_prefix_path.ps1'
+[9.960s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/cmake_prefix_path.dsv'
+[9.961s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/cmake_prefix_path.sh'
+[9.961s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_ros/lib'
+[9.961s] Level 1:colcon.colcon_core.shell:create_environment_hook('eddie_ros', 'ld_library_path_lib')
+[9.961s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/ld_library_path_lib.ps1'
+[9.962s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/ld_library_path_lib.dsv'
+[9.962s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/ld_library_path_lib.sh'
+[9.962s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_ros/bin'
+[9.962s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_ros/lib/pkgconfig/eddie_ros.pc'
+[9.963s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages'
+[9.963s] Level 1:colcon.colcon_core.shell:create_environment_hook('eddie_ros', 'pythonpath')
+[9.963s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/pythonpath.ps1'
+[9.963s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/pythonpath.dsv'
+[9.964s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/hook/pythonpath.sh'
+[9.964s] Level 1:colcon.colcon_core.environment:checking '/home/wasim/r4s/install/eddie_ros/bin'
+[9.964s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/package.ps1'
+[9.965s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/package.dsv'
+[9.965s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/package.sh'
+[9.966s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/package.bash'
+[9.966s] INFO:colcon.colcon_core.shell:Creating package script '/home/wasim/r4s/install/eddie_ros/share/eddie_ros/package.zsh'
+[9.966s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/wasim/r4s/install/eddie_ros/share/colcon-core/packages/eddie_ros)
+[9.966s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[9.967s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[9.967s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[9.967s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[9.972s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[9.972s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[9.973s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[9.986s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[9.986s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/wasim/r4s/install/local_setup.ps1'
+[9.987s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/wasim/r4s/install/_local_setup_util_ps1.py'
+[9.988s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/wasim/r4s/install/setup.ps1'
+[9.989s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/wasim/r4s/install/local_setup.sh'
+[9.990s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/wasim/r4s/install/_local_setup_util_sh.py'
+[9.990s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/wasim/r4s/install/setup.sh'
+[9.991s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/wasim/r4s/install/local_setup.bash'
+[9.992s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/wasim/r4s/install/setup.bash'
+[9.992s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/wasim/r4s/install/local_setup.zsh'
+[9.993s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/wasim/r4s/install/setup.zsh'

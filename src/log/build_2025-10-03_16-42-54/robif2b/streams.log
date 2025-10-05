@@ -1,0 +1,53 @@
+[0.055s] Invoking command in '/home/wasim/r4s/src/build/robif2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/r4s/src/robif2b -DCMAKE_INSTALL_PREFIX=/home/wasim/r4s/src/install/robif2b
+[0.265s] -- The C compiler identification is GNU 13.3.0
+[0.426s] -- The CXX compiler identification is GNU 13.3.0
+[0.479s] -- Detecting C compiler ABI info
+[0.739s] -- Detecting C compiler ABI info - done
+[0.763s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.769s] -- Detecting C compile features
+[0.771s] -- Detecting C compile features - done
+[0.796s] -- Detecting CXX compiler ABI info
+[1.080s] -- Detecting CXX compiler ABI info - done
+[1.106s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.107s] -- Detecting CXX compile features
+[1.109s] -- Detecting CXX compile features - done
+[1.127s] -- Configuring done (1.0s)
+[1.145s] -- Generating done (0.0s)
+[1.154s] -- Build files have been written to: /home/wasim/r4s/src/build/robif2b
+[1.163s] Invoked command in '/home/wasim/r4s/src/build/robif2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/r4s/src/robif2b -DCMAKE_INSTALL_PREFIX=/home/wasim/r4s/src/install/robif2b
+[1.166s] Invoking command in '/home/wasim/r4s/src/build/robif2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/src/build/robif2b -- -j16 -l16
+[1.316s] [ 25%] [32mBuilding C object src/nbx/2dof/CMakeFiles/2dof.dir/2dof.c.o[0m
+[1.395s] [ 50%] [32m[1mLinking C shared library lib2dof.so[0m
+[1.501s] [ 50%] Built target 2dof
+[1.566s] [ 75%] [32mBuilding C object src/example/CMakeFiles/2dof_example.dir/2dof_example.c.o[0m
+[1.648s] [100%] [32m[1mLinking C executable 2dof_example[0m
+[1.764s] [100%] Built target 2dof_example
+[1.801s] Invoked command in '/home/wasim/r4s/src/build/robif2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/src/build/robif2b -- -j16 -l16
+[1.803s] Invoking command in '/home/wasim/r4s/src/build/robif2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/src/build/robif2b
+[1.828s] -- Install configuration: ""
+[1.829s] -- Installing: /home/wasim/r4s/src/install/robif2b/lib/cmake/robif2b/robif2b-config.cmake
+[1.829s] -- Installing: /home/wasim/r4s/src/install/robif2b/lib/cmake/robif2b/robif2b-config-version.cmake
+[1.830s] -- Installing: /home/wasim/r4s/src/install/robif2b/lib/cmake/robif2b/robif2b-targets.cmake
+[1.830s] -- Installing: /home/wasim/r4s/src/install/robif2b/lib/cmake/robif2b/robif2b-targets-noconfig.cmake
+[1.831s] -- Installing: /home/wasim/r4s/src/install/robif2b/include
+[1.831s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b
+[1.832s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/functions
+[1.832s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/functions/kelo_power_board.h
+[1.832s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/functions/eddie_power_board.h
+[1.832s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/functions/kelo_drive.h
+[1.833s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/functions/kinova_gen3.h
+[1.833s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/functions/ethercat.h
+[1.833s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/functions/2dof.h
+[1.834s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/types
+[1.834s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/kelo_power_board_api.h
+[1.834s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/kelo_drive_api.h
+[1.834s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/kelo_power_board.h
+[1.835s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/eddie_power_board.h
+[1.835s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/eddie_power_board_api.h
+[1.836s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/kelo_drive.h
+[1.836s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/kinova_gen3.h
+[1.836s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/ethercat.h
+[1.837s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/control_mode.h
+[1.837s] -- Installing: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/2dof.h
+[1.838s] -- Installing: /home/wasim/r4s/src/install/robif2b/lib/lib2dof.so
+[1.845s] Invoked command in '/home/wasim/r4s/src/build/robif2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/src/build/robif2b

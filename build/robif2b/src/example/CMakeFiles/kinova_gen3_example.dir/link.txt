@@ -1,0 +1,1 @@
+/usr/bin/cc -g CMakeFiles/kinova_gen3_example.dir/kinova_gen3_example.c.o -o kinova_gen3_example  -Wl,-rpath,/home/wasim/r4s/build/robif2b/src/nbx/kortex ../nbx/kortex/libkinova_gen3.so 

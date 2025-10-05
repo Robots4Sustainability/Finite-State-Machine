@@ -1,0 +1,88 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-e127d797c28c4f37ae5b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "kinova_vision",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "kinova_vision::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-kinova_vision-dff0883cbad67bd1cd0a.json",
+					"name" : "kinova_vision",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "kinova_vision_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-kinova_vision_node-8ce2f765010907ecf72b.json",
+					"name" : "kinova_vision_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "kinova_vision_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-kinova_vision_uninstall-2774d43d6f03c595bf36.json",
+					"name" : "kinova_vision_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-9d7527e0998243413351.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/wasim/r4s/src/build/kinova_vision",
+		"source" : "/home/wasim/r4s/src/ros2_kortex_vision"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

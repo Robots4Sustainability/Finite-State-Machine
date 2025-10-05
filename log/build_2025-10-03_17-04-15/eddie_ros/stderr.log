@@ -1,0 +1,33 @@
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In function ‘[01m[Kvoid[01;32m[K sigint_handler[m[K(int)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:27:25:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Ksignum[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   27 | void sigint_handler([01;35m[Kint signum[m[K) { keep_running = 0; }
+      |                     [01;35m[K~~~~^~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In function ‘[01m[Kvoid[01;32m[K sigint_handler[m[K(int)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:27:25:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Ksignum[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   27 | void sigint_handler([01;35m[Kint signum[m[K) { keep_running = 0; }
+      |                     [01;35m[K~~~~^~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompile[m[K(events*, const EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:953:70:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Keddie_state[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  953 | eRosInterface::compile(events *eventData, [01;35m[Kconst EddieState *eddie_state[m[K) {
+      |                                           [01;35m[K~~~~~~~~~~~~~~~~~~^~~~~~~~~~~[m[K
+
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_gravity_comp[m[K(events*, EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:958:54:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  958 | void EddieRosInterface::compute_gravity_comp([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+      |                                              [01;35m[K~~~~~~~~^~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_cartesian_ctrl[m[K(events*, EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:1013:56:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+ 1013 | void EddieRosInterface::compute_cartesian_ctrl([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+      |                                                [01;35m[K~~~~~~~~^~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompile[m[K(events*, const EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:848:70:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Keddie_state[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  848 | void EddieRosInterface::compile(events *eventData, [01;35m[Kconst EddieState *eddie_state[m[K) {
+      |                                                    [01;35m[K~~~~~~~~~~~~~~~~~~^~~~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_gravity_comp[m[K(events*, EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:854:54:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  854 | void EddieRosInterface::compute_gravity_comp([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+      |                                              [01;35m[K~~~~~~~~^~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_cartesian_ctrl[m[K(events*, EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:919:56:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  919 | void EddieRosInterface::compute_cartesian_ctrl([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+      |                                                [01;35m[K~~~~~~~~^~~~~~~~~[m[K

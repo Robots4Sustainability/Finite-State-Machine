@@ -1,0 +1,7 @@
+{
+  "package_name": "eddie_ros",
+  "non_idl_tuples": [
+    "/home/wasim/r4s/src/eddie-ros:action/ArmControl.action",
+    "/home/wasim/r4s/src/eddie-ros:action/GripperControl.action"
+  ]
+}

@@ -1,0 +1,7 @@
+[0.048s] Invoking command in '/home/wasim/r4s/build/eddie_pmu_control': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/eddie_pmu_control -- -j16 -l16
+[0.181s] [100%] Built target eddie_pmu_control
+[0.216s] Invoked command in '/home/wasim/r4s/build/eddie_pmu_control' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/eddie_pmu_control -- -j16 -l16
+[0.245s] Invoking command in '/home/wasim/r4s/build/eddie_pmu_control': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/eddie_pmu_control
+[0.268s] -- Install configuration: ""
+[0.269s] -- Up-to-date: /home/wasim/r4s/install/eddie_pmu_control/bin/eddie_pmu_control
+[0.274s] Invoked command in '/home/wasim/r4s/build/eddie_pmu_control' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/eddie_pmu_control

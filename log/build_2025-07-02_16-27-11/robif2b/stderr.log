@@ -1,0 +1,13 @@
+[33mCMake Warning at cmake/FindKortexApi.cmake:5 (message):
+  KortexApi library not found in /home/wasim/r4s/install/robif2b/lib or
+  /home/wasim/r4s/install/robif2b/include/kortex_api/
+Call Stack (most recent call first):
+  src/nbx/kortex/CMakeLists.txt:1 (find_package)
+
+[0m
+[0mFile downloaded successfully at /home/wasim/r4s/build/robif2b/src/nbx/kortex/kortex_api.zip[0m
+[0mUnzipping to /home/wasim/r4s/build/robif2b/src/nbx/kortex/kortex_api[0m
+[0mCopying library...[0m
+[0mCopying include directory...[0m
+[0mCleaning...[0m
+[0mDone.[0m

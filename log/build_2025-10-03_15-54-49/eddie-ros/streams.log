@@ -1,0 +1,275 @@
+[0.033s] Invoking command in '/home/wasim/r4s/build/eddie-ros': CMAKE_MODULE_PATH=/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/cmake CMAKE_PREFIX_PATH=/home/wasim/r4s/install/robif2b:/home/wasim/r4s/install/orocos_kdl:/home/wasim/r4s/install/coord2b:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/robif2b/lib:/home/wasim/r4s/install/orocos_kdl/lib:/home/wasim/r4s/install/coord2b/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig /usr/bin/cmake --build /home/wasim/r4s/build/eddie-ros -- -j16 -l16
+[0.225s] [ 50%] [32mBuilding CXX object CMakeFiles/eddie_ros_interface_test.dir/src/interface-test.cpp.o[0m
+[0.226s] [ 50%] [32mBuilding CXX object CMakeFiles/eddie_ros_interface.dir/src/interface.cpp.o[0m
+[0.226s] [ 50%] [32mBuilding CXX object CMakeFiles/eddie_ros_interface.dir/src/interface-parameters.cpp.o[0m
+[0.226s] [ 66%] [32mBuilding CXX object CMakeFiles/eddie_ros_interface_test.dir/src/interface-parameters.cpp.o[0m
+[7.520s] In file included from [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/interface.hpp:40[m[K,
+[7.521s]                  from [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:7[m[K:
+[7.521s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:83:5:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K}[m[K’ before ‘[01m[KE_STEP[m[K’
+[7.521s]    83 |     [01;31m[KE_STEP[m[K,
+[7.521s]       |     [01;31m[K^~~~~~[m[K
+[7.521s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:69:15:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K{[m[K’
+[7.521s]    69 | enum e_events [01;36m[K{[m[K
+[7.522s]       |               [01;36m[K^[m[K
+[7.522s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:85:1:[m[K [01;31m[Kerror: [m[Kexpected initializer before ‘[01m[K}[m[K’ token
+[7.522s]    85 | [01;31m[K}[m[K;
+[7.522s]       | [01;31m[K^[m[K
+[7.522s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:85:1:[m[K [01;31m[Kerror: [m[Kexpected declaration before ‘[01m[K}[m[K’ token
+[7.522s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:100:5:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K}[m[K’ before ‘[01m[KNUM_TRANSITIONS[m[K’
+[7.523s]   100 |     [01;31m[KNUM_TRANSITIONS[m[K
+[7.523s]       |     [01;31m[K^~~~~~~~~~~~~~~[m[K
+[7.523s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:88:20:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K{[m[K’
+[7.523s]    88 | enum e_transitions [01;36m[K{[m[K
+[7.523s]       |                    [01;36m[K^[m[K
+[7.523s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:101:1:[m[K [01;31m[Kerror: [m[Kexpected initializer before ‘[01m[K}[m[K’ token
+[7.523s]   101 | [01;31m[K}[m[K;
+[7.524s]       | [01;31m[K^[m[K
+[7.524s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:101:1:[m[K [01;31m[Kerror: [m[Kexpected declaration before ‘[01m[K}[m[K’ token
+[7.534s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:128:38:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_TRANSITIONS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_REACTIONS[m[K’?
+[7.534s]   128 | inline struct transition transitions[[01;31m[KNUM_TRANSITIONS[m[K] = {
+[7.535s]       |                                      [01;31m[K^~~~~~~~~~~~~~~[m[K
+[7.535s]       |                                      [32m[KNUM_REACTIONS[m[K
+[7.535s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:253:1:[m[K [01;31m[Kerror: [m[Ktoo many initializers for ‘[01m[Kevent_reaction [7][m[K’
+[7.535s]   253 | [01;31m[K}[m[K;
+[7.535s]       | [01;31m[K^[m[K
+[7.546s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:257:18:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_EVENTS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_JOINTS[m[K’?
+[7.546s]   257 |     .numEvents = [01;31m[KNUM_EVENTS[m[K,
+[7.546s]       |                  [01;31m[K^~~~~~~~~~[m[K
+[7.547s]       |                  [32m[KNUM_JOINTS[m[K
+[7.555s] In file included from [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/interface.hpp:40[m[K,
+[7.556s]                  from [01m[K/home/wasim/r4s/src/eddie-ros/src/interface-parameters.cpp:7[m[K:
+[7.556s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:83:5:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K}[m[K’ before ‘[01m[KE_STEP[m[K’
+[7.556s]    83 |     [01;31m[KE_STEP[m[K,
+[7.556s]       |     [01;31m[K^~~~~~[m[K
+[7.556s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:69:15:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K{[m[K’
+[7.557s]    69 | enum e_events [01;36m[K{[m[K
+[7.557s]       |               [01;36m[K^[m[K
+[7.557s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:85:1:[m[K [01;31m[Kerror: [m[Kexpected initializer before ‘[01m[K}[m[K’ token
+[7.557s]    85 | [01;31m[K}[m[K;
+[7.558s]       | [01;31m[K^[m[K
+[7.558s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:85:1:[m[K [01;31m[Kerror: [m[Kexpected declaration before ‘[01m[K}[m[K’ token
+[7.558s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:100:5:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K}[m[K’ before ‘[01m[KNUM_TRANSITIONS[m[K’
+[7.558s]   100 |     [01;31m[KNUM_TRANSITIONS[m[K
+[7.558s]       |     [01;31m[K^~~~~~~~~~~~~~~[m[K
+[7.558s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:88:20:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K{[m[K’
+[7.559s]    88 | enum e_transitions [01;36m[K{[m[K
+[7.559s]       |                    [01;36m[K^[m[K
+[7.559s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:101:1:[m[K [01;31m[Kerror: [m[Kexpected initializer before ‘[01m[K}[m[K’ token
+[7.559s]   101 | [01;31m[K}[m[K;
+[7.559s]       | [01;31m[K^[m[K
+[7.559s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:101:1:[m[K [01;31m[Kerror: [m[Kexpected declaration before ‘[01m[K}[m[K’ token
+[7.559s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:258:32:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_EVENTS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_JOINTS[m[K’?
+[7.560s]   258 |     .currentEvents = new _Bool[[01;31m[KNUM_EVENTS[m[K]{false},
+[7.560s]       |                                [01;31m[K^~~~~~~~~~[m[K
+[7.560s]       |                                [32m[KNUM_JOINTS[m[K
+[7.568s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:259:31:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_EVENTS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_JOINTS[m[K’?
+[7.568s]   259 |     .futureEvents = new _Bool[[01;31m[KNUM_EVENTS[m[K]{false},
+[7.568s]       |                               [01;31m[K^~~~~~~~~~[m[K
+[7.568s]       |                               [32m[KNUM_JOINTS[m[K
+[7.570s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:128:38:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_TRANSITIONS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_REACTIONS[m[K’?
+[7.570s]   128 | inline struct transition transitions[[01;31m[KNUM_TRANSITIONS[m[K] = {
+[7.570s]       |                                      [01;31m[K^~~~~~~~~~~~~~~[m[K
+[7.570s]       |                                      [32m[KNUM_REACTIONS[m[K
+[7.571s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:253:1:[m[K [01;31m[Kerror: [m[Ktoo many initializers for ‘[01m[Kevent_reaction [7][m[K’
+[7.571s]   253 | [01;31m[K}[m[K;
+[7.571s]       | [01;31m[K^[m[K
+[7.581s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:265:23:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_TRANSITIONS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_REACTIONS[m[K’?
+[7.581s]   265 |     .numTransitions = [01;31m[KNUM_TRANSITIONS[m[K,
+[7.582s]       |                       [01;31m[K^~~~~~~~~~~~~~~[m[K
+[7.582s]       |                       [32m[KNUM_REACTIONS[m[K
+[7.582s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:257:18:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_EVENTS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_JOINTS[m[K’?
+[7.582s]   257 |     .numEvents = [01;31m[KNUM_EVENTS[m[K,
+[7.582s]       |                  [01;31m[K^~~~~~~~~~[m[K
+[7.583s]       |                  [32m[KNUM_JOINTS[m[K
+[7.589s] In file included from [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/interface.hpp:40[m[K,
+[7.590s]                  from [01m[K/home/wasim/r4s/src/eddie-ros/src/interface-parameters.cpp:7[m[K:
+[7.590s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:83:5:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K}[m[K’ before ‘[01m[KE_STEP[m[K’
+[7.590s]    83 |     [01;31m[KE_STEP[m[K,
+[7.590s]       |     [01;31m[K^~~~~~[m[K
+[7.590s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:69:15:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K{[m[K’
+[7.591s]    69 | enum e_events [01;36m[K{[m[K
+[7.591s]       |               [01;36m[K^[m[K
+[7.591s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:275:20:[m[K [01;31m[Kerror: [m[K‘[01m[Ktransitions[m[K’ was not declared in this scope; did you mean ‘[01m[Ktransition[m[K’?
+[7.591s]   275 |     .transitions = [01;31m[Ktransitions[m[K,
+[7.591s]       |                    [01;31m[K^~~~~~~~~~~[m[K
+[7.592s]       |                    [32m[Ktransition[m[K
+[7.592s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:85:1:[m[K [01;31m[Kerror: [m[Kexpected initializer before ‘[01m[K}[m[K’ token
+[7.592s]    85 | [01;31m[K}[m[K;
+[7.592s]       | [01;31m[K^[m[K
+[7.592s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:85:1:[m[K [01;31m[Kerror: [m[Kexpected declaration before ‘[01m[K}[m[K’ token
+[7.593s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:100:5:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K}[m[K’ before ‘[01m[KNUM_TRANSITIONS[m[K’
+[7.593s]   100 |     [01;31m[KNUM_TRANSITIONS[m[K
+[7.593s]       |     [01;31m[K^~~~~~~~~~~~~~~[m[K
+[7.593s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:88:20:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K{[m[K’
+[7.593s]    88 | enum e_transitions [01;36m[K{[m[K
+[7.593s]       |                    [01;36m[K^[m[K
+[7.593s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:101:1:[m[K [01;31m[Kerror: [m[Kexpected initializer before ‘[01m[K}[m[K’ token
+[7.594s]   101 | [01;31m[K}[m[K;
+[7.594s]       | [01;31m[K^[m[K
+[7.594s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:101:1:[m[K [01;31m[Kerror: [m[Kexpected declaration before ‘[01m[K}[m[K’ token
+[7.594s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:258:32:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_EVENTS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_JOINTS[m[K’?
+[7.594s]   258 |     .currentEvents = new _Bool[[01;31m[KNUM_EVENTS[m[K]{false},
+[7.594s]       |                                [01;31m[K^~~~~~~~~~[m[K
+[7.595s]       |                                [32m[KNUM_JOINTS[m[K
+[7.603s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:259:31:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_EVENTS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_JOINTS[m[K’?
+[7.603s]   259 |     .futureEvents = new _Bool[[01;31m[KNUM_EVENTS[m[K]{false},
+[7.604s]       |                               [01;31m[K^~~~~~~~~~[m[K
+[7.604s]       |                               [32m[KNUM_JOINTS[m[K
+[7.604s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In function ‘[01m[Kvoid[01;32m[K sigint_handler[m[K(int)[m[K’:
+[7.604s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:20:25:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Ksignum[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+[7.604s]    20 | void sigint_handler([01;35m[Kint signum[m[K) { keep_running = 0; }
+[7.605s]       |                     [01;35m[K~~~~^~~~~~[m[K
+[7.605s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:128:38:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_TRANSITIONS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_REACTIONS[m[K’?
+[7.605s]   128 | inline struct transition transitions[[01;31m[KNUM_TRANSITIONS[m[K] = {
+[7.605s]       |                                      [01;31m[K^~~~~~~~~~~~~~~[m[K
+[7.605s]       |                                      [32m[KNUM_REACTIONS[m[K
+[7.605s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:253:1:[m[K [01;31m[Kerror: [m[Ktoo many initializers for ‘[01m[Kevent_reaction [7][m[K’
+[7.606s]   253 | [01;31m[K}[m[K;
+[7.606s]       | [01;31m[K^[m[K
+[7.606s] In file included from [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/interface.hpp:40[m[K,
+[7.606s]                  from [01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:7[m[K:
+[7.606s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:83:5:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K}[m[K’ before ‘[01m[KE_STEP[m[K’
+[7.606s]    83 |     [01;31m[KE_STEP[m[K,
+[7.607s]       |     [01;31m[K^~~~~~[m[K
+[7.607s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:69:15:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K{[m[K’
+[7.607s]    69 | enum e_events [01;36m[K{[m[K
+[7.607s]       |               [01;36m[K^[m[K
+[7.607s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:85:1:[m[K [01;31m[Kerror: [m[Kexpected initializer before ‘[01m[K}[m[K’ token
+[7.607s]    85 | [01;31m[K}[m[K;
+[7.607s]       | [01;31m[K^[m[K
+[7.608s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:85:1:[m[K [01;31m[Kerror: [m[Kexpected declaration before ‘[01m[K}[m[K’ token
+[7.608s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:100:5:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K}[m[K’ before ‘[01m[KNUM_TRANSITIONS[m[K’
+[7.608s]   100 |     [01;31m[KNUM_TRANSITIONS[m[K
+[7.608s]       |     [01;31m[K^~~~~~~~~~~~~~~[m[K
+[7.608s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:88:20:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K{[m[K’
+[7.608s]    88 | enum e_transitions [01;36m[K{[m[K
+[7.608s]       |                    [01;36m[K^[m[K
+[7.608s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:101:1:[m[K [01;31m[Kerror: [m[Kexpected initializer before ‘[01m[K}[m[K’ token
+[7.609s]   101 | [01;31m[K}[m[K;
+[7.609s]       | [01;31m[K^[m[K
+[7.609s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:101:1:[m[K [01;31m[Kerror: [m[Kexpected declaration before ‘[01m[K}[m[K’ token
+[7.615s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:257:18:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_EVENTS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_JOINTS[m[K’?
+[7.616s]   257 |     .numEvents = [01;31m[KNUM_EVENTS[m[K,
+[7.616s]       |                  [01;31m[K^~~~~~~~~~[m[K
+[7.616s]       |                  [32m[KNUM_JOINTS[m[K
+[7.616s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:265:23:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_TRANSITIONS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_REACTIONS[m[K’?
+[7.616s]   265 |     .numTransitions = [01;31m[KNUM_TRANSITIONS[m[K,
+[7.617s]       |                       [01;31m[K^~~~~~~~~~~~~~~[m[K
+[7.617s]       |                       [32m[KNUM_REACTIONS[m[K
+[7.620s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In constructor ‘[01m[KEddieRosInterface::[01;32m[KEddieRosInterface[m[K(const rclcpp::NodeOptions&)[m[K’:
+[7.620s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:185:9:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kgripper_wait_counter[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+[7.620s]   185 |     int [01;35m[Kgripper_wait_counter[m[K = 0;
+[7.620s]       |         [01;35m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[7.620s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:128:38:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_TRANSITIONS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_REACTIONS[m[K’?
+[7.620s]   128 | inline struct transition transitions[[01;31m[KNUM_TRANSITIONS[m[K] = {
+[7.621s]       |                                      [01;31m[K^~~~~~~~~~~~~~~[m[K
+[7.621s]       |                                      [32m[KNUM_REACTIONS[m[K
+[7.621s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:186:15:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[KGRIPPER_WAIT_CYCLES[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+[7.621s]   186 |     const int [01;35m[KGRIPPER_WAIT_CYCLES[m[K = 1000;  // 300 cycles at 1kHz = 300 ms
+[7.621s]       |               [01;35m[K^~~~~~~~~~~~~~~~~~~[m[K
+[7.621s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:253:1:[m[K [01;31m[Kerror: [m[Ktoo many initializers for ‘[01m[Kevent_reaction [7][m[K’
+[7.621s]   253 | [01;31m[K}[m[K;
+[7.622s]       | [01;31m[K^[m[K
+[7.624s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:275:20:[m[K [01;31m[Kerror: [m[K‘[01m[Ktransitions[m[K’ was not declared in this scope; did you mean ‘[01m[Ktransition[m[K’?
+[7.624s]   275 |     .transitions = [01;31m[Ktransitions[m[K,
+[7.624s]       |                    [01;31m[K^~~~~~~~~~~[m[K
+[7.624s]       |                    [32m[Ktransition[m[K
+[7.626s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:258:32:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_EVENTS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_JOINTS[m[K’?
+[7.626s]   258 |     .currentEvents = new _Bool[[01;31m[KNUM_EVENTS[m[K]{false},
+[7.626s]       |                                [01;31m[K^~~~~~~~~~[m[K
+[7.626s]       |                                [32m[KNUM_JOINTS[m[K
+[7.631s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:257:18:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_EVENTS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_JOINTS[m[K’?
+[7.631s]   257 |     .numEvents = [01;31m[KNUM_EVENTS[m[K,
+[7.631s]       |                  [01;31m[K^~~~~~~~~~[m[K
+[7.631s]       |                  [32m[KNUM_JOINTS[m[K
+[7.636s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompile[m[K(events*, const EddieState*)[m[K’:
+[7.636s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:489:70:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Keddie_state[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+[7.636s]   489 | eRosInterface::compile(events *eventData, [01;35m[Kconst EddieState *eddie_state[m[K) {
+[7.637s]       |                                           [01;35m[K~~~~~~~~~~~~~~~~~~^~~~~~~~~~~[m[K
+[7.637s] 
+[7.637s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:259:31:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_EVENTS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_JOINTS[m[K’?
+[7.637s]   259 |     .futureEvents = new _Bool[[01;31m[KNUM_EVENTS[m[K]{false},
+[7.637s]       |                               [01;31m[K^~~~~~~~~~[m[K
+[7.637s]       |                               [32m[KNUM_JOINTS[m[K
+[7.641s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:258:32:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_EVENTS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_JOINTS[m[K’?
+[7.642s]   258 |     .currentEvents = new _Bool[[01;31m[KNUM_EVENTS[m[K]{false},
+[7.642s]       |                                [01;31m[K^~~~~~~~~~[m[K
+[7.642s]       |                                [32m[KNUM_JOINTS[m[K
+[7.643s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_gravity_comp[m[K(events*, EddieState*)[m[K’:
+[7.644s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:494:54:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+[7.644s]   494 | void EddieRosInterface::compute_gravity_comp([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+[7.644s]       |                                              [01;35m[K~~~~~~~~^~~~~~~~~[m[K
+[7.649s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:265:23:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_TRANSITIONS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_REACTIONS[m[K’?
+[7.649s]   265 |     .numTransitions = [01;31m[KNUM_TRANSITIONS[m[K,
+[7.649s]       |                       [01;31m[K^~~~~~~~~~~~~~~[m[K
+[7.650s]       |                       [32m[KNUM_REACTIONS[m[K
+[7.652s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:259:31:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_EVENTS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_JOINTS[m[K’?
+[7.652s]   259 |     .futureEvents = new _Bool[[01;31m[KNUM_EVENTS[m[K]{false},
+[7.652s]       |                               [01;31m[K^~~~~~~~~~[m[K
+[7.652s]       |                               [32m[KNUM_JOINTS[m[K
+[7.653s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_cartesian_ctrl[m[K(events*, EddieState*)[m[K’:
+[7.653s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:548:56:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+[7.653s]   548 | void EddieRosInterface::compute_cartesian_ctrl([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+[7.653s]       |                                                [01;35m[K~~~~~~~~^~~~~~~~~[m[K
+[7.657s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:275:20:[m[K [01;31m[Kerror: [m[K‘[01m[Ktransitions[m[K’ was not declared in this scope; did you mean ‘[01m[Ktransition[m[K’?
+[7.658s]   275 |     .transitions = [01;31m[Ktransitions[m[K,
+[7.658s]       |                    [01;31m[K^~~~~~~~~~~[m[K
+[7.658s]       |                    [32m[Ktransition[m[K
+[7.665s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:265:23:[m[K [01;31m[Kerror: [m[K‘[01m[KNUM_TRANSITIONS[m[K’ was not declared in this scope; did you mean ‘[01m[KNUM_REACTIONS[m[K’?
+[7.665s]   265 |     .numTransitions = [01;31m[KNUM_TRANSITIONS[m[K,
+[7.665s]       |                       [01;31m[K^~~~~~~~~~~~~~~[m[K
+[7.665s]       |                       [32m[KNUM_REACTIONS[m[K
+[7.673s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp:275:20:[m[K [01;31m[Kerror: [m[K‘[01m[Ktransitions[m[K’ was not declared in this scope; did you mean ‘[01m[Ktransition[m[K’?
+[7.673s]   275 |     .transitions = [01;31m[Ktransitions[m[K,
+[7.673s]       |                    [01;31m[K^~~~~~~~~~~[m[K
+[7.673s]       |                    [32m[Ktransition[m[K
+[7.681s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kfsm_behavior[m[K(events*, EddieState*)[m[K’:
+[7.682s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:755:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kgripper_wait_counter[m[K’ was not declared in this scope
+[7.682s]   755 |         [01;31m[Kgripper_wait_counter[m[K = 0;     // Reset wait counter
+[7.682s]       |         [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[7.686s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In function ‘[01m[Kvoid[01;32m[K sigint_handler[m[K(int)[m[K’:
+[7.686s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:20:25:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Ksignum[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+[7.686s]    20 | void sigint_handler([01;35m[Kint signum[m[K) { keep_running = 0; }
+[7.686s]       |                     [01;35m[K~~~~^~~~~~[m[K
+[7.706s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:759:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kgripper_wait_counter[m[K’ was not declared in this scope
+[7.706s]   759 |         [01;31m[Kgripper_wait_counter[m[K++;
+[7.706s]       |         [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[7.709s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompile[m[K(events*, const EddieState*)[m[K’:
+[7.709s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:352:70:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Keddie_state[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+[7.709s]   352 | void EddieRosInterface::compile(events *eventData, [01;35m[Kconst EddieState *eddie_state[m[K) {
+[7.709s]       |                                                    [01;35m[K~~~~~~~~~~~~~~~~~~^~~~~~~~~~~[m[K
+[7.713s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_gravity_comp[m[K(events*, EddieState*)[m[K’:
+[7.713s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:358:54:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+[7.713s]   358 | void EddieRosInterface::compute_gravity_comp([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+[7.714s]       |                                              [01;35m[K~~~~~~~~^~~~~~~~~[m[K
+[7.717s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_cartesian_ctrl[m[K(events*, EddieState*)[m[K’:
+[7.717s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:390:56:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+[7.717s]   390 | void EddieRosInterface::compute_cartesian_ctrl([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+[7.718s]       |                                                [01;35m[K~~~~~~~~^~~~~~~~~[m[K
+[7.730s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:760:37:[m[K [01;31m[Kerror: [m[K‘[01m[KGRIPPER_WAIT_CYCLES[m[K’ was not declared in this scope
+[7.730s]   760 |         if (gripper_wait_counter >= [01;31m[KGRIPPER_WAIT_CYCLES[m[K) {
+[7.737s]       |                                     [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+[7.755s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:772:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kgripper_wait_counter[m[K’ was not declared in this scope
+[7.755s]   772 |         [01;31m[Kgripper_wait_counter[m[K = 0;
+[7.755s]       |         [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[7.775s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:775:34:[m[K [01;31m[Kerror: [m[K‘[01m[KE_CLOSE_GRIPPER_WAIT[m[K’ was not declared in this scope; did you mean ‘[01m[KE_OPEN_GRIPPER_WAIT[m[K’?
+[7.775s]   775 |     if (consume_event(eventData, [01;31m[KE_CLOSE_GRIPPER_WAIT[m[K)) {
+[7.775s]       |                                  [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[7.775s]       |                                  [32m[KE_OPEN_GRIPPER_WAIT[m[K
+[7.799s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:776:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kgripper_wait_counter[m[K’ was not declared in this scope
+[7.799s]   776 |         [01;31m[Kgripper_wait_counter[m[K++;
+[7.799s]       |         [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[7.822s] [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:777:37:[m[K [01;31m[Kerror: [m[K‘[01m[KGRIPPER_WAIT_CYCLES[m[K’ was not declared in this scope
+[7.822s]   777 |         if (gripper_wait_counter >= [01;31m[KGRIPPER_WAIT_CYCLES[m[K) {
+[7.822s]       |                                     [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+[9.521s] gmake[2]: *** [CMakeFiles/eddie_ros_interface.dir/build.make:90: CMakeFiles/eddie_ros_interface.dir/src/interface-parameters.cpp.o] Error 1
+[9.521s] gmake[2]: *** Waiting for unfinished jobs....
+[9.553s] gmake[2]: *** [CMakeFiles/eddie_ros_interface_test.dir/build.make:90: CMakeFiles/eddie_ros_interface_test.dir/src/interface-parameters.cpp.o] Error 1
+[9.553s] gmake[2]: *** Waiting for unfinished jobs....
+[9.585s] gmake[2]: *** [CMakeFiles/eddie_ros_interface_test.dir/build.make:76: CMakeFiles/eddie_ros_interface_test.dir/src/interface-test.cpp.o] Error 1
+[9.585s] gmake[1]: *** [CMakeFiles/Makefile2:165: CMakeFiles/eddie_ros_interface_test.dir/all] Error 2
+[9.585s] gmake[1]: *** Waiting for unfinished jobs....
+[9.638s] gmake[2]: *** [CMakeFiles/eddie_ros_interface.dir/build.make:76: CMakeFiles/eddie_ros_interface.dir/src/interface.cpp.o] Error 1
+[9.638s] gmake[1]: *** [CMakeFiles/Makefile2:139: CMakeFiles/eddie_ros_interface.dir/all] Error 2
+[9.638s] gmake: *** [Makefile:146: all] Error 2
+[9.641s] Invoked command in '/home/wasim/r4s/build/eddie-ros' returned '2': CMAKE_MODULE_PATH=/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/cmake CMAKE_PREFIX_PATH=/home/wasim/r4s/install/robif2b:/home/wasim/r4s/install/orocos_kdl:/home/wasim/r4s/install/coord2b:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/robif2b/lib:/home/wasim/r4s/install/orocos_kdl/lib:/home/wasim/r4s/install/coord2b/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig /usr/bin/cmake --build /home/wasim/r4s/build/eddie-ros -- -j16 -l16

@@ -1,0 +1,47 @@
+[0.014s] Invoking command in '/home/wasim/r4s/build/eddie_ros': CMAKE_MODULE_PATH=/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/cmake CMAKE_PREFIX_PATH=/home/wasim/r4s/install/robif2b:/home/wasim/r4s/install/orocos_kdl:/home/wasim/r4s/install/coord2b:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/robif2b/lib:/home/wasim/r4s/install/orocos_kdl/lib:/home/wasim/r4s/install/coord2b/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig /usr/bin/cmake --build /home/wasim/r4s/build/eddie_ros -- -j16 -l16
+[0.086s] [  1%] Built target eddie_ros__rosidl_generator_type_description
+[0.103s] [  1%] Built target ament_cmake_python_copy_eddie_ros
+[0.116s] [  3%] Built target eddie_ros__cpp
+[0.117s] [ 16%] Built target eddie_ros__rosidl_generator_c
+[0.154s] [ 23%] Built target eddie_ros__rosidl_typesupport_c
+[0.154s] [ 56%] Built target eddie_ros__rosidl_typesupport_introspection_c
+[0.154s] [ 56%] Built target eddie_ros__rosidl_typesupport_fastrtps_cpp
+[0.155s] [ 56%] Built target eddie_ros__rosidl_typesupport_fastrtps_c
+[0.155s] [ 56%] Built target eddie_ros__rosidl_typesupport_cpp
+[0.155s] [ 56%] Built target eddie_ros__rosidl_typesupport_introspection_cpp
+[0.191s] [ 60%] [32mBuilding CXX object CMakeFiles/eddie_ros_interface_dummy.dir/src/interface_dummy.cpp.o[0m
+[0.191s] [ 60%] [32mBuilding CXX object CMakeFiles/eddie_ros_interface_dummy.dir/src/interface-parameters.cpp.o[0m
+[0.207s] [ 76%] Built target task_planner_node
+[0.207s] [ 76%] Built target mock_servers_only
+[0.208s] [ 76%] Built target pick_place_fsm_mock
+[0.208s] [ 76%] Built target eddie_ros_interface_test
+[0.220s] [ 81%] Built target eddie_ros_interface
+[0.241s] [ 81%] Built target eddie_ros
+[0.275s] [ 83%] Built target eddie_ros__py
+[0.312s] [ 88%] Built target eddie_ros__rosidl_generator_py
+[0.347s] [ 96%] Built target eddie_ros_s__rosidl_typesupport_c
+[0.347s] [ 98%] Built target eddie_ros_s__rosidl_typesupport_fastrtps_c
+[0.348s] [ 98%] Built target eddie_ros_s__rosidl_typesupport_introspection_c
+[0.440s] running egg_info
+[0.471s] writing eddie_ros.egg-info/PKG-INFO
+[0.472s] writing dependency_links to eddie_ros.egg-info/dependency_links.txt
+[0.472s] writing top-level names to eddie_ros.egg-info/top_level.txt
+[0.566s] reading manifest file 'eddie_ros.egg-info/SOURCES.txt'
+[0.567s] writing manifest file 'eddie_ros.egg-info/SOURCES.txt'
+[0.603s] [ 98%] Built target ament_cmake_python_build_eddie_ros_egg
+[0.782s] In file included from [01m[K/home/wasim/r4s/src/eddie-ros/src/interface_dummy.cpp:7[m[K:
+[0.782s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie_ros/interface.hpp:40:10:[m[K [01;31m[Kfatal error: [m[Krobif2b/functions/ethercat.h: No such file or directory
+[0.782s]    40 | #include [01;31m[K"robif2b/functions/ethercat.h"[m[K
+[0.782s]       |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[0.782s] compilation terminated.
+[0.787s] In file included from [01m[K/home/wasim/r4s/src/eddie-ros/src/interface-parameters.cpp:7[m[K:
+[0.787s] [01m[K/home/wasim/r4s/src/eddie-ros/include/eddie_ros/interface.hpp:40:10:[m[K [01;31m[Kfatal error: [m[Krobif2b/functions/ethercat.h: No such file or directory
+[0.787s]    40 | #include [01;31m[K"robif2b/functions/ethercat.h"[m[K
+[0.787s]       |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[0.787s] compilation terminated.
+[0.796s] gmake[2]: *** [CMakeFiles/eddie_ros_interface_dummy.dir/build.make:90: CMakeFiles/eddie_ros_interface_dummy.dir/src/interface-parameters.cpp.o] Error 1
+[0.797s] gmake[2]: *** Waiting for unfinished jobs....
+[0.797s] gmake[2]: *** [CMakeFiles/eddie_ros_interface_dummy.dir/build.make:76: CMakeFiles/eddie_ros_interface_dummy.dir/src/interface_dummy.cpp.o] Error 1
+[0.797s] gmake[1]: *** [CMakeFiles/Makefile2:775: CMakeFiles/eddie_ros_interface_dummy.dir/all] Error 2
+[0.797s] gmake: *** [Makefile:146: all] Error 2
+[0.799s] Invoked command in '/home/wasim/r4s/build/eddie_ros' returned '2': CMAKE_MODULE_PATH=/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/cmake CMAKE_PREFIX_PATH=/home/wasim/r4s/install/robif2b:/home/wasim/r4s/install/orocos_kdl:/home/wasim/r4s/install/coord2b:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/robif2b/lib:/home/wasim/r4s/install/orocos_kdl/lib:/home/wasim/r4s/install/coord2b/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig /usr/bin/cmake --build /home/wasim/r4s/build/eddie_ros -- -j16 -l16

@@ -1,0 +1,18 @@
+[ 20%] [32m[1mLinking C shared library libcoord2b.so[0m
+[ 60%] Built target coord2b
+[ 80%] [32m[1mLinking C executable traffic_lights[0m
+[100%] Built target traffic_lights
+-- Install configuration: ""
+-- Up-to-date: /home/wasim/r4s/install/coord2b/include
+-- Up-to-date: /home/wasim/r4s/install/coord2b/include/coord2b
+-- Up-to-date: /home/wasim/r4s/install/coord2b/include/coord2b/functions
+-- Up-to-date: /home/wasim/r4s/install/coord2b/include/coord2b/functions/fsm.h
+-- Up-to-date: /home/wasim/r4s/install/coord2b/include/coord2b/functions/event_loop.h
+-- Up-to-date: /home/wasim/r4s/install/coord2b/include/coord2b/types
+-- Up-to-date: /home/wasim/r4s/install/coord2b/include/coord2b/types/fsm.h
+-- Up-to-date: /home/wasim/r4s/install/coord2b/include/coord2b/types/event_loop.h
+-- Up-to-date: /home/wasim/r4s/install/coord2b/lib/cmake/coord2b/coord2b-config.cmake
+-- Up-to-date: /home/wasim/r4s/install/coord2b/lib/cmake/coord2b/coord2b-config-version.cmake
+-- Up-to-date: /home/wasim/r4s/install/coord2b/lib/cmake/coord2b/coord2b-targets.cmake
+-- Up-to-date: /home/wasim/r4s/install/coord2b/lib/cmake/coord2b/coord2b-targets-noconfig.cmake
+-- Installing: /home/wasim/r4s/install/coord2b/lib/libcoord2b.so

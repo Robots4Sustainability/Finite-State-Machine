@@ -1,0 +1,9 @@
+/home/wasim/r4s/src/install/coord2b/include/coord2b/functions/fsm.h
+/home/wasim/r4s/src/install/coord2b/include/coord2b/functions/event_loop.h
+/home/wasim/r4s/src/install/coord2b/include/coord2b/types/fsm.h
+/home/wasim/r4s/src/install/coord2b/include/coord2b/types/event_loop.h
+/home/wasim/r4s/src/install/coord2b/lib/cmake/coord2b/coord2b-config.cmake
+/home/wasim/r4s/src/install/coord2b/lib/cmake/coord2b/coord2b-config-version.cmake
+/home/wasim/r4s/src/install/coord2b/lib/cmake/coord2b/coord2b-targets.cmake
+/home/wasim/r4s/src/install/coord2b/lib/cmake/coord2b/coord2b-targets-noconfig.cmake
+/home/wasim/r4s/src/install/coord2b/lib/libcoord2b.so

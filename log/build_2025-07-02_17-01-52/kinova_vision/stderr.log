@@ -1,0 +1,19 @@
+[01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:[m[K In member function ‘[01m[Kbool ros_kortex_vision::Vision::[01;32m[Kstart[m[K()[m[K’:
+[01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:266:14:[m[K [01;35m[Kwarning: [m[Kenumeration value ‘[01m[KGST_STATE_CHANGE_SUCCESS[m[K’ not handled in switch [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wswitch-Wswitch]8;;[m[K]
+  266 |       switch [01;35m[K([m[Kret)
+      |              [01;35m[K^[m[K
+[01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:266:14:[m[K [01;35m[Kwarning: [m[Kenumeration value ‘[01m[KGST_STATE_CHANGE_NO_PREROLL[m[K’ not handled in switch [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wswitch-Wswitch]8;;[m[K]
+[01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:[m[K In member function ‘[01m[Kbool ros_kortex_vision::Vision::[01;32m[Kpublish[m[K()[m[K’:
+[01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:383:24:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Ksensor_msgs::msg::CameraInfo_<std::allocator<void> >::_height_type[m[K’ {aka ‘[01m[Kunsigned int[m[K’} and ‘[01m[Kint[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  383 |   if ([01;35m[Kcur_cinfo.height != image_height_[m[K || cur_cinfo.width != image_width_)
+      |       [01;35m[K~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:383:60:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Ksensor_msgs::msg::CameraInfo_<std::allocator<void> >::_width_type[m[K’ {aka ‘[01m[Kunsigned int[m[K’} and ‘[01m[Kint[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  383 |   if (cur_cinfo.height != image_height_ || [01;35m[Kcur_cinfo.width != image_width_[m[K)
+      |                                            [01;35m[K~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:[m[K In member function ‘[01m[Kbool ros_kortex_vision::Vision::[01;32m[Kstart[m[K()[m[K’:
+[01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:276:5:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+  276 |     [01;35m[K}[m[K
+      |     [01;35m[K^[m[K
+[01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:278:5:[m[K [01;36m[Knote: [m[Khere
+  278 |     [01;36m[Kcase[m[K GST_STATE_CHANGE_SUCCESS:
+      |     [01;36m[K^~~~[m[K

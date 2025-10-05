@@ -1,0 +1,50 @@
+// generated from rosidl_adapter/resource/action.idl.em
+// with input from eddie_ros/action/GripperControl.action
+// generated code does not contain a copyright notice
+
+
+module eddie_ros {
+  module action {
+    @verbatim (language="comment", text=
+      "Request: Command to control gripper")
+    struct GripperControl_Goal {
+      @verbatim (language="comment", text=
+        "0.0 = fully closed, 1.0 = fully open")
+      double target_position;
+
+      @verbatim (language="comment", text=
+        "Maximum velocity (optional, use default if 0.0)")
+      double velocity;
+
+      @verbatim (language="comment", text=
+        "Maximum force/effort (optional, use default if 0.0)")
+      double force;
+    };
+    @verbatim (language="comment", text=
+      "Result: Final status of the gripper operation")
+    struct GripperControl_Result {
+      @verbatim (language="comment", text=
+        "Success")
+      boolean success;
+
+      @verbatim (language="comment", text=
+        "Result status message")
+      string message;
+
+      @verbatim (language="comment", text=
+        "Final gripper position achieved")
+      double final_position;
+    };
+    @verbatim (language="comment", text=
+      "Feedback: Progress updates during gripper movement")
+    struct GripperControl_Feedback {
+      @verbatim (language="comment", text=
+        "Current gripper position")
+      double current_position;
+
+      @verbatim (language="comment", text=
+        "Possible status message")
+      string status_message;
+    };
+  };
+};

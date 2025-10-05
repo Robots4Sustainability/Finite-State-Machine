@@ -1,0 +1,36 @@
+[0.045s] Invoking command in '/home/wasim/r4s/build/kinova_vision': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/r4s/src/ros2_kortex_vision -DCMAKE_INSTALL_PREFIX=/home/wasim/r4s/install/kinova_vision
+[0.190s] -- The C compiler identification is GNU 13.3.0
+[0.334s] -- The CXX compiler identification is GNU 13.3.0
+[0.381s] -- Detecting C compiler ABI info
+[0.632s] -- Detecting C compiler ABI info - done
+[0.655s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.655s] -- Detecting C compile features
+[0.656s] -- Detecting C compile features - done
+[0.681s] -- Detecting CXX compiler ABI info
+[0.956s] -- Detecting CXX compiler ABI info - done
+[0.979s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.981s] -- Detecting CXX compile features
+[0.981s] -- Detecting CXX compile features - done
+[0.995s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[1.414s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[1.795s] [31mCMake Error at CMakeLists.txt:15 (find_package):
+[1.795s]   By not providing "Findcamera_calibration_parsers.cmake" in
+[1.795s]   CMAKE_MODULE_PATH this project has asked CMake to find a package
+[1.795s]   configuration file provided by "camera_calibration_parsers", but CMake did
+[1.795s]   not find one.
+[1.795s] 
+[1.796s]   Could not find a package configuration file provided by
+[1.796s]   "camera_calibration_parsers" with any of the following names:
+[1.796s] 
+[1.796s]     camera_calibration_parsersConfig.cmake
+[1.796s]     camera_calibration_parsers-config.cmake
+[1.796s] 
+[1.796s]   Add the installation prefix of "camera_calibration_parsers" to
+[1.797s]   CMAKE_PREFIX_PATH or set "camera_calibration_parsers_DIR" to a directory
+[1.797s]   containing one of the above files.  If "camera_calibration_parsers"
+[1.797s]   provides a separate development package or SDK, be sure it has been
+[1.797s]   installed.
+[1.797s] 
+[1.798s] [0m
+[1.798s] -- Configuring incomplete, errors occurred!
+[1.806s] Invoked command in '/home/wasim/r4s/build/kinova_vision' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/r4s/src/ros2_kortex_vision -DCMAKE_INSTALL_PREFIX=/home/wasim/r4s/install/kinova_vision

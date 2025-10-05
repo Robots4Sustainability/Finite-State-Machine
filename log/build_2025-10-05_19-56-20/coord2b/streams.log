@@ -1,0 +1,20 @@
+[0.018s] Invoking command in '/home/wasim/r4s/build/coord2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/coord2b -- -j16 -l16
+[0.078s] [ 60%] Built target coord2b
+[0.109s] [100%] Built target traffic_lights
+[0.142s] Invoked command in '/home/wasim/r4s/build/coord2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/coord2b -- -j16 -l16
+[0.143s] Invoking command in '/home/wasim/r4s/build/coord2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/coord2b
+[0.155s] -- Install configuration: ""
+[0.156s] -- Up-to-date: /home/wasim/r4s/install/coord2b/include
+[0.156s] -- Up-to-date: /home/wasim/r4s/install/coord2b/include/coord2b
+[0.156s] -- Up-to-date: /home/wasim/r4s/install/coord2b/include/coord2b/functions
+[0.156s] -- Up-to-date: /home/wasim/r4s/install/coord2b/include/coord2b/functions/fsm.h
+[0.156s] -- Up-to-date: /home/wasim/r4s/install/coord2b/include/coord2b/functions/event_loop.h
+[0.156s] -- Up-to-date: /home/wasim/r4s/install/coord2b/include/coord2b/types
+[0.156s] -- Up-to-date: /home/wasim/r4s/install/coord2b/include/coord2b/types/fsm.h
+[0.156s] -- Up-to-date: /home/wasim/r4s/install/coord2b/include/coord2b/types/event_loop.h
+[0.156s] -- Up-to-date: /home/wasim/r4s/install/coord2b/lib/cmake/coord2b/coord2b-config.cmake
+[0.156s] -- Up-to-date: /home/wasim/r4s/install/coord2b/lib/cmake/coord2b/coord2b-config-version.cmake
+[0.157s] -- Up-to-date: /home/wasim/r4s/install/coord2b/lib/cmake/coord2b/coord2b-targets.cmake
+[0.157s] -- Up-to-date: /home/wasim/r4s/install/coord2b/lib/cmake/coord2b/coord2b-targets-noconfig.cmake
+[0.157s] -- Up-to-date: /home/wasim/r4s/install/coord2b/lib/libcoord2b.so
+[0.161s] Invoked command in '/home/wasim/r4s/build/coord2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/coord2b

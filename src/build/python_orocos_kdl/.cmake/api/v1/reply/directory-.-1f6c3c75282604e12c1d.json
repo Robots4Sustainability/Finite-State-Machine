@@ -1,0 +1,56 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 67,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/home/wasim/r4s/src/install/python_orocos_kdl/lib/python3.12/dist-packages",
+			"paths" : 
+			[
+				"PyKDL.cpython-312-x86_64-linux-gnu.so"
+			],
+			"targetId" : "PyKDL::@6890427a1f51a3e7e1df",
+			"targetIndex" : 0,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"cxxModuleBmiTarget" : 
+			{
+				"id" : "PyKDL::@6890427a1f51a3e7e1df",
+				"index" : 0
+			},
+			"destination" : "/home/wasim/r4s/src/install/python_orocos_kdl/lib/python3.12/dist-packages",
+			"type" : "cxxModuleBmi"
+		}
+	],
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	}
+}

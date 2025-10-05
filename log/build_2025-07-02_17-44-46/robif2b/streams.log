@@ -1,0 +1,48 @@
+[0.018s] Invoking command in '/home/wasim/r4s/build/robif2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/robif2b -- -j16 -l16
+[0.072s] [ 18%] [32m[1mLinking C shared library lib2dof.so[0m
+[0.072s] [ 18%] [32m[1mLinking C shared library libethercat.so[0m
+[0.072s] [ 18%] [32m[1mLinking C shared library libkelo.so[0m
+[0.075s] [ 25%] [32m[1mLinking CXX shared library libkinova_gen3.so[0m
+[0.117s] [ 31%] Built target ethercat
+[0.117s] [ 37%] Built target 2dof
+[0.137s] [ 56%] Built target kelo
+[0.141s] [ 62%] [32m[1mLinking C executable 2dof_example[0m
+[0.153s] [ 68%] [32m[1mLinking C executable eddie_example[0m
+[0.184s] [ 75%] Built target 2dof_example
+[0.202s] [ 81%] Built target eddie_example
+[0.361s] [ 87%] Built target kinova_gen3
+[0.386s] [ 93%] [32m[1mLinking C executable kinova_gen3_example[0m
+[0.465s] [100%] Built target kinova_gen3_example
+[0.479s] Invoked command in '/home/wasim/r4s/build/robif2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/robif2b -- -j16 -l16
+[0.480s] Invoking command in '/home/wasim/r4s/build/robif2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/robif2b
+[0.490s] -- Install configuration: "Debug"
+[0.490s] -- Up-to-date: /home/wasim/r4s/install/robif2b/lib/cmake/robif2b/robif2b-config.cmake
+[0.490s] -- Up-to-date: /home/wasim/r4s/install/robif2b/lib/cmake/robif2b/robif2b-config-version.cmake
+[0.490s] -- Up-to-date: /home/wasim/r4s/install/robif2b/lib/cmake/robif2b/robif2b-targets.cmake
+[0.490s] -- Up-to-date: /home/wasim/r4s/install/robif2b/lib/cmake/robif2b/robif2b-targets-debug.cmake
+[0.490s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include
+[0.490s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b
+[0.490s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/functions
+[0.490s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/functions/kelo_power_board.h
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/functions/eddie_power_board.h
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/functions/kelo_drive.h
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/functions/kinova_gen3.h
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/functions/ethercat.h
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/functions/2dof.h
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/types
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/types/kelo_power_board_api.h
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/types/kelo_drive_api.h
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/types/kelo_power_board.h
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/types/eddie_power_board.h
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/types/eddie_power_board_api.h
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/types/kelo_drive.h
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/types/kinova_gen3.h
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/types/ethercat.h
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/types/control_mode.h
+[0.491s] -- Up-to-date: /home/wasim/r4s/install/robif2b/include/robif2b/types/2dof.h
+[0.492s] -- Installing: /home/wasim/r4s/install/robif2b/lib/lib2dof.so
+[0.492s] -- Installing: /home/wasim/r4s/install/robif2b/lib/libethercat.so
+[0.492s] -- Set non-toolchain portion of runtime path of "/home/wasim/r4s/install/robif2b/lib/libethercat.so" to ""
+[0.492s] -- Installing: /home/wasim/r4s/install/robif2b/lib/libkinova_gen3.so
+[0.506s] -- Installing: /home/wasim/r4s/install/robif2b/lib/libkelo.so
+[0.508s] Invoked command in '/home/wasim/r4s/build/robif2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/robif2b

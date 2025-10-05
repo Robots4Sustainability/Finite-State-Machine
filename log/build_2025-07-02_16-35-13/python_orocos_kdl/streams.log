@@ -1,0 +1,26 @@
+[0.028s] Invoking command in '/home/wasim/r4s/build/python_orocos_kdl': CMAKE_MODULE_PATH=/home/wasim/r4s/install/orocos_kdl/share/orocos_kdl/cmake CMAKE_PREFIX_PATH=/home/wasim/r4s/install/orocos_kdl:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/orocos_kdl/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig /usr/bin/cmake /home/wasim/r4s/src/orocos_kinematics_dynamics/python_orocos_kdl -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCMAKE_INSTALL_PREFIX=/home/wasim/r4s/install/python_orocos_kdl
+[0.182s] -- The C compiler identification is GNU 13.3.0
+[0.336s] -- The CXX compiler identification is GNU 13.3.0
+[0.378s] -- Detecting C compiler ABI info
+[0.610s] -- Detecting C compiler ABI info - done
+[0.632s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.633s] -- Detecting C compile features
+[0.634s] -- Detecting C compile features - done
+[0.657s] -- Detecting CXX compiler ABI info
+[0.909s] -- Detecting CXX compiler ABI info - done
+[0.930s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.931s] -- Detecting CXX compile features
+[0.932s] -- Detecting CXX compile features - done
+[1.664s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter Development Development.Module Development.Embed 
+[1.814s] -- Performing Test HAS_FLTO
+[2.153s] -- Performing Test HAS_FLTO - Success
+[2.155s] -- pybind11 found, building against installed version
+[2.156s] -- Configuring done (2.1s)
+[2.164s] -- Generating done (0.0s)
+[2.165s] [33mCMake Warning:
+[2.165s]   Manually-specified variables were not used by the project:
+[2.166s] 
+[2.166s]     CATKIN_INSTALL_INTO_PREFIX_ROOT
+[2.166s] 
+[2.166s] [0m
+[2.168s] -- Build files have been written to: /home/wasim/r4s/build/python_orocos_kdl

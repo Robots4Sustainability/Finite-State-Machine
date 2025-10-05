@@ -1,0 +1,7 @@
+[ 16%] [32m[1mLinking CXX shared module PyKDL.cpython-312-x86_64-linux-gnu.so[0m
+[01m[Klto-wrapper:[m[K [01;35m[Kwarning: [m[Kusing serial compilation of 2 LTRANS jobs
+[01m[Klto-wrapper:[m[K [01;36m[Knote: [m[Ksee the ]8;;https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html#index-flto‘[01m[K-flto[m[K’ option documentation]8;; for more information
+[100%] Built target PyKDL
+-- Install configuration: ""
+-- Installing: /home/wasim/r4s/install/python_orocos_kdl/lib/python3.12/dist-packages/PyKDL.cpython-312-x86_64-linux-gnu.so
+-- Set non-toolchain portion of runtime path of "/home/wasim/r4s/install/python_orocos_kdl/lib/python3.12/dist-packages/PyKDL.cpython-312-x86_64-linux-gnu.so" to ""

@@ -1,0 +1,6 @@
+Invoking command in '/home/wasim/r4s/src/build/coord2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/r4s/src/coord2b -DCMAKE_INSTALL_PREFIX=/home/wasim/r4s/src/install/coord2b
+Invoked command in '/home/wasim/r4s/src/build/coord2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/r4s/src/coord2b -DCMAKE_INSTALL_PREFIX=/home/wasim/r4s/src/install/coord2b
+Invoking command in '/home/wasim/r4s/src/build/coord2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/src/build/coord2b -- -j16 -l16
+Invoked command in '/home/wasim/r4s/src/build/coord2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/src/build/coord2b -- -j16 -l16
+Invoking command in '/home/wasim/r4s/src/build/coord2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/src/build/coord2b
+Invoked command in '/home/wasim/r4s/src/build/coord2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/src/build/coord2b

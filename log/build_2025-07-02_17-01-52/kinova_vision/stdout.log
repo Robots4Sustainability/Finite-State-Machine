@@ -1,0 +1,63 @@
+-- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Found camera_calibration_parsers: 5.1.7 (/opt/ros/jazzy/share/camera_calibration_parsers/cmake)
+-- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+-- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Setting yaml-cpp_DIR to: '/opt/ros/jazzy/share/yaml_cpp_vendor/cmake/../../../opt/yaml_cpp_vendor/share/cmake/yaml-cpp'
+-- Found camera_info_manager: 5.1.7 (/opt/ros/jazzy/share/camera_info_manager/cmake)
+-- Found cv_bridge: 4.1.0 (/opt/ros/jazzy/share/cv_bridge/cmake)
+-- Found image_transport: 5.1.6 (/opt/ros/jazzy/share/image_transport/cmake)
+-- Found rclcpp_components: 28.1.9 (/opt/ros/jazzy/share/rclcpp_components/cmake)
+-- Found tf2: 0.36.11 (/opt/ros/jazzy/share/tf2/cmake)
+-- Found tf2_ros: 0.36.11 (/opt/ros/jazzy/share/tf2_ros/cmake)
+-- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1") 
+-- Checking for modules 'gstreamer-1.0;gstreamer-app-1.0'
+--   Found gstreamer-1.0, version 1.24.2
+--   Found gstreamer-app-1.0, version 1.24.2
+-- Configuring done (2.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/wasim/r4s/build/kinova_vision
+[ 25%] [32mBuilding CXX object CMakeFiles/kinova_vision.dir/src/vision.cpp.o[0m
+[ 50%] [32m[1mLinking CXX shared library libkinova_vision.so[0m
+[ 50%] Built target kinova_vision
+[ 75%] [32mBuilding CXX object CMakeFiles/kinova_vision_node.dir/src/vision_node.cpp.o[0m
+[100%] [32m[1mLinking CXX executable kinova_vision_node[0m
+[100%] Built target kinova_vision_node
+-- Install configuration: ""
+-- Installing: /home/wasim/r4s/install/kinova_vision/lib/libkinova_vision.so
+-- Set non-toolchain portion of runtime path of "/home/wasim/r4s/install/kinova_vision/lib/libkinova_vision.so" to ""
+-- Installing: /home/wasim/r4s/install/kinova_vision/lib/kinova_vision/kinova_vision_node
+-- Set non-toolchain portion of runtime path of "/home/wasim/r4s/install/kinova_vision/lib/kinova_vision/kinova_vision_node" to ""
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/camera_streams.rviz
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/calibration
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_320x240.ini
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/calibration/default_depth_calib_424x240.ini
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_1920x1080.ini
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/calibration/default_depth_calib_480x270.ini
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_640x480.ini
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_1280x720.ini
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/kinova_vision.launch.py
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/environment/library_path.sh
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/environment/library_path.dsv
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/ament_index/resource_index/package_run_dependencies/kinova_vision
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/ament_index/resource_index/parent_prefix_path/kinova_vision
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/environment/ament_prefix_path.sh
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/environment/ament_prefix_path.dsv
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/environment/path.sh
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/environment/path.dsv
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/local_setup.bash
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/local_setup.sh
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/local_setup.zsh
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/local_setup.dsv
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/package.dsv
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/ament_index/resource_index/packages/kinova_vision
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/cmake/ament_cmake_export_libraries-extras.cmake
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/cmake/kinova_visionConfig.cmake
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/cmake/kinova_visionConfig-version.cmake
+-- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/package.xml

@@ -1,0 +1,5 @@
+[ 16%] [32m[1mLinking CXX shared module PyKDL.cpython-312-x86_64-linux-gnu.so[0m
+[100%] Built target PyKDL
+-- Install configuration: ""
+-- Installing: /home/wasim/r4s/install/python_orocos_kdl/lib/python3.12/dist-packages/PyKDL.cpython-312-x86_64-linux-gnu.so
+-- Set non-toolchain portion of runtime path of "/home/wasim/r4s/install/python_orocos_kdl/lib/python3.12/dist-packages/PyKDL.cpython-312-x86_64-linux-gnu.so" to ""

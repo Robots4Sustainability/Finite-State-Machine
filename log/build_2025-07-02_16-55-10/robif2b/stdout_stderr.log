@@ -1,0 +1,37 @@
+[ 31%] Built target 2dof
+[ 31%] Built target ethercat
+[ 50%] Built target kelo
+[ 62%] Built target kinova_gen3
+[ 75%] Built target 2dof_example
+[ 87%] Built target eddie_example
+[100%] Built target kinova_gen3_example
+-- Install configuration: "Debug"
+-- Installing: /home/wasim/r4s/install/robif2b/lib/cmake/robif2b/robif2b-config.cmake
+-- Installing: /home/wasim/r4s/install/robif2b/lib/cmake/robif2b/robif2b-config-version.cmake
+-- Installing: /home/wasim/r4s/install/robif2b/lib/cmake/robif2b/robif2b-targets.cmake
+-- Installing: /home/wasim/r4s/install/robif2b/lib/cmake/robif2b/robif2b-targets-debug.cmake
+-- Up-to-date: /home/wasim/r4s/install/robif2b/include
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/functions
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/functions/kelo_power_board.h
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/functions/eddie_power_board.h
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/functions/kelo_drive.h
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/functions/kinova_gen3.h
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/functions/ethercat.h
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/functions/2dof.h
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/types
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/types/kelo_power_board_api.h
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/types/kelo_drive_api.h
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/types/kelo_power_board.h
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/types/eddie_power_board.h
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/types/eddie_power_board_api.h
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/types/kelo_drive.h
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/types/kinova_gen3.h
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/types/ethercat.h
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/types/control_mode.h
+-- Installing: /home/wasim/r4s/install/robif2b/include/robif2b/types/2dof.h
+-- Installing: /home/wasim/r4s/install/robif2b/lib/lib2dof.so
+-- Installing: /home/wasim/r4s/install/robif2b/lib/libethercat.so
+-- Set non-toolchain portion of runtime path of "/home/wasim/r4s/install/robif2b/lib/libethercat.so" to ""
+-- Installing: /home/wasim/r4s/install/robif2b/lib/libkinova_gen3.so
+-- Installing: /home/wasim/r4s/install/robif2b/lib/libkelo.so

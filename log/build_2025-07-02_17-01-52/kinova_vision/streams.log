@@ -1,0 +1,88 @@
+[0.050s] Invoking command in '/home/wasim/r4s/build/kinova_vision': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/r4s/src/ros2_kortex_vision -DCMAKE_INSTALL_PREFIX=/home/wasim/r4s/install/kinova_vision
+[0.088s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.670s] -- Found camera_calibration_parsers: 5.1.7 (/opt/ros/jazzy/share/camera_calibration_parsers/cmake)
+[0.751s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.774s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.804s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.839s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.998s] -- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[1.001s] -- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[1.167s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.484s] -- Setting yaml-cpp_DIR to: '/opt/ros/jazzy/share/yaml_cpp_vendor/cmake/../../../opt/yaml_cpp_vendor/share/cmake/yaml-cpp'
+[1.496s] -- Found camera_info_manager: 5.1.7 (/opt/ros/jazzy/share/camera_info_manager/cmake)
+[1.635s] -- Found cv_bridge: 4.1.0 (/opt/ros/jazzy/share/cv_bridge/cmake)
+[1.685s] -- Found image_transport: 5.1.6 (/opt/ros/jazzy/share/image_transport/cmake)
+[1.797s] -- Found rclcpp_components: 28.1.9 (/opt/ros/jazzy/share/rclcpp_components/cmake)
+[1.890s] -- Found tf2: 0.36.11 (/opt/ros/jazzy/share/tf2/cmake)
+[1.910s] -- Found tf2_ros: 0.36.11 (/opt/ros/jazzy/share/tf2_ros/cmake)
+[2.188s] -- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1") 
+[2.190s] -- Checking for modules 'gstreamer-1.0;gstreamer-app-1.0'
+[2.253s] --   Found gstreamer-1.0, version 1.24.2
+[2.293s] --   Found gstreamer-app-1.0, version 1.24.2
+[2.683s] -- Configuring done (2.6s)
+[2.738s] -- Generating done (0.0s)
+[2.753s] -- Build files have been written to: /home/wasim/r4s/build/kinova_vision
+[2.775s] Invoked command in '/home/wasim/r4s/build/kinova_vision' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/r4s/src/ros2_kortex_vision -DCMAKE_INSTALL_PREFIX=/home/wasim/r4s/install/kinova_vision
+[2.777s] Invoking command in '/home/wasim/r4s/build/kinova_vision': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/kinova_vision -- -j16 -l16
+[2.921s] [ 25%] [32mBuilding CXX object CMakeFiles/kinova_vision.dir/src/vision.cpp.o[0m
+[8.372s] [01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:[m[K In member function ‘[01m[Kbool ros_kortex_vision::Vision::[01;32m[Kstart[m[K()[m[K’:
+[8.372s] [01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:266:14:[m[K [01;35m[Kwarning: [m[Kenumeration value ‘[01m[KGST_STATE_CHANGE_SUCCESS[m[K’ not handled in switch [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wswitch-Wswitch]8;;[m[K]
+[8.372s]   266 |       switch [01;35m[K([m[Kret)
+[8.372s]       |              [01;35m[K^[m[K
+[8.372s] [01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:266:14:[m[K [01;35m[Kwarning: [m[Kenumeration value ‘[01m[KGST_STATE_CHANGE_NO_PREROLL[m[K’ not handled in switch [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wswitch-Wswitch]8;;[m[K]
+[8.376s] [01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:[m[K In member function ‘[01m[Kbool ros_kortex_vision::Vision::[01;32m[Kpublish[m[K()[m[K’:
+[8.376s] [01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:383:24:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Ksensor_msgs::msg::CameraInfo_<std::allocator<void> >::_height_type[m[K’ {aka ‘[01m[Kunsigned int[m[K’} and ‘[01m[Kint[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+[8.376s]   383 |   if ([01;35m[Kcur_cinfo.height != image_height_[m[K || cur_cinfo.width != image_width_)
+[8.376s]       |       [01;35m[K~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~[m[K
+[8.377s] [01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:383:60:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Ksensor_msgs::msg::CameraInfo_<std::allocator<void> >::_width_type[m[K’ {aka ‘[01m[Kunsigned int[m[K’} and ‘[01m[Kint[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+[8.377s]   383 |   if (cur_cinfo.height != image_height_ || [01;35m[Kcur_cinfo.width != image_width_[m[K)
+[8.377s]       |                                            [01;35m[K~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~[m[K
+[9.454s] [01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:[m[K In member function ‘[01m[Kbool ros_kortex_vision::Vision::[01;32m[Kstart[m[K()[m[K’:
+[9.454s] [01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:276:5:[m[K [01;35m[Kwarning: [m[Kthis statement may fall through [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wimplicit-fallthrough=-Wimplicit-fallthrough=]8;;[m[K]
+[9.455s]   276 |     [01;35m[K}[m[K
+[9.455s]       |     [01;35m[K^[m[K
+[9.455s] [01m[K/home/wasim/r4s/src/ros2_kortex_vision/src/vision.cpp:278:5:[m[K [01;36m[Knote: [m[Khere
+[9.455s]   278 |     [01;36m[Kcase[m[K GST_STATE_CHANGE_SUCCESS:
+[9.455s]       |     [01;36m[K^~~~[m[K
+[10.925s] [ 50%] [32m[1mLinking CXX shared library libkinova_vision.so[0m
+[11.145s] [ 50%] Built target kinova_vision
+[11.168s] [ 75%] [32mBuilding CXX object CMakeFiles/kinova_vision_node.dir/src/vision_node.cpp.o[0m
+[14.933s] [100%] [32m[1mLinking CXX executable kinova_vision_node[0m
+[15.106s] [100%] Built target kinova_vision_node
+[15.120s] Invoked command in '/home/wasim/r4s/build/kinova_vision' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/kinova_vision -- -j16 -l16
+[15.122s] Invoking command in '/home/wasim/r4s/build/kinova_vision': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/kinova_vision
+[15.131s] -- Install configuration: ""
+[15.131s] -- Installing: /home/wasim/r4s/install/kinova_vision/lib/libkinova_vision.so
+[15.133s] -- Set non-toolchain portion of runtime path of "/home/wasim/r4s/install/kinova_vision/lib/libkinova_vision.so" to ""
+[15.133s] -- Installing: /home/wasim/r4s/install/kinova_vision/lib/kinova_vision/kinova_vision_node
+[15.134s] -- Set non-toolchain portion of runtime path of "/home/wasim/r4s/install/kinova_vision/lib/kinova_vision/kinova_vision_node" to ""
+[15.134s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch
+[15.134s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/camera_streams.rviz
+[15.134s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/calibration
+[15.134s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_320x240.ini
+[15.134s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/calibration/default_depth_calib_424x240.ini
+[15.134s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_1920x1080.ini
+[15.135s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/calibration/default_depth_calib_480x270.ini
+[15.135s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_640x480.ini
+[15.135s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_1280x720.ini
+[15.135s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/launch/kinova_vision.launch.py
+[15.135s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/environment/library_path.sh
+[15.135s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/environment/library_path.dsv
+[15.136s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/ament_index/resource_index/package_run_dependencies/kinova_vision
+[15.136s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/ament_index/resource_index/parent_prefix_path/kinova_vision
+[15.136s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/environment/ament_prefix_path.sh
+[15.136s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/environment/ament_prefix_path.dsv
+[15.136s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/environment/path.sh
+[15.137s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/environment/path.dsv
+[15.137s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/local_setup.bash
+[15.137s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/local_setup.sh
+[15.137s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/local_setup.zsh
+[15.137s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/local_setup.dsv
+[15.138s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/package.dsv
+[15.138s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/ament_index/resource_index/packages/kinova_vision
+[15.138s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/cmake/ament_cmake_export_include_directories-extras.cmake
+[15.138s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/cmake/ament_cmake_export_libraries-extras.cmake
+[15.138s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/cmake/kinova_visionConfig.cmake
+[15.139s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/cmake/kinova_visionConfig-version.cmake
+[15.139s] -- Installing: /home/wasim/r4s/install/kinova_vision/share/kinova_vision/package.xml
+[15.141s] Invoked command in '/home/wasim/r4s/build/kinova_vision' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/build/kinova_vision

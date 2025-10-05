@@ -1,0 +1,45 @@
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In function ‘[01m[Kvoid[01;32m[K sigint_handler[m[K(int)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:20:25:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Ksignum[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   20 | void sigint_handler([01;35m[Kint signum[m[K) { keep_running = 0; }
+      |                     [01;35m[K~~~~^~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompile[m[K(events*, const EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:352:70:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Keddie_state[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  352 | void EddieRosInterface::compile(events *eventData, [01;35m[Kconst EddieState *eddie_state[m[K) {
+      |                                                    [01;35m[K~~~~~~~~~~~~~~~~~~^~~~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_gravity_comp[m[K(events*, EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:358:54:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  358 | void EddieRosInterface::compute_gravity_comp([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+      |                                              [01;35m[K~~~~~~~~^~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_cartesian_ctrl[m[K(events*, EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:390:56:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  390 | void EddieRosInterface::compute_cartesian_ctrl([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+      |                                                [01;35m[K~~~~~~~~^~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In function ‘[01m[Kvoid[01;32m[K sigint_handler[m[K(int)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:20:25:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Ksignum[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   20 | void sigint_handler([01;35m[Kint signum[m[K) { keep_running = 0; }
+      |                     [01;35m[K~~~~^~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompile[m[K(events*, const EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:488:70:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Keddie_state[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  488 | void EddieRosInterface::compile(events *eventData, [01;35m[Kconst EddieState *eddie_state[m[K) {
+      |                                                    [01;35m[K~~~~~~~~~~~~~~~~~~^~~~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_gravity_comp[m[K(events*, EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:493:54:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  493 | void EddieRosInterface::compute_gravity_comp([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+      |                                              [01;35m[K~~~~~~~~^~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_cartesian_ctrl[m[K(events*, EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:547:56:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  547 | void EddieRosInterface::compute_cartesian_ctrl([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+      |                                                [01;35m[K~~~~~~~~^~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K At global scope:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:644:6:[m[K [01;31m[Kerror: [m[Kdefault argument given for parameter 2 of ‘[01m[Kvoid EddieRosInterface::[01;32m[Kclose_gripper[m[K(EddieState&, const std::string&)[m[K’
+  644 | void [01;31m[KEddieRosInterface[m[K::close_gripper(EddieState &state, const std::string &arm = "right") {
+      |      [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:7[m[K:
+[01m[K/home/wasim/r4s/src/eddie-ros/include/eddie-ros/interface.hpp:208:10:[m[K [01;36m[Knote: [m[Kprevious specification in ‘[01m[Kvoid EddieRosInterface::[01;32m[Kclose_gripper[m[K(EddieState&, const std::string&)[m[K’ here
+  208 |     void [01;36m[Kclose_gripper[m[K(EddieState &state, const std::string &arm = "rightarm");
+      |          [01;36m[K^~~~~~~~~~~~~[m[K
+gmake[2]: *** [CMakeFiles/eddie_ros_interface.dir/build.make:76: CMakeFiles/eddie_ros_interface.dir/src/interface.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+gmake[1]: *** [CMakeFiles/Makefile2:139: CMakeFiles/eddie_ros_interface.dir/all] Error 2
+gmake[1]: *** Waiting for unfinished jobs....
+gmake: *** [Makefile:146: all] Error 2

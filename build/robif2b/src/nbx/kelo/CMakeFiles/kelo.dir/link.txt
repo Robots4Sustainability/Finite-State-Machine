@@ -1,0 +1,1 @@
+/usr/bin/cc -fPIC -g -shared -Wl,-soname,libkelo.so -o libkelo.so CMakeFiles/kelo.dir/kelo_drive.c.o CMakeFiles/kelo.dir/kelo_power_board.c.o CMakeFiles/kelo.dir/eddie_power_board.c.o  -lm 

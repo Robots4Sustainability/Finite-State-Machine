@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/eddie_pmu_control.dir/eddie_pmu_control.c.o -o eddie_pmu_control  -Wl,-rpath,/home/wasim/r4s/src/install/eddie_pmu_control/lib:/usr/local/lib /usr/local/lib/libsoem.so.1.4.0 -lpthread -lrt 

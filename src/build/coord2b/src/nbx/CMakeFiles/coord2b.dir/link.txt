@@ -1,0 +1,1 @@
+/usr/bin/cc -fPIC -shared -Wl,-soname,libcoord2b.so -o libcoord2b.so CMakeFiles/coord2b.dir/fsm.c.o CMakeFiles/coord2b.dir/event_loop.c.o 

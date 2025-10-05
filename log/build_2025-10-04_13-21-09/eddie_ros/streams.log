@@ -1,0 +1,223 @@
+[0.027s] Invoking command in '/home/wasim/r4s/build/eddie_ros': CMAKE_PREFIX_PATH=/home/wasim/r4s/install/robif2b:/home/wasim/r4s/install/orocos_kdl:/home/wasim/r4s/install/coord2b:/home/wasim/r4s/install/eddie_ros:/home/wasim/r4s/install/eddie-ros:/home/wasim/r4s/install/kinova_vision:/home/wasim/r4s/src/install/kinova_vision:/home/wasim/r4s/src/install/robif2b:/home/wasim/r4s/src/install/orocos_kdl:/home/wasim/r4s/src/install/coord2b:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/robif2b/lib:/home/wasim/r4s/install/orocos_kdl/lib:/home/wasim/r4s/install/coord2b/lib:/home/wasim/r4s/install/eddie_ros/lib:/home/wasim/r4s/install/kinova_vision/lib:/home/wasim/r4s/src/install/kinova_vision/lib:/home/wasim/r4s/src/install/robif2b/lib:/home/wasim/r4s/src/install/orocos_kdl/lib:/home/wasim/r4s/src/install/coord2b/lib:/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig:/home/wasim/r4s/install/python_orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/python_orocos_kdl/lib/pkgconfig:/home/wasim/r4s/src/install/python_orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/src/install/python_orocos_kdl/lib/pkgconfig:/home/wasim/r4s/src/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/src/install/orocos_kdl/lib/pkgconfig /usr/bin/cmake --build /home/wasim/r4s/build/eddie_ros -- -j16 -l16
+[0.084s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.130s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.259s] -- Found rclcpp: 28.1.9 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.311s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.325s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.343s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.365s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.467s] -- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[0.470s] -- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[0.584s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.693s] -- Found rclcpp_action: 28.1.9 (/opt/ros/jazzy/share/rclcpp_action/cmake)
+[0.758s] -- Found rclcpp_components: 28.1.9 (/opt/ros/jazzy/share/rclcpp_components/cmake)
+[0.805s] -- Found geometry_msgs: 5.3.6 (/opt/ros/jazzy/share/geometry_msgs/cmake)
+[0.859s] -- Found kdl_parser: 2.11.0 (/opt/ros/jazzy/share/kdl_parser/cmake)
+[0.861s] -- Found eigen3_cmake_module: 0.3.0 (/opt/ros/jazzy/share/eigen3_cmake_module/cmake)
+[0.863s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[0.866s] -- Found rosidl_default_generators: 1.6.0 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+[0.880s] -- Found rosidl_adapter: 4.6.5 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[1.380s] -- Found ament_cmake_ros: 0.12.0 (/opt/ros/jazzy/share/ament_cmake_ros/cmake)
+[1.880s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.074s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.076s] -- Found python_cmake_module: 0.11.1 (/opt/ros/jazzy/share/python_cmake_module/cmake)
+[2.506s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter Development NumPy Development.Module Development.Embed 
+[2.585s] -- Configuring done (2.5s)
+[2.699s] -- Generating done (0.1s)
+[2.734s] -- Build files have been written to: /home/wasim/r4s/build/eddie_ros
+[2.814s] [  1%] Built target eddie_ros__rosidl_generator_type_description
+[2.836s] [  1%] Built target ament_cmake_python_copy_eddie_ros
+[2.859s] [  3%] Built target eddie_ros__cpp
+[2.865s] [ 17%] Built target eddie_ros__rosidl_generator_c
+[2.915s] [ 24%] Built target eddie_ros__rosidl_typesupport_introspection_c
+[2.915s] [ 31%] Built target eddie_ros__rosidl_typesupport_c
+[2.916s] [ 38%] Built target eddie_ros__rosidl_typesupport_cpp
+[2.916s] [ 45%] Built target eddie_ros__rosidl_typesupport_fastrtps_c
+[2.917s] [ 52%] Built target eddie_ros__rosidl_typesupport_introspection_cpp
+[2.918s] [ 59%] Built target eddie_ros__rosidl_typesupport_fastrtps_cpp
+[2.960s] [ 61%] [32mBuilding CXX object CMakeFiles/mock_servers_only.dir/src/mock_servers_only.cpp.o[0m
+[2.960s] [ 61%] Built target eddie_ros
+[2.976s] [ 64%] Built target pick_place_fsm_mock
+[2.984s] [ 75%] Built target task_planner_node
+[2.984s] [ 75%] Built target eddie_ros_interface_test
+[2.987s] [ 80%] Built target eddie_ros_interface
+[3.008s] [ 82%] Built target eddie_ros__py
+[3.060s] [ 87%] Built target eddie_ros__rosidl_generator_py
+[3.110s] [ 96%] Built target eddie_ros_s__rosidl_typesupport_c
+[3.110s] [ 96%] Built target eddie_ros_s__rosidl_typesupport_fastrtps_c
+[3.111s] [ 98%] Built target eddie_ros_s__rosidl_typesupport_introspection_c
+[3.279s] running egg_info
+[3.328s] writing eddie_ros.egg-info/PKG-INFO
+[3.329s] writing dependency_links to eddie_ros.egg-info/dependency_links.txt
+[3.329s] writing top-level names to eddie_ros.egg-info/top_level.txt
+[3.474s] reading manifest file 'eddie_ros.egg-info/SOURCES.txt'
+[3.475s] writing manifest file 'eddie_ros.egg-info/SOURCES.txt'
+[3.524s] [ 98%] Built target ament_cmake_python_build_eddie_ros_egg
+[8.559s] [100%] [32m[1mLinking CXX executable mock_servers_only[0m
+[8.712s] [100%] Built target mock_servers_only
+[8.728s] Invoked command in '/home/wasim/r4s/build/eddie_ros' returned '0': CMAKE_PREFIX_PATH=/home/wasim/r4s/install/robif2b:/home/wasim/r4s/install/orocos_kdl:/home/wasim/r4s/install/coord2b:/home/wasim/r4s/install/eddie_ros:/home/wasim/r4s/install/eddie-ros:/home/wasim/r4s/install/kinova_vision:/home/wasim/r4s/src/install/kinova_vision:/home/wasim/r4s/src/install/robif2b:/home/wasim/r4s/src/install/orocos_kdl:/home/wasim/r4s/src/install/coord2b:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/robif2b/lib:/home/wasim/r4s/install/orocos_kdl/lib:/home/wasim/r4s/install/coord2b/lib:/home/wasim/r4s/install/eddie_ros/lib:/home/wasim/r4s/install/kinova_vision/lib:/home/wasim/r4s/src/install/kinova_vision/lib:/home/wasim/r4s/src/install/robif2b/lib:/home/wasim/r4s/src/install/orocos_kdl/lib:/home/wasim/r4s/src/install/coord2b/lib:/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig:/home/wasim/r4s/install/python_orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/python_orocos_kdl/lib/pkgconfig:/home/wasim/r4s/src/install/python_orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/src/install/python_orocos_kdl/lib/pkgconfig:/home/wasim/r4s/src/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/src/install/orocos_kdl/lib/pkgconfig /usr/bin/cmake --build /home/wasim/r4s/build/eddie_ros -- -j16 -l16
+[8.729s] Invoking command in '/home/wasim/r4s/build/eddie_ros': CMAKE_PREFIX_PATH=/home/wasim/r4s/install/robif2b:/home/wasim/r4s/install/orocos_kdl:/home/wasim/r4s/install/coord2b:/home/wasim/r4s/install/eddie_ros:/home/wasim/r4s/install/eddie-ros:/home/wasim/r4s/install/kinova_vision:/home/wasim/r4s/src/install/kinova_vision:/home/wasim/r4s/src/install/robif2b:/home/wasim/r4s/src/install/orocos_kdl:/home/wasim/r4s/src/install/coord2b:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/robif2b/lib:/home/wasim/r4s/install/orocos_kdl/lib:/home/wasim/r4s/install/coord2b/lib:/home/wasim/r4s/install/eddie_ros/lib:/home/wasim/r4s/install/kinova_vision/lib:/home/wasim/r4s/src/install/kinova_vision/lib:/home/wasim/r4s/src/install/robif2b/lib:/home/wasim/r4s/src/install/orocos_kdl/lib:/home/wasim/r4s/src/install/coord2b/lib:/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig:/home/wasim/r4s/install/python_orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/python_orocos_kdl/lib/pkgconfig:/home/wasim/r4s/src/install/python_orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/src/install/python_orocos_kdl/lib/pkgconfig:/home/wasim/r4s/src/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/src/install/orocos_kdl/lib/pkgconfig /usr/bin/cmake --install /home/wasim/r4s/build/eddie_ros
+[8.739s] -- Install configuration: ""
+[8.739s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/ament_index/resource_index/rosidl_interfaces/eddie_ros
+[8.739s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/action/ArmControl.json
+[8.739s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/action/GripperControl.json
+[8.740s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros
+[8.740s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/msg
+[8.740s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/msg/rosidl_generator_c__visibility_control.h
+[8.740s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action
+[8.740s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/arm_control.h
+[8.740s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/gripper_control.h
+[8.740s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail
+[8.740s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__type_support.h
+[8.740s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__struct.h
+[8.740s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__type_support.c
+[8.740s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__functions.h
+[8.740s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__struct.h
+[8.740s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__type_support.h
+[8.741s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__description.c
+[8.741s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__functions.h
+[8.741s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__functions.c
+[8.741s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__functions.c
+[8.741s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__description.c
+[8.741s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__type_support.c
+[8.741s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/environment/library_path.sh
+[8.741s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/environment/library_path.dsv
+[8.741s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/libeddie_ros__rosidl_generator_c.so
+[8.741s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros
+[8.741s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/msg
+[8.741s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[8.741s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action
+[8.741s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail
+[8.742s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__rosidl_typesupport_fastrtps_c.h
+[8.742s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__rosidl_typesupport_fastrtps_c.h
+[8.742s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/libeddie_ros__rosidl_typesupport_fastrtps_c.so
+[8.742s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros
+[8.742s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/msg
+[8.742s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/msg/rosidl_generator_cpp__visibility_control.hpp
+[8.742s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action
+[8.742s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/arm_control.hpp
+[8.742s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail
+[8.742s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__struct.hpp
+[8.742s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__builder.hpp
+[8.742s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__builder.hpp
+[8.742s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__type_support.hpp
+[8.743s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__struct.hpp
+[8.743s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__traits.hpp
+[8.743s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__traits.hpp
+[8.743s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__type_support.hpp
+[8.743s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/gripper_control.hpp
+[8.743s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros
+[8.743s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/msg
+[8.743s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[8.743s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action
+[8.743s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail
+[8.743s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__rosidl_typesupport_fastrtps_cpp.hpp
+[8.743s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__rosidl_typesupport_fastrtps_cpp.hpp
+[8.743s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/dds_fastrtps
+[8.743s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/libeddie_ros__rosidl_typesupport_fastrtps_cpp.so
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/msg
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__type_support.c
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__rosidl_typesupport_introspection_c.h
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__rosidl_typesupport_introspection_c.h
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__type_support.c
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/libeddie_ros__rosidl_typesupport_introspection_c.so
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/libeddie_ros__rosidl_typesupport_c.so
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__rosidl_typesupport_introspection_cpp.hpp
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__rosidl_typesupport_introspection_cpp.hpp
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/gripper_control__type_support.cpp
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros/action/detail/arm_control__type_support.cpp
+[8.744s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/libeddie_ros__rosidl_typesupport_introspection_cpp.so
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/libeddie_ros__rosidl_typesupport_cpp.so
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/environment/pythonpath.sh
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/environment/pythonpath.dsv
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros-0.0.1-py3.12.egg-info
+[8.745s] -- Installing: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros-0.0.1-py3.12.egg-info/top_level.txt
+[8.745s] -- Installing: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros-0.0.1-py3.12.egg-info/SOURCES.txt
+[8.745s] -- Installing: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros-0.0.1-py3.12.egg-info/dependency_links.txt
+[8.745s] -- Installing: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros-0.0.1-py3.12.egg-info/PKG-INFO
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/eddie_ros_s__rosidl_typesupport_introspection_c.so
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/eddie_ros_s__rosidl_typesupport_fastrtps_c.so
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/_eddie_ros_s.ep.rosidl_typesupport_introspection_c.c
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/_eddie_ros_s.ep.rosidl_typesupport_c.c
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/eddie_ros_s__rosidl_typesupport_c.so
+[8.745s] -- Installing: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/__init__.py
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/action
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/action/_gripper_control.py
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/action/__init__.py
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/action/_arm_control.py
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/action/_arm_control_s.c
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/action/_gripper_control_s.c
+[8.745s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/_eddie_ros_s.ep.rosidl_typesupport_fastrtps_c.c
+[8.776s] Listing '/home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros'...
+[8.776s] Compiling '/home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/__init__.py'...
+[8.777s] Listing '/home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/action'...
+[8.781s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/eddie_ros_s__rosidl_typesupport_fastrtps_c.so
+[8.782s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/eddie_ros_s__rosidl_typesupport_introspection_c.so
+[8.782s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/python3.12/site-packages/eddie_ros/eddie_ros_s__rosidl_typesupport_c.so
+[8.782s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/libeddie_ros__rosidl_generator_py.so
+[8.782s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/action/ArmControl.idl
+[8.782s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/action/GripperControl.idl
+[8.783s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/action/ArmControl.action
+[8.783s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/action/GripperControl.action
+[8.783s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include
+[8.783s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros
+[8.783s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros.fsm.hpp
+[8.783s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/interface.hpp
+[8.783s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/include/eddie_ros/eddie_ros.fsm
+[8.783s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/urdf
+[8.783s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/urdf/eddie.urdf
+[8.783s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/eddie_ros/eddie_ros_interface
+[8.783s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/eddie_ros/eddie_ros_interface_test
+[8.783s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/eddie_ros/set_interface_permissions.sh
+[8.783s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/eddie_ros/task_planner_node
+[8.783s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/lib/eddie_ros/pick_place_fsm_mock
+[8.783s] -- Installing: /home/wasim/r4s/install/eddie_ros/lib/eddie_ros/mock_servers_only
+[8.785s] -- Set non-toolchain portion of runtime path of "/home/wasim/r4s/install/eddie_ros/lib/eddie_ros/mock_servers_only" to ""
+[8.785s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/ament_index/resource_index/package_run_dependencies/eddie_ros
+[8.785s] -- Installing: /home/wasim/r4s/install/eddie_ros/share/ament_index/resource_index/parent_prefix_path/eddie_ros
+[8.785s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/environment/ament_prefix_path.sh
+[8.785s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/environment/ament_prefix_path.dsv
+[8.785s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/environment/path.sh
+[8.786s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/environment/path.dsv
+[8.786s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/local_setup.bash
+[8.786s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/local_setup.sh
+[8.786s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/local_setup.zsh
+[8.786s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/local_setup.dsv
+[8.786s] -- Installing: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/package.dsv
+[8.786s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/ament_index/resource_index/packages/eddie_ros
+[8.786s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/export_eddie_ros__rosidl_generator_cExport.cmake
+[8.786s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/export_eddie_ros__rosidl_generator_cExport-noconfig.cmake
+[8.786s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/export_eddie_ros__rosidl_typesupport_fastrtps_cExport.cmake
+[8.786s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/export_eddie_ros__rosidl_typesupport_fastrtps_cExport-noconfig.cmake
+[8.786s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/export_eddie_ros__rosidl_generator_cppExport.cmake
+[8.786s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/export_eddie_ros__rosidl_typesupport_fastrtps_cppExport.cmake
+[8.786s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/export_eddie_ros__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/eddie_ros__rosidl_typesupport_introspection_cExport.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/eddie_ros__rosidl_typesupport_introspection_cExport-noconfig.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/eddie_ros__rosidl_typesupport_cExport.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/eddie_ros__rosidl_typesupport_cExport-noconfig.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/eddie_ros__rosidl_typesupport_introspection_cppExport.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/eddie_ros__rosidl_typesupport_introspection_cppExport-noconfig.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/eddie_ros__rosidl_typesupport_cppExport.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/eddie_ros__rosidl_typesupport_cppExport-noconfig.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/export_eddie_ros__rosidl_generator_pyExport.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/export_eddie_ros__rosidl_generator_pyExport-noconfig.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/rosidl_cmake-extras.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/ament_cmake_export_dependencies-extras.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/ament_cmake_export_include_directories-extras.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/ament_cmake_export_libraries-extras.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/ament_cmake_export_targets-extras.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/eddie_rosConfig.cmake
+[8.787s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/cmake/eddie_rosConfig-version.cmake
+[8.788s] -- Up-to-date: /home/wasim/r4s/install/eddie_ros/share/eddie_ros/package.xml
+[8.790s] Invoked command in '/home/wasim/r4s/build/eddie_ros' returned '0': CMAKE_PREFIX_PATH=/home/wasim/r4s/install/robif2b:/home/wasim/r4s/install/orocos_kdl:/home/wasim/r4s/install/coord2b:/home/wasim/r4s/install/eddie_ros:/home/wasim/r4s/install/eddie-ros:/home/wasim/r4s/install/kinova_vision:/home/wasim/r4s/src/install/kinova_vision:/home/wasim/r4s/src/install/robif2b:/home/wasim/r4s/src/install/orocos_kdl:/home/wasim/r4s/src/install/coord2b:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/wasim/r4s/install/robif2b/lib:/home/wasim/r4s/install/orocos_kdl/lib:/home/wasim/r4s/install/coord2b/lib:/home/wasim/r4s/install/eddie_ros/lib:/home/wasim/r4s/install/kinova_vision/lib:/home/wasim/r4s/src/install/kinova_vision/lib:/home/wasim/r4s/src/install/robif2b/lib:/home/wasim/r4s/src/install/orocos_kdl/lib:/home/wasim/r4s/src/install/coord2b/lib:/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib PKG_CONFIG_PATH=/home/wasim/r4s/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/orocos_kdl/lib/pkgconfig:/home/wasim/r4s/install/python_orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/install/python_orocos_kdl/lib/pkgconfig:/home/wasim/r4s/src/install/python_orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/src/install/python_orocos_kdl/lib/pkgconfig:/home/wasim/r4s/src/install/orocos_kdl/lib/x86_64-linux-gnu/pkgconfig:/home/wasim/r4s/src/install/orocos_kdl/lib/pkgconfig /usr/bin/cmake --install /home/wasim/r4s/build/eddie_ros

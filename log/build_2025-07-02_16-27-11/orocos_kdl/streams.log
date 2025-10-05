@@ -1,0 +1,91 @@
+[0.065s] Invoking command in '/home/wasim/r4s/build/orocos_kdl': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/r4s/src/orocos_kinematics_dynamics/orocos_kdl -DCMAKE_INSTALL_PREFIX=/home/wasim/r4s/install/orocos_kdl
+[0.214s] -- The C compiler identification is GNU 13.3.0
+[0.358s] -- The CXX compiler identification is GNU 13.3.0
+[0.405s] -- Detecting C compiler ABI info
+[0.653s] -- Detecting C compiler ABI info - done
+[0.673s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.674s] -- Detecting C compile features
+[0.675s] -- Detecting C compile features - done
+[0.700s] -- Detecting CXX compiler ABI info
+[0.973s] -- Detecting CXX compiler ABI info - done
+[0.995s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.996s] -- Detecting CXX compile features
+[0.997s] -- Detecting CXX compile features - done
+[0.999s] -- Orocos KDL version  (1.5.2)
+[1.040s] -- Setting build type to 'Release'
+[1.067s] -- Performing Test HAVE_STL_CONTAINER_INCOMPLETE_TYPES
+[1.801s] -- Performing Test HAVE_STL_CONTAINER_INCOMPLETE_TYPES - Success
+[1.818s] -- Configuring done (1.7s)
+[1.850s] -- Generating done (0.0s)
+[1.857s] -- Build files have been written to: /home/wasim/r4s/build/orocos_kdl
+[1.866s] Invoked command in '/home/wasim/r4s/build/orocos_kdl' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/r4s/src/orocos_kinematics_dynamics/orocos_kdl -DCMAKE_INSTALL_PREFIX=/home/wasim/r4s/install/orocos_kdl
+[1.869s] Invoking command in '/home/wasim/r4s/build/orocos_kdl': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/build/orocos_kdl -- -j16 -l16
+[2.018s] [  4%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chaindynparam.cpp.o[0m
+[2.018s] [  4%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/articulatedbodyinertia.cpp.o[0m
+[2.023s] [  4%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chain.cpp.o[0m
+[2.023s] [  7%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainfdsolver_recursive_newton_euler.cpp.o[0m
+[2.024s] [  7%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainexternalwrenchestimator.cpp.o[0m
+[2.024s] [  8%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainfksolverpos_recursive.cpp.o[0m
+[2.024s] [ 10%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainfksolvervel_recursive.cpp.o[0m
+[2.025s] [ 11%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainhdsolver_vereshchagin.cpp.o[0m
+[2.025s] [ 13%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainhdsolver_vereshchagin_fext.cpp.o[0m
+[2.025s] [ 14%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainidsolver_vereshchagin.cpp.o[0m
+[2.026s] [ 16%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainiksolverpos_lma.cpp.o[0m
+[2.026s] [ 17%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainiksolverpos_nr.cpp.o[0m
+[2.026s] [ 19%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainiksolverpos_nr_jl.cpp.o[0m
+[2.027s] [ 20%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainiksolvervel_pinv.cpp.o[0m
+[2.027s] [ 22%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainiksolvervel_pinv_givens.cpp.o[0m
+[2.028s] [ 23%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainidsolver_recursive_newton_euler.cpp.o[0m
+[3.993s] [ 25%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainiksolvervel_pinv_nso.cpp.o[0m
+[5.566s] [ 26%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainiksolvervel_wdls.cpp.o[0m
+[5.662s] [ 27%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainjnttojacdotsolver.cpp.o[0m
+[5.696s] [ 29%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/chainjnttojacsolver.cpp.o[0m
+[5.842s] [ 30%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/frameacc.cpp.o[0m
+[5.932s] [ 32%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/frames.cpp.o[0m
+[6.067s] [ 33%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/frames_io.cpp.o[0m
+[6.333s] [ 35%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/framevel.cpp.o[0m
+[6.362s] [ 36%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/jacobian.cpp.o[0m
+[6.982s] [ 38%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/jntarray.cpp.o[0m
+[7.075s] [ 39%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/jntarrayacc.cpp.o[0m
+[7.527s] [ 41%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/jntarrayvel.cpp.o[0m
+[7.552s] [ 42%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/jntspaceinertiamatrix.cpp.o[0m
+[8.869s] [ 44%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/joint.cpp.o[0m
+[9.209s] [ 45%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/kinfam_io.cpp.o[0m
+[9.369s] [ 47%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/path.cpp.o[0m
+[9.718s] [ 48%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/path_circle.cpp.o[0m
+[9.749s] [ 50%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/path_composite.cpp.o[0m
+[9.993s] [ 51%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/path_cyclic_closed.cpp.o[0m
+[10.057s] [ 52%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/path_line.cpp.o[0m
+[10.385s] [ 54%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/path_point.cpp.o[0m
+[10.567s] [ 55%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/path_roundedcomposite.cpp.o[0m
+[10.982s] [ 57%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/rigidbodyinertia.cpp.o[0m
+[11.448s] [ 58%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/rotational_interpolation.cpp.o[0m
+[11.922s] [ 60%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/rotational_interpolation_sa.cpp.o[0m
+[12.582s] [ 61%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/rotationalinertia.cpp.o[0m
+[12.672s] [ 63%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/segment.cpp.o[0m
+[12.781s] [ 64%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/trajectory.cpp.o[0m
+[12.944s] [ 66%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/trajectory_composite.cpp.o[0m
+[13.049s] [ 67%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/trajectory_segment.cpp.o[0m
+[13.112s] [ 69%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/trajectory_stationary.cpp.o[0m
+[13.297s] [ 70%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/tree.cpp.o[0m
+[13.473s] [ 72%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/treefksolverpos_recursive.cpp.o[0m
+[14.138s] [ 73%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/treeidsolver_recursive_newton_euler.cpp.o[0m
+[14.350s] [ 75%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/treeiksolverpos_nr_jl.cpp.o[0m
+[14.509s] [ 76%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/treeiksolverpos_online.cpp.o[0m
+[14.870s] [ 77%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/treeiksolvervel_wdls.cpp.o[0m
+[15.882s] [ 79%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/treejnttojacsolver.cpp.o[0m
+[15.905s] [ 80%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/utilities/error_stack.cxx.o[0m
+[16.019s] [ 82%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/utilities/ldl_solver_eigen.cpp.o[0m
+[16.023s] [ 83%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/utilities/svd_HH.cpp.o[0m
+[16.247s] [ 85%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/utilities/svd_eigen_HH.cpp.o[0m
+[16.506s] [ 86%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/utilities/svd_eigen_Macie.cpp.o[0m
+[16.537s] [ 88%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/utilities/utility.cxx.o[0m
+[16.659s] [ 89%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/utilities/utility_io.cxx.o[0m
+[17.022s] [ 91%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/velocityprofile.cpp.o[0m
+[17.608s] [ 92%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/velocityprofile_dirac.cpp.o[0m
+[17.692s] [ 94%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/velocityprofile_rect.cpp.o[0m
+[17.704s] [ 95%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/velocityprofile_spline.cpp.o[0m
+[17.980s] [ 97%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/velocityprofile_trap.cpp.o[0m
+[18.218s] [ 98%] [32mBuilding CXX object src/CMakeFiles/orocos-kdl.dir/velocityprofile_traphalf.cpp.o[0m
+[21.953s] [100%] [32m[1mLinking CXX shared library liborocos-kdl.so[0m
+[22.061s] [100%] Built target orocos-kdl

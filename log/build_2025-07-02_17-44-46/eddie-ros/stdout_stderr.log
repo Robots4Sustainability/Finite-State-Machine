@@ -1,0 +1,81 @@
+-- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Found rclcpp: 28.1.9 (/opt/ros/jazzy/share/rclcpp/cmake)
+-- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+-- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found kdl_parser: 2.11.0 (/opt/ros/jazzy/share/kdl_parser/cmake)
+-- Found eigen3_cmake_module: 0.3.0 (/opt/ros/jazzy/share/eigen3_cmake_module/cmake)
+-- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+-- Configuring done (0.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/wasim/r4s/build/eddie-ros
+[ 66%] [32mBuilding CXX object CMakeFiles/eddie_ros_interface.dir/src/interface-parameters.cpp.o[0m
+[ 66%] [32mBuilding CXX object CMakeFiles/eddie_ros_interface.dir/src/interface.cpp.o[0m
+[ 66%] [32mBuilding CXX object CMakeFiles/eddie_ros_interface_test.dir/src/interface-test.cpp.o[0m
+[ 66%] [32mBuilding CXX object CMakeFiles/eddie_ros_interface_test.dir/src/interface-parameters.cpp.o[0m
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In function ‘[01m[Kvoid[01;32m[K sigint_handler[m[K(int)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:20:25:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Ksignum[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   20 | void sigint_handler([01;35m[Kint signum[m[K) { keep_running = 0; }
+      |                     [01;35m[K~~~~^~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompile[m[K(events*, const EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:352:70:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Keddie_state[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  352 | void EddieRosInterface::compile(events *eventData, [01;35m[Kconst EddieState *eddie_state[m[K) {
+      |                                                    [01;35m[K~~~~~~~~~~~~~~~~~~^~~~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_gravity_comp[m[K(events*, EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:358:54:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  358 | void EddieRosInterface::compute_gravity_comp([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+      |                                              [01;35m[K~~~~~~~~^~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_cartesian_ctrl[m[K(events*, EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface-test.cpp:390:56:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  390 | void EddieRosInterface::compute_cartesian_ctrl([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+      |                                                [01;35m[K~~~~~~~~^~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In function ‘[01m[Kvoid[01;32m[K sigint_handler[m[K(int)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:20:25:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Ksignum[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   20 | void sigint_handler([01;35m[Kint signum[m[K) { keep_running = 0; }
+      |                     [01;35m[K~~~~^~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompile[m[K(events*, const EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:488:70:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Keddie_state[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  488 | void EddieRosInterface::compile(events *eventData, [01;35m[Kconst EddieState *eddie_state[m[K) {
+      |                                                    [01;35m[K~~~~~~~~~~~~~~~~~~^~~~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_gravity_comp[m[K(events*, EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:493:54:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  493 | void EddieRosInterface::compute_gravity_comp([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+      |                                              [01;35m[K~~~~~~~~^~~~~~~~~[m[K
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:[m[K In member function ‘[01m[Kvoid EddieRosInterface::[01;32m[Kcompute_cartesian_ctrl[m[K(events*, EddieState*)[m[K’:
+[01m[K/home/wasim/r4s/src/eddie-ros/src/interface.cpp:547:56:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KeventData[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  547 | void EddieRosInterface::compute_cartesian_ctrl([01;35m[Kevents *eventData[m[K, EddieState *eddie_state) {
+      |                                                [01;35m[K~~~~~~~~^~~~~~~~~[m[K
+[ 83%] [32m[1mLinking CXX executable eddie_ros_interface_test[0m
+[100%] [32m[1mLinking CXX executable eddie_ros_interface[0m
+[100%] Built target eddie_ros_interface_test
+[100%] Built target eddie_ros_interface
+-- Install configuration: ""
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/include
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/include/eddie-ros
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/include/eddie-ros/eddie_ros.fsm.hpp
+-- Installing: /home/wasim/r4s/install/eddie-ros/include/eddie-ros/interface.hpp
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/include/eddie-ros/eddie_ros.fsm
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/share/eddie-ros/urdf
+-- Installing: /home/wasim/r4s/install/eddie-ros/share/eddie-ros/urdf/eddie.urdf
+-- Installing: /home/wasim/r4s/install/eddie-ros/lib/eddie-ros/eddie_ros_interface
+-- Installing: /home/wasim/r4s/install/eddie-ros/lib/eddie-ros/eddie_ros_interface_test
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/lib/eddie-ros/set_interface_permissions.sh
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/share/ament_index/resource_index/package_run_dependencies/eddie-ros
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/share/ament_index/resource_index/parent_prefix_path/eddie-ros
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/share/eddie-ros/environment/ament_prefix_path.sh
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/share/eddie-ros/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/share/eddie-ros/environment/path.sh
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/share/eddie-ros/environment/path.dsv
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/share/eddie-ros/local_setup.bash
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/share/eddie-ros/local_setup.sh
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/share/eddie-ros/local_setup.zsh
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/share/eddie-ros/local_setup.dsv
+-- Installing: /home/wasim/r4s/install/eddie-ros/share/eddie-ros/package.dsv
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/share/ament_index/resource_index/packages/eddie-ros
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/share/eddie-ros/cmake/eddie-rosConfig.cmake
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/share/eddie-ros/cmake/eddie-rosConfig-version.cmake
+-- Up-to-date: /home/wasim/r4s/install/eddie-ros/share/eddie-ros/package.xml

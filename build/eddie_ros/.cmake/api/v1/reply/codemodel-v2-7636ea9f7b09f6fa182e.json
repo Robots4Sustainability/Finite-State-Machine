@@ -1,0 +1,287 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-cc4231e1d5e2875ae895.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						23
+					]
+				},
+				{
+					"build" : "eddie_ros__py",
+					"jsonFile" : "directory-eddie_ros__py-eda9cd471cf4c8c18170.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/wasim/r4s/build/eddie_ros/eddie_ros__py",
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "eddie_ros",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						23
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_eddie_ros_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_eddie_ros_egg-9040316faf252b17eafa.json",
+					"name" : "ament_cmake_python_build_eddie_ros_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_copy_eddie_ros::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_copy_eddie_ros-7a6bebdec102156107e5.json",
+					"name" : "ament_cmake_python_copy_eddie_ros",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros-969e244b936f0eb1caea.json",
+					"name" : "eddie_ros",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros__cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros__cpp-47df9165170d540dbfe2.json",
+					"name" : "eddie_ros__cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "eddie_ros__py::@acc8350343509f446b34",
+					"jsonFile" : "target-eddie_ros__py-c5b3e236a38c74f7b4c7.json",
+					"name" : "eddie_ros__py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros__rosidl_generator_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros__rosidl_generator_c-6d4a79e1eeba02d7c30d.json",
+					"name" : "eddie_ros__rosidl_generator_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros__rosidl_generator_py::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros__rosidl_generator_py-df1934cb3acd239510bc.json",
+					"name" : "eddie_ros__rosidl_generator_py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros__rosidl_generator_type_description::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros__rosidl_generator_type_description-46c53f16c6cd4f8faf9c.json",
+					"name" : "eddie_ros__rosidl_generator_type_description",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros__rosidl_typesupport_c-35c8cd3815aa1f9b86b1.json",
+					"name" : "eddie_ros__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros__rosidl_typesupport_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros__rosidl_typesupport_cpp-508845e4f1312fb57bd9.json",
+					"name" : "eddie_ros__rosidl_typesupport_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros__rosidl_typesupport_fastrtps_c-df32d02387e0cde5b358.json",
+					"name" : "eddie_ros__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros__rosidl_typesupport_fastrtps_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros__rosidl_typesupport_fastrtps_cpp-3f9a92d98ab8a6b4c3ea.json",
+					"name" : "eddie_ros__rosidl_typesupport_fastrtps_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros__rosidl_typesupport_introspection_c-e797099b773baa8b4fed.json",
+					"name" : "eddie_ros__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros__rosidl_typesupport_introspection_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros__rosidl_typesupport_introspection_cpp-f9a60bf77abfb68076b4.json",
+					"name" : "eddie_ros__rosidl_typesupport_introspection_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros_interface::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros_interface-91462ac06f15e9d58f04.json",
+					"name" : "eddie_ros_interface",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros_interface_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros_interface_test-2ae68d03c79c273f2e14.json",
+					"name" : "eddie_ros_interface_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros_s__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros_s__rosidl_typesupport_c-7f012396296fe65e9504.json",
+					"name" : "eddie_ros_s__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros_s__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros_s__rosidl_typesupport_fastrtps_c-a97450c7aa8e7e19626d.json",
+					"name" : "eddie_ros_s__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros_s__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros_s__rosidl_typesupport_introspection_c-9eb1e3493f7f2ff7b7e6.json",
+					"name" : "eddie_ros_s__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "eddie_ros_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-eddie_ros_uninstall-7c38238cbd8d78e7d509.json",
+					"name" : "eddie_ros_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "mock_servers_only::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-mock_servers_only-f8cb5c441f8b0777c52b.json",
+					"name" : "mock_servers_only",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "pick_place_fsm_mock::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-pick_place_fsm_mock-1f8cbb4ab5fc0e3e82a8.json",
+					"name" : "pick_place_fsm_mock",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "task_planner_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-task_planner_node-332e93f363dc8ac65cc8.json",
+					"name" : "task_planner_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-da0cb9a626b82cb9b877.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/wasim/r4s/build/eddie_ros",
+		"source" : "/home/wasim/r4s/src/eddie-ros"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

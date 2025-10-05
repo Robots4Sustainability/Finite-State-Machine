@@ -1,0 +1,34 @@
+[ 50%] Built target kinova_vision
+[100%] Built target kinova_vision_node
+-- Install configuration: ""
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/lib/libkinova_vision.so
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/lib/kinova_vision/kinova_vision_node
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/camera_streams.rviz
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/calibration
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_320x240.ini
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/calibration/default_depth_calib_424x240.ini
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_1920x1080.ini
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/calibration/default_depth_calib_480x270.ini
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_640x480.ini
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_1280x720.ini
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/kinova_vision.launch.py
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/environment/library_path.sh
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/environment/library_path.dsv
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/ament_index/resource_index/package_run_dependencies/kinova_vision
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/ament_index/resource_index/parent_prefix_path/kinova_vision
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/environment/ament_prefix_path.sh
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/environment/path.sh
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/environment/path.dsv
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/local_setup.bash
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/local_setup.sh
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/local_setup.zsh
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/local_setup.dsv
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/package.dsv
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/ament_index/resource_index/packages/kinova_vision
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/cmake/ament_cmake_export_libraries-extras.cmake
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/cmake/kinova_visionConfig.cmake
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/cmake/kinova_visionConfig-version.cmake
+-- Up-to-date: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/package.xml

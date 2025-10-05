@@ -1,0 +1,57 @@
+[0.014s] Invoking command in '/home/wasim/r4s/src/build/eddie_ros': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/r4s/src/eddie-ros -DCMAKE_INSTALL_PREFIX=/home/wasim/r4s/src/install/eddie_ros
+[0.082s] -- The C compiler identification is GNU 13.3.0
+[0.149s] -- The CXX compiler identification is GNU 13.3.0
+[0.171s] -- Detecting C compiler ABI info
+[0.288s] -- Detecting C compiler ABI info - done
+[0.298s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.298s] -- Detecting C compile features
+[0.299s] -- Detecting C compile features - done
+[0.311s] -- Detecting CXX compiler ABI info
+[0.439s] -- Detecting CXX compiler ABI info - done
+[0.448s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.449s] -- Detecting CXX compile features
+[0.449s] -- Detecting CXX compile features - done
+[0.470s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.638s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[0.785s] -- Found rclcpp: 28.1.9 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.859s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.882s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.909s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.938s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.053s] -- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[1.059s] -- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[1.171s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[1.194s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[1.222s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.334s] -- Found rclcpp_action: 28.1.9 (/opt/ros/jazzy/share/rclcpp_action/cmake)
+[1.397s] -- Found rclcpp_components: 28.1.9 (/opt/ros/jazzy/share/rclcpp_components/cmake)
+[1.452s] -- Found geometry_msgs: 5.3.6 (/opt/ros/jazzy/share/geometry_msgs/cmake)
+[1.509s] -- Found kdl_parser: 2.11.0 (/opt/ros/jazzy/share/kdl_parser/cmake)
+[1.520s] -- Found eigen3_cmake_module: 0.3.0 (/opt/ros/jazzy/share/eigen3_cmake_module/cmake)
+[1.521s] -- Found Eigen3: TRUE (found version "3.4.0") 
+[1.521s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[1.531s] -- Found rosidl_default_generators: 1.6.0 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+[1.558s] -- Found rosidl_adapter: 4.6.5 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[2.187s] -- Found ament_cmake_ros: 0.12.0 (/opt/ros/jazzy/share/ament_cmake_ros/cmake)
+[3.077s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[3.432s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[3.444s] -- Found python_cmake_module: 0.11.1 (/opt/ros/jazzy/share/python_cmake_module/cmake)
+[3.586s] -- Found PythonExtra: /usr/bin/python3  
+[4.046s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter Development NumPy Development.Module Development.Embed 
+[4.116s] -- Configuring done (4.1s)
+[4.123s] [31mCMake Error at CMakeLists.txt:160 (add_executable):
+[4.123s]   Cannot find source file:
+[4.124s] 
+[4.124s]     src/mock_arm_server.cpp
+[4.124s] 
+[4.124s]   Tried extensions .c .C .c++ .cc .cpp .cxx .cu .mpp .m .M .mm .ixx .cppm
+[4.124s]   .ccm .cxxm .c++m .h .hh .h++ .hm .hpp .hxx .in .txx .f .F .for .f77 .f90
+[4.124s]   .f95 .f03 .hip .ispc
+[4.124s] 
+[4.124s] [0m
+[4.128s] [31mCMake Error at CMakeLists.txt:160 (add_executable):
+[4.128s]   No SOURCES given to target: mock_arm_server
+[4.128s] 
+[4.128s] [0m
+[4.128s] [0mCMake Generate step failed.  Build files cannot be regenerated correctly.[0m
+[4.142s] Invoked command in '/home/wasim/r4s/src/build/eddie_ros' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/r4s/src/eddie-ros -DCMAKE_INSTALL_PREFIX=/home/wasim/r4s/src/install/eddie_ros

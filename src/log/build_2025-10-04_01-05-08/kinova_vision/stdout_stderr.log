@@ -1,0 +1,36 @@
+[ 50%] Built target kinova_vision
+[100%] Built target kinova_vision_node
+-- Install configuration: ""
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/lib/libkinova_vision.so
+-- Set non-toolchain portion of runtime path of "/home/wasim/r4s/src/install/kinova_vision/lib/libkinova_vision.so" to ""
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/lib/kinova_vision/kinova_vision_node
+-- Set non-toolchain portion of runtime path of "/home/wasim/r4s/src/install/kinova_vision/lib/kinova_vision/kinova_vision_node" to ""
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/camera_streams.rviz
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/calibration
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_320x240.ini
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/calibration/default_depth_calib_424x240.ini
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_1920x1080.ini
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/calibration/default_depth_calib_480x270.ini
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_640x480.ini
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/calibration/default_color_calib_1280x720.ini
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/launch/kinova_vision.launch.py
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/environment/library_path.sh
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/environment/library_path.dsv
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/ament_index/resource_index/package_run_dependencies/kinova_vision
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/ament_index/resource_index/parent_prefix_path/kinova_vision
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/environment/ament_prefix_path.sh
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/environment/ament_prefix_path.dsv
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/environment/path.sh
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/environment/path.dsv
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/local_setup.bash
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/local_setup.sh
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/local_setup.zsh
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/local_setup.dsv
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/package.dsv
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/ament_index/resource_index/packages/kinova_vision
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/cmake/ament_cmake_export_libraries-extras.cmake
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/cmake/kinova_visionConfig.cmake
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/cmake/kinova_visionConfig-version.cmake
+-- Installing: /home/wasim/r4s/src/install/kinova_vision/share/kinova_vision/package.xml

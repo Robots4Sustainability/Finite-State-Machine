@@ -1,0 +1,32 @@
+[0.020s] Invoking command in '/home/wasim/r4s/src/build/robif2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/src/build/robif2b -- -j16 -l16
+[0.089s] [ 50%] Built target 2dof
+[0.122s] [100%] Built target 2dof_example
+[0.157s] Invoked command in '/home/wasim/r4s/src/build/robif2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/wasim/r4s/src/build/robif2b -- -j16 -l16
+[0.159s] Invoking command in '/home/wasim/r4s/src/build/robif2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/src/build/robif2b
+[0.172s] -- Install configuration: ""
+[0.172s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/lib/cmake/robif2b/robif2b-config.cmake
+[0.172s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/lib/cmake/robif2b/robif2b-config-version.cmake
+[0.172s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/lib/cmake/robif2b/robif2b-targets.cmake
+[0.172s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/lib/cmake/robif2b/robif2b-targets-noconfig.cmake
+[0.173s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include
+[0.173s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b
+[0.173s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/functions
+[0.174s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/functions/kelo_power_board.h
+[0.174s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/functions/eddie_power_board.h
+[0.174s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/functions/kelo_drive.h
+[0.174s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/functions/kinova_gen3.h
+[0.174s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/functions/ethercat.h
+[0.174s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/functions/2dof.h
+[0.174s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/types
+[0.174s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/kelo_power_board_api.h
+[0.175s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/kelo_drive_api.h
+[0.175s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/kelo_power_board.h
+[0.175s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/eddie_power_board.h
+[0.175s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/eddie_power_board_api.h
+[0.175s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/kelo_drive.h
+[0.175s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/kinova_gen3.h
+[0.175s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/ethercat.h
+[0.175s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/control_mode.h
+[0.175s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/include/robif2b/types/2dof.h
+[0.175s] -- Up-to-date: /home/wasim/r4s/src/install/robif2b/lib/lib2dof.so
+[0.189s] Invoked command in '/home/wasim/r4s/src/build/robif2b' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/wasim/r4s/src/build/robif2b

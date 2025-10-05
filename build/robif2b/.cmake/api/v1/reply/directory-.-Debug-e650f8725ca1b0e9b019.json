@@ -1,0 +1,99 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 56,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 71,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 78,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/robif2b",
+			"paths" : 
+			[
+				"/home/wasim/r4s/build/robif2b/robif2b-config.cmake",
+				"/home/wasim/r4s/build/robif2b/robif2b-config-version.cmake"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/robif2b",
+			"exportName" : "robif2b-targets",
+			"exportTargets" : 
+			[
+				{
+					"id" : "2dof::@bdd70701597fc922077d",
+					"index" : 0
+				},
+				{
+					"id" : "ethercat::@9469299b1e796809a99f",
+					"index" : 3
+				},
+				{
+					"id" : "kinova_gen3::@101ed8e2ece37cd658b8",
+					"index" : 5
+				},
+				{
+					"id" : "kelo::@2019ec221ba3f9c43548",
+					"index" : 4
+				}
+			],
+			"paths" : 
+			[
+				"CMakeFiles/Export/68d5715b9db97e88784a14a9d4e62c9e/robif2b-targets.cmake"
+			],
+			"type" : "export"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "include",
+			"paths" : 
+			[
+				{
+					"from" : "include",
+					"to" : "."
+				}
+			],
+			"type" : "directory"
+		}
+	],
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	}
+}

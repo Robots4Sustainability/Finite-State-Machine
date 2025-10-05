@@ -1,0 +1,126 @@
+[0.049s] Invoking command in '/home/wasim/r4s/build/robif2b': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/r4s/src/robif2b -DENABLE_ETHERCAT=ON -DENABLE_KELO=ON -DENABLE_KORTEX=ON -DCMAKE_BUILD_TYPE=Debug -DENABLE_KORTEX_API_AUTO_DOWNLOAD=ON -DCMAKE_INSTALL_PREFIX=/home/wasim/r4s/install/robif2b
+[0.192s] -- The C compiler identification is GNU 13.3.0
+[0.336s] -- The CXX compiler identification is GNU 13.3.0
+[0.381s] -- Detecting C compiler ABI info
+[0.626s] -- Detecting C compiler ABI info - done
+[0.650s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.651s] -- Detecting C compile features
+[0.651s] -- Detecting C compile features - done
+[0.675s] -- Detecting CXX compiler ABI info
+[0.948s] -- Detecting CXX compiler ABI info - done
+[0.973s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.974s] -- Detecting CXX compile features
+[0.975s] -- Detecting CXX compile features - done
+[1.000s] [33mCMake Warning at cmake/FindKortexApi.cmake:5 (message):
+[1.000s]   KortexApi library not found in /home/wasim/r4s/install/robif2b/lib or
+[1.000s]   /home/wasim/r4s/install/robif2b/include/kortex_api/
+[1.000s] Call Stack (most recent call first):
+[1.001s]   src/nbx/kortex/CMakeLists.txt:1 (find_package)
+[1.001s] 
+[1.001s] [0m
+[1.947s] -- [download 0% complete]
+[2.158s] -- [download 1% complete]
+[2.357s] -- [download 2% complete]
+[2.562s] -- [download 3% complete]
+[2.565s] -- [download 4% complete]
+[2.772s] -- [download 5% complete]
+[2.977s] -- [download 7% complete]
+[3.142s] -- [download 9% complete]
+[3.242s] -- [download 10% complete]
+[3.356s] -- [download 11% complete]
+[3.358s] -- [download 12% complete]
+[3.472s] -- [download 13% complete]
+[3.603s] -- [download 14% complete]
+[3.607s] -- [download 15% complete]
+[3.722s] -- [download 16% complete]
+[3.824s] -- [download 17% complete]
+[3.825s] -- [download 18% complete]
+[3.932s] -- [download 19% complete]
+[4.042s] -- [download 20% complete]
+[4.043s] -- [download 21% complete]
+[4.148s] -- [download 22% complete]
+[4.155s] -- [download 23% complete]
+[4.259s] -- [download 24% complete]
+[4.360s] -- [download 25% complete]
+[4.369s] -- [download 26% complete]
+[4.467s] -- [download 27% complete]
+[4.476s] -- [download 28% complete]
+[4.584s] -- [download 29% complete]
+[4.584s] -- [download 30% complete]
+[4.693s] -- [download 31% complete]
+[4.783s] -- [download 32% complete]
+[4.799s] -- [download 33% complete]
+[4.908s] -- [download 34% complete]
+[4.912s] -- [download 35% complete]
+[5.016s] -- [download 36% complete]
+[5.020s] -- [download 37% complete]
+[5.127s] -- [download 38% complete]
+[5.136s] -- [download 39% complete]
+[5.233s] -- [download 40% complete]
+[5.375s] -- [download 42% complete]
+[5.445s] -- [download 43% complete]
+[5.478s] -- [download 44% complete]
+[5.560s] -- [download 45% complete]
+[5.666s] -- [download 46% complete]
+[5.727s] -- [download 47% complete]
+[5.817s] -- [download 48% complete]
+[5.880s] -- [download 49% complete]
+[5.983s] -- [download 50% complete]
+[6.041s] -- [download 51% complete]
+[6.090s] -- [download 52% complete]
+[6.197s] -- [download 53% complete]
+[6.273s] -- [download 54% complete]
+[6.307s] -- [download 55% complete]
+[6.407s] -- [download 56% complete]
+[6.462s] -- [download 57% complete]
+[6.544s] -- [download 58% complete]
+[6.621s] -- [download 59% complete]
+[6.686s] -- [download 60% complete]
+[6.728s] -- [download 61% complete]
+[6.832s] -- [download 62% complete]
+[6.902s] -- [download 63% complete]
+[6.940s] -- [download 64% complete]
+[7.111s] -- [download 66% complete]
+[7.211s] -- [download 67% complete]
+[7.301s] -- [download 68% complete]
+[7.403s] -- [download 69% complete]
+[7.462s] -- [download 70% complete]
+[7.568s] -- [download 71% complete]
+[7.682s] -- [download 72% complete]
+[7.787s] -- [download 73% complete]
+[7.852s] -- [download 74% complete]
+[7.919s] -- [download 75% complete]
+[8.026s] -- [download 76% complete]
+[8.110s] -- [download 77% complete]
+[8.216s] -- [download 78% complete]
+[8.272s] -- [download 79% complete]
+[8.344s] -- [download 80% complete]
+[8.442s] -- [download 81% complete]
+[8.540s] -- [download 82% complete]
+[8.642s] -- [download 83% complete]
+[8.692s] -- [download 84% complete]
+[8.755s] -- [download 85% complete]
+[8.861s] -- [download 86% complete]
+[8.967s] -- [download 87% complete]
+[9.069s] -- [download 88% complete]
+[9.090s] -- [download 89% complete]
+[9.183s] -- [download 90% complete]
+[9.288s] -- [download 91% complete]
+[9.391s] -- [download 92% complete]
+[9.433s] -- [download 93% complete]
+[9.500s] -- [download 94% complete]
+[9.606s] -- [download 95% complete]
+[9.706s] -- [download 96% complete]
+[9.812s] -- [download 97% complete]
+[9.818s] -- [download 98% complete]
+[9.935s] -- [download 99% complete]
+[10.057s] -- [download 100% complete]
+[10.057s] [0mFile downloaded successfully at /home/wasim/r4s/build/robif2b/src/nbx/kortex/kortex_api.zip[0m
+[10.057s] [0mUnzipping to /home/wasim/r4s/build/robif2b/src/nbx/kortex/kortex_api[0m
+[10.908s] [0mCopying library...[0m
+[11.060s] [0mCopying include directory...[0m
+[11.145s] [0mCleaning...[0m
+[11.193s] [0mDone.[0m
+[11.202s] -- Configuring done (11.1s)
+[11.250s] -- Generating done (0.0s)
+[11.261s] -- Build files have been written to: /home/wasim/r4s/build/robif2b

@@ -1,0 +1,6 @@
+source;share/eddie_pmu_control/hook/path.ps1
+source;share/eddie_pmu_control/hook/path.dsv
+source;share/eddie_pmu_control/hook/path.sh
+source;share/eddie_pmu_control/hook/pythonscriptspath.ps1
+source;share/eddie_pmu_control/hook/pythonscriptspath.dsv
+source;share/eddie_pmu_control/hook/pythonscriptspath.sh
