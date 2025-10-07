@@ -1,0 +1,46 @@
+[0.029s] Invoking command in '/home/wasim/FSM/build/pick_place_fsm': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/FSM -DCMAKE_INSTALL_PREFIX=/home/wasim/FSM/install/pick_place_fsm
+[0.275s] -- The C compiler identification is GNU 13.3.0
+[0.498s] -- The CXX compiler identification is GNU 13.3.0
+[0.555s] -- Detecting C compiler ABI info
+[0.832s] -- Detecting C compiler ABI info - done
+[0.860s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.869s] -- Detecting C compile features
+[0.870s] -- Detecting C compile features - done
+[0.900s] -- Detecting CXX compiler ABI info
+[1.210s] -- Detecting CXX compiler ABI info - done
+[1.234s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.235s] -- Detecting CXX compile features
+[1.236s] -- Detecting CXX compile features - done
+[1.265s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[1.713s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[2.108s] -- Found rclcpp: 28.1.9 (/opt/ros/jazzy/share/rclcpp/cmake)
+[2.296s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[2.355s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[2.426s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.501s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.803s] -- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[2.819s] -- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[3.130s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[3.192s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[3.256s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[3.532s] -- Found rclcpp_action: 28.1.9 (/opt/ros/jazzy/share/rclcpp_action/cmake)
+[3.694s] -- Found geometry_msgs: 5.3.6 (/opt/ros/jazzy/share/geometry_msgs/cmake)
+[3.833s] [31mCMake Error at CMakeLists.txt:11 (find_package):
+[3.834s]   By not providing "Findeddie_ros.cmake" in CMAKE_MODULE_PATH this project
+[3.834s]   has asked CMake to find a package configuration file provided by
+[3.834s]   "eddie_ros", but CMake did not find one.
+[3.834s] 
+[3.834s]   Could not find a package configuration file provided by "eddie_ros" with
+[3.834s]   any of the following names:
+[3.835s] 
+[3.835s]     eddie_rosConfig.cmake
+[3.835s]     eddie_ros-config.cmake
+[3.835s] 
+[3.835s]   Add the installation prefix of "eddie_ros" to CMAKE_PREFIX_PATH or set
+[3.835s]   "eddie_ros_DIR" to a directory containing one of the above files.  If
+[3.836s]   "eddie_ros" provides a separate development package or SDK, be sure it has
+[3.836s]   been installed.
+[3.836s] 
+[3.836s] [0m
+[3.836s] -- Configuring incomplete, errors occurred!
+[3.854s] Invoked command in '/home/wasim/FSM/build/pick_place_fsm' returned '1': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/FSM -DCMAKE_INSTALL_PREFIX=/home/wasim/FSM/install/pick_place_fsm
