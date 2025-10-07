@@ -1,0 +1,2 @@
+Invoking command in '/home/wasim/FSM/build/pick_place_fsm': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/FSM -DCMAKE_INSTALL_PREFIX=/home/wasim/FSM/install/pick_place_fsm
+Invoked command in '/home/wasim/FSM/build/pick_place_fsm' returned '1': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/wasim/FSM -DCMAKE_INSTALL_PREFIX=/home/wasim/FSM/install/pick_place_fsm
