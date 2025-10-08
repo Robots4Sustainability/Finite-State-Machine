@@ -1,0 +1,97 @@
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- Found rclcpp: 28.1.12 (/opt/ros/jazzy/share/rclcpp/cmake)
+-- Found rosidl_generator_c: 4.6.6 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+-- Found rosidl_generator_cpp: 4.6.6 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+-- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found rclcpp_action: 28.1.12 (/opt/ros/jazzy/share/rclcpp_action/cmake)
+-- Found geometry_msgs: 5.3.6 (/opt/ros/jazzy/share/geometry_msgs/cmake)
+-- Found eddie_ros: 0.0.1 (/home/ashlesh/r4s/install/eddie_ros/share/eddie_ros/cmake)
+-- Configuring done (1.4s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/ashlesh/r4s/src/Finite-State-Machine/build/pick_place_fsm
+[ 50%] [32mBuilding CXX object CMakeFiles/mock_servers_only.dir/src/mock_servers_only.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/pick_place_fsm_mock.dir/src/pick_place_fsm_mock.cpp.o[0m
+In file included from [01m[K/home/ashlesh/r4s/src/Finite-State-Machine/src/pick_place_fsm_mock.cpp:14[m[K:
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+  187 | [01;35m[K}[m[K;
+      | [01;35m[K^[m[K
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::numFiredEvents[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[01m[K/home/ashlesh/r4s/src/Finite-State-Machine/include/pick_place_fsm.hpp:187:1:[m[K [01;35m[Kwarning: [m[Kmissing initializer for member ‘[01m[Kevent_reaction::firedEventIndices[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmissing-field-initializers-Wmissing-field-initializers]8;;[m[K]
+[ 75%] [32m[1mLinking CXX executable mock_servers_only[0m
+[ 75%] Built target mock_servers_only
+[100%] [32m[1mLinking CXX executable pick_place_fsm_mock[0m
+[100%] Built target pick_place_fsm_mock
+-- Install configuration: ""
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/lib/pick_place_fsm/pick_place_fsm_mock
+-- Set non-toolchain portion of runtime path of "/home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/lib/pick_place_fsm/pick_place_fsm_mock" to ""
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/lib/pick_place_fsm/mock_servers_only
+-- Set non-toolchain portion of runtime path of "/home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/lib/pick_place_fsm/mock_servers_only" to ""
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/include
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/include/pick_place_fsm.hpp
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/share/ament_index/resource_index/package_run_dependencies/pick_place_fsm
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/share/ament_index/resource_index/parent_prefix_path/pick_place_fsm
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/share/pick_place_fsm/environment/ament_prefix_path.sh
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/share/pick_place_fsm/environment/ament_prefix_path.dsv
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/share/pick_place_fsm/environment/path.sh
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/share/pick_place_fsm/environment/path.dsv
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/share/pick_place_fsm/local_setup.bash
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/share/pick_place_fsm/local_setup.sh
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/share/pick_place_fsm/local_setup.zsh
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/share/pick_place_fsm/local_setup.dsv
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/share/pick_place_fsm/package.dsv
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/share/ament_index/resource_index/packages/pick_place_fsm
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/share/pick_place_fsm/cmake/pick_place_fsmConfig.cmake
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/share/pick_place_fsm/cmake/pick_place_fsmConfig-version.cmake
+-- Installing: /home/ashlesh/r4s/src/Finite-State-Machine/install/pick_place_fsm/share/pick_place_fsm/package.xml

@@ -1,0 +1,184 @@
+NAME: pick_place
+
+STATES:
+    S_IDLE,
+    S_MOVE_TO_APPROACH,
+    S_WAIT_APPROACH_RESULT,
+    S_MOVE_TO_GRASP,
+    S_WAIT_GRASP_RESULT,
+    S_CLOSE_GRIPPER,
+    S_WAIT_GRIPPER_RESULT,
+    S_MOVE_TO_PLACE,
+    S_WAIT_PLACE_RESULT,
+    S_OPEN_GRIPPER,
+    S_WAIT_OPEN_RESULT,
+    S_FINISHED,
+    S_ABORT,
+    S_EXIT
+
+START_STATE: @S_IDLE
+CURRENT_STATE: @S_IDLE
+END_STATE: @S_EXIT
+
+EVENTS:
+    E_STEP,
+    E_PERCEPTION_POSE,
+    E_APPROACH_DONE_OK,
+    E_APPROACH_DONE_FAIL,
+    E_GRASP_DONE_OK,
+    E_GRASP_DONE_FAIL,
+    E_GRIPPER_CLOSE_DONE_OK,
+    E_GRIPPER_CLOSE_DONE_FAIL,
+    E_PLACE_DONE_OK,
+    E_PLACE_DONE_FAIL,
+    E_OPEN_DONE_OK,
+    E_OPEN_DONE_FAIL,
+    E_RESET
+
+TRANSITIONS:
+    # Perception trigger
+    T_IDLE_MOVE_TO_APPROACH:
+        FROM: @S_IDLE
+        TO: @S_MOVE_TO_APPROACH
+
+    # Approach
+    T_MOVE_TO_APPROACH_WAIT:
+        FROM: @S_MOVE_TO_APPROACH
+        TO: @S_WAIT_APPROACH_RESULT
+    T_WAIT_APPROACH_MOVE_TO_GRASP:
+        FROM: @S_WAIT_APPROACH_RESULT
+        TO: @S_MOVE_TO_GRASP
+    T_WAIT_APPROACH_ABORT:
+        FROM: @S_WAIT_APPROACH_RESULT
+        TO: @S_ABORT
+
+    # Grasp
+    T_MOVE_TO_GRASP_WAIT:
+        FROM: @S_MOVE_TO_GRASP
+        TO: @S_WAIT_GRASP_RESULT
+    T_WAIT_GRASP_CLOSE_GRIPPER:
+        FROM: @S_WAIT_GRASP_RESULT
+        TO: @S_CLOSE_GRIPPER
+    T_WAIT_GRASP_ABORT:
+        FROM: @S_WAIT_GRASP_RESULT
+        TO: @S_ABORT
+
+    # Close Gripper
+    T_CLOSE_GRIPPER_WAIT:
+        FROM: @S_CLOSE_GRIPPER
+        TO: @S_WAIT_GRIPPER_RESULT
+    T_WAIT_GRIPPER_MOVE_TO_PLACE:
+        FROM: @S_WAIT_GRIPPER_RESULT
+        TO: @S_MOVE_TO_PLACE
+    T_WAIT_GRIPPER_ABORT:
+        FROM: @S_WAIT_GRIPPER_RESULT
+        TO: @S_ABORT
+
+    # Place
+    T_MOVE_TO_PLACE_WAIT:
+        FROM: @S_MOVE_TO_PLACE
+        TO: @S_WAIT_PLACE_RESULT
+    T_WAIT_PLACE_OPEN_GRIPPER:
+        FROM: @S_WAIT_PLACE_RESULT
+        TO: @S_OPEN_GRIPPER
+    T_WAIT_PLACE_ABORT:
+        FROM: @S_WAIT_PLACE_RESULT
+        TO: @S_ABORT
+
+    # Open Gripper
+    T_OPEN_GRIPPER_WAIT:
+        FROM: @S_OPEN_GRIPPER
+        TO: @S_WAIT_OPEN_RESULT
+    T_WAIT_OPEN_FINISHED:
+        FROM: @S_WAIT_OPEN_RESULT
+        TO: @S_FINISHED
+    T_WAIT_OPEN_ABORT:
+        FROM: @S_WAIT_OPEN_RESULT
+        TO: @S_ABORT
+
+    # Reset transitions
+    T_FINISHED_IDLE:
+        FROM: @S_FINISHED
+        TO: @S_IDLE
+    T_ABORT_IDLE:
+        FROM: @S_ABORT
+        TO: @S_IDLE
+
+REACTIONS:
+    # Perception trigger
+    R_E_PERCEPTION_POSE:
+        WHEN: @E_PERCEPTION_POSE
+        DO: @T_IDLE_MOVE_TO_APPROACH
+
+    # Approach goal sent → wait result
+    R_E_STEP1:
+        WHEN: @E_STEP
+        DO: @T_MOVE_TO_APPROACH_WAIT
+
+    # Approach results
+    R_E_APPROACH_DONE_OK:
+        WHEN: @E_APPROACH_DONE_OK
+        DO: @T_WAIT_APPROACH_MOVE_TO_GRASP
+    R_E_APPROACH_DONE_FAIL:
+        WHEN: @E_APPROACH_DONE_FAIL
+        DO: @T_WAIT_APPROACH_ABORT
+
+    # Grasp goal sent → wait result
+    R_E_STEP2:
+        WHEN: @E_STEP
+        DO: @T_MOVE_TO_GRASP_WAIT
+
+    # Grasp results
+    R_E_GRASP_DONE_OK:
+        WHEN: @E_GRASP_DONE_OK
+        DO: @T_WAIT_GRASP_CLOSE_GRIPPER
+    R_E_GRASP_DONE_FAIL:
+        WHEN: @E_GRASP_DONE_FAIL
+        DO: @T_WAIT_GRASP_ABORT
+
+    # Close gripper goal sent → wait result
+    R_E_STEP3:
+        WHEN: @E_STEP
+        DO: @T_CLOSE_GRIPPER_WAIT
+
+    # Gripper close results
+    R_E_GRIPPER_CLOSE_DONE_OK:
+        WHEN: @E_GRIPPER_CLOSE_DONE_OK
+        DO: @T_WAIT_GRIPPER_MOVE_TO_PLACE
+    R_E_GRIPPER_CLOSE_DONE_FAIL:
+        WHEN: @E_GRIPPER_CLOSE_DONE_FAIL
+        DO: @T_WAIT_GRIPPER_ABORT
+
+    # Place goal sent → wait result
+    R_E_STEP4:
+        WHEN: @E_STEP
+        DO: @T_MOVE_TO_PLACE_WAIT
+
+    # Place results
+    R_E_PLACE_DONE_OK:
+        WHEN: @E_PLACE_DONE_OK
+        DO: @T_WAIT_PLACE_OPEN_GRIPPER
+    R_E_PLACE_DONE_FAIL:
+        WHEN: @E_PLACE_DONE_FAIL
+        DO: @T_WAIT_PLACE_ABORT
+
+    # Open gripper goal sent → wait result
+    R_E_STEP5:
+        WHEN: @E_STEP
+        DO: @T_OPEN_GRIPPER_WAIT
+
+    # Open results
+    R_E_OPEN_DONE_OK:
+        WHEN: @E_OPEN_DONE_OK
+        DO: @T_WAIT_OPEN_FINISHED
+    R_E_OPEN_DONE_FAIL:
+        WHEN: @E_OPEN_DONE_FAIL
+        DO: @T_WAIT_OPEN_ABORT
+
+    # Reset transitions
+    R_E_RESET_FINISHED:
+        WHEN: @E_RESET
+        DO: @T_FINISHED_IDLE
+    R_E_RESET_ABORT:
+        WHEN: @E_RESET
+        DO: @T_ABORT_IDLE

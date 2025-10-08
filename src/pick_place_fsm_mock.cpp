@@ -1,6 +1,8 @@
+
 #include <memory>
 #include <string>
 #include <thread>
+#include <chrono>
 
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_action/rclcpp_action.hpp"
@@ -9,261 +11,263 @@
 #include "eddie_ros/action/gripper_control.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
 
-// STATE ENUM
-enum class State
-{
-  IDLE,
-  MOVE_TO_APPROACH,
-  WAIT_APPROACH_RESULT,
-  MOVE_TO_GRASP,
-  WAIT_GRASP_RESULT,
-  CLOSE_GRIPPER,
-  WAIT_GRIPPER_RESULT,
-  MOVE_TO_PLACE,        
-  WAIT_PLACE_RESULT,    
-  OPEN_GRIPPER,         
-  WAIT_OPEN_RESULT, 
-  FINISHED,
-  ABORT
-};
+#include "pick_place_fsm.hpp" 
 
-//  MOCK CLIENT NODE  
-class PickPlaceFSM : public rclcpp::Node
+// Forward declaration
+void fsm_behavior(struct events *eventData, struct PickPlaceNode_user_data *ud);
+
+// ============================================================================
+// PickPlaceNode definition
+// ============================================================================
+class PickPlaceNode : public rclcpp::Node
 {
 public:
   using ArmControl     = eddie_ros::action::ArmControl;
   using GripperControl = eddie_ros::action::GripperControl;
 
-  explicit PickPlaceFSM(const rclcpp::NodeOptions & opt = rclcpp::NodeOptions{})
-  : Node("pick_place_fsm", opt), state_(State::IDLE)
+  explicit PickPlaceNode(const rclcpp::NodeOptions & opt = rclcpp::NodeOptions{})
+  : Node("pick_place_fsm_node", opt)
   {
-    // clients 
+    // ------------------------------------------------------------------------
+    // Action clients
+    // ------------------------------------------------------------------------
     arm_client_     = rclcpp_action::create_client<ArmControl>(this, "right_arm/arm_control");
     gripper_client_ = rclcpp_action::create_client<GripperControl>(this, "right_arm/gripper_control");
 
-    // perception sub 
+    // ------------------------------------------------------------------------
+    // Perception subscriber
+    // ------------------------------------------------------------------------
     perception_sub_ = create_subscription<geometry_msgs::msg::PoseStamped>(
-        "/perception/target_pose", 10,
-        std::bind(&PickPlaceFSM::on_perception, this, std::placeholders::_1));
+      "/perception/target_pose", 10,
+      std::bind(&PickPlaceNode::on_perception, this, std::placeholders::_1));
 
-    // internal timer  
+    // ------------------------------------------------------------------------
+    // FSM timer
+    // ------------------------------------------------------------------------
     timer_ = create_wall_timer(std::chrono::milliseconds(100),
-                               std::bind(&PickPlaceFSM::tick, this));
-    // hard-coded place pose (10 cm sideways same height)
-    place_pose_.position.x    = 0.00;
-    place_pose_.position.y    = 0.0;
-    place_pose_.position.z    = 0.20;
-    place_pose_.orientation.x = 0.0;
-    place_pose_.orientation.y = 0.0;
-    place_pose_.orientation.z = 0.0;
-    place_pose_.orientation.w = 1.0;
+      std::bind(&PickPlaceNode::fsm_loop, this));
 
-    RCLCPP_INFO(get_logger(), "Mock FSM ready – waiting for /perception/target_pose");
+    // ------------------------------------------------------------------------
+    // User data initialization
+    // ------------------------------------------------------------------------
+    user_data_.node           = this;
+    user_data_.arm_client     = arm_client_;
+    user_data_.gripper_client = gripper_client_;
+
+    // Hard-coded place pose
+    user_data_.place_pose.position.x    = 0.60;
+    user_data_.place_pose.position.y    = 0.0;
+    user_data_.place_pose.position.z    = 0.20;
+    user_data_.place_pose.orientation.x = 0.0;
+    user_data_.place_pose.orientation.y = 0.0;
+    user_data_.place_pose.orientation.z = 0.0;
+    user_data_.place_pose.orientation.w = 1.0;
+
+    RCLCPP_INFO(get_logger(), "PickPlace FSM node ready – waiting for /perception/target_pose");
   }
 
 private:
-  // STATE MACHINE DRIVER  
-  void tick()
+  // --------------------------------------------------------------------------
+  // FSM data
+  // --------------------------------------------------------------------------
+  struct user_data
   {
-    switch (state_)
-    {
-      case State::IDLE:
-        /* nothing to do – perception callback will promote us */
-        break;
+    PickPlaceNode * node;
+    geometry_msgs::msg::Pose target_pose;
+    geometry_msgs::msg::Pose place_pose;
+    rclcpp_action::Client<ArmControl>::SharedPtr arm_client;
+    rclcpp_action::Client<GripperControl>::SharedPtr gripper_client;
+  } user_data_;
 
-      case State::MOVE_TO_APPROACH:
-        send_approach_goal();
-        break;
+  // --------------------------------------------------------------------------
+  // ROS interfaces
+  // --------------------------------------------------------------------------
+  rclcpp_action::Client<ArmControl>::SharedPtr arm_client_;
+  rclcpp_action::Client<GripperControl>::SharedPtr gripper_client_;
+  rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr perception_sub_;
+  rclcpp::TimerBase::SharedPtr timer_;
 
-      case State::MOVE_TO_GRASP:
-        send_grasp_goal();
-        break;
-
-      case State::CLOSE_GRIPPER:
-        send_gripper_close();
-        break;
-
-      case State::MOVE_TO_PLACE:
-        send_place_goal();
-        break;
-
-      case State::OPEN_GRIPPER:
-        send_open_gripper_goal();
-        break;
-
-      case State::FINISHED:
-        RCLCPP_INFO(get_logger(), "PICK & PLACE SEQUENCE COMPLETE – back to IDLE");
-        state_ = State::IDLE;
-        break;
-
-      case State::ABORT:
-        RCLCPP_WARN(get_logger(), "SEQUENCE ABORTED – back to IDLE");
-        state_ = State::IDLE;
-        break;
-
-      default: /* waiting states – result callbacks will promote us */
-        break;
-    }
+  // --------------------------------------------------------------------------
+  // FSM main loop
+  // --------------------------------------------------------------------------
+  void fsm_loop()
+  {
+    produce_event(fsm.eventData, E_STEP);
+    fsm_behavior(fsm.eventData, &user_data_);
+    fsm_step_nbx(&fsm);
+    reconfig_event_buffers(fsm.eventData);
   }
 
-  // 1. PERCEPTION TRIGGER  
+  // --------------------------------------------------------------------------
+  // Perception callback
+  // --------------------------------------------------------------------------
   void on_perception(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
   {
-    if (state_ != State::IDLE) return;          // ignore if busy
-    RCLCPP_INFO(get_logger(), "Perception pose received – starting sequence");
-    target_pose_ = msg->pose;
-    state_       = State::MOVE_TO_APPROACH;
+    RCLCPP_INFO(get_logger(), "Perception pose received – starting pick & place");
+    user_data_.target_pose = msg->pose;
+    produce_event(fsm.eventData, E_PERCEPTION_POSE);
   }
 
-  // 2. APPROACH  
-  void send_approach_goal()
+  // --------------------------------------------------------------------------
+  // FSM helpers (actions)
+  // --------------------------------------------------------------------------
+  static void send_approach_goal(user_data *ud, struct events *ev)
   {
-    if (!arm_client_->wait_for_action_server(std::chrono::seconds(2)))
-    {
-      RCLCPP_ERROR(get_logger(), "Arm server not up – abort");
-      state_ = State::ABORT;
+    auto node = ud->node;
+    if (!ud->arm_client->wait_for_action_server(std::chrono::seconds(2))) {
+      RCLCPP_ERROR(node->get_logger(), "Arm server not up – abort");
+      produce_event(ev, E_APPROACH_DONE_FAIL);
       return;
     }
 
-    auto goal          = ArmControl::Goal();
-    goal.target_pose   = target_pose_;
-    goal.target_pose.position.z -= 0.10; // 10 cm away
+    ArmControl::Goal goal;
+    goal.target_pose = ud->target_pose;
+    goal.target_pose.position.z -= 0.10; // approach offset
 
-    auto send_opt = rclcpp_action::Client<ArmControl>::SendGoalOptions();
-    send_opt.result_callback =
-        [this](const rclcpp_action::ClientGoalHandle<ArmControl>::WrappedResult & r)
-        { on_arm_result(r, /*is_approach=*/true); };
+    auto opt = rclcpp_action::Client<ArmControl>::SendGoalOptions();
+    opt.result_callback = [node, ev](const auto &r) {
+      if (r.code == rclcpp_action::ResultCode::SUCCEEDED)
+        produce_event(ev, E_APPROACH_DONE_OK);
+      else
+        produce_event(ev, E_APPROACH_DONE_FAIL);
+    };
 
-    arm_client_->async_send_goal(goal, send_opt);
-    RCLCPP_INFO(get_logger(), "[FSM] Approach goal sent");
-    state_ = State::WAIT_APPROACH_RESULT;
+    ud->arm_client->async_send_goal(goal, opt);
+    RCLCPP_INFO(node->get_logger(), "[FSM] Approach goal sent");
   }
 
-  // 3. GRASP  
-  void send_grasp_goal()
+  static void send_grasp_goal(user_data *ud, struct events *ev)
   {
-    auto goal        = ArmControl::Goal();
-    goal.target_pose = target_pose_; // back to object
+    auto node = ud->node;
+    ArmControl::Goal goal;
+    goal.target_pose = ud->target_pose;
 
-    auto send_opt = rclcpp_action::Client<ArmControl>::SendGoalOptions();
-    send_opt.result_callback =
-        [this](const rclcpp_action::ClientGoalHandle<ArmControl>::WrappedResult & r)
-        { on_arm_result(r, /*is_approach=*/false); };
+    auto opt = rclcpp_action::Client<ArmControl>::SendGoalOptions();
+    opt.result_callback = [node, ev](const auto &r) {
+      if (r.code == rclcpp_action::ResultCode::SUCCEEDED)
+        produce_event(ev, E_GRASP_DONE_OK);
+      else
+        produce_event(ev, E_GRASP_DONE_FAIL);
+    };
 
-    arm_client_->async_send_goal(goal, send_opt);
-    RCLCPP_INFO(get_logger(), "[FSM] Grasp goal sent");
-    state_ = State::WAIT_GRASP_RESULT;
+    ud->arm_client->async_send_goal(goal, opt);
+    RCLCPP_INFO(node->get_logger(), "[FSM] Grasp goal sent");
   }
 
-  // 4. GRIPPER CLOSE  
-  void send_gripper_close()
+  static void send_gripper_close(user_data *ud, struct events *ev)
   {
-    if (!gripper_client_->wait_for_action_server(std::chrono::seconds(2)))
-    {
-      RCLCPP_ERROR(get_logger(), "Gripper server not up – abort");
-      state_ = State::ABORT;
+    auto node = ud->node;
+    if (!ud->gripper_client->wait_for_action_server(std::chrono::seconds(2))) {
+      RCLCPP_ERROR(node->get_logger(), "Gripper server not up – abort");
+      produce_event(ev, E_GRIPPER_CLOSE_DONE_FAIL);
       return;
     }
 
-    auto goal           = GripperControl::Goal();
+    GripperControl::Goal goal;
     goal.target_position = 100.0;
-    goal.velocity        = 20.0;
-    goal.force           = 10.0;
+    goal.velocity = 20.0;
+    goal.force = 10.0;
 
-    auto send_opt = rclcpp_action::Client<GripperControl>::SendGoalOptions();
-    send_opt.result_callback =
-        [this](const rclcpp_action::ClientGoalHandle<GripperControl>::WrappedResult & r)
-        { on_gripper_result(r); };
+    auto opt = rclcpp_action::Client<GripperControl>::SendGoalOptions();
+    opt.result_callback = [node, ev](const auto &r) {
+      if (r.code == rclcpp_action::ResultCode::SUCCEEDED)
+        produce_event(ev, E_GRIPPER_CLOSE_DONE_OK);
+      else
+        produce_event(ev, E_GRIPPER_CLOSE_DONE_FAIL);
+    };
 
-    gripper_client_->async_send_goal(goal, send_opt);
-    RCLCPP_INFO(get_logger(), "[FSM] Gripper close goal sent");
-    state_ = State::WAIT_GRIPPER_RESULT;
+    ud->gripper_client->async_send_goal(goal, opt);
+    RCLCPP_INFO(node->get_logger(), "[FSM] Gripper close goal sent");
   }
 
-  // RESULT CALLBACKS  
-  void on_arm_result(const rclcpp_action::ClientGoalHandle<ArmControl>::WrappedResult & r,
-                     bool is_approach)
+  static void send_place_goal(user_data *ud, struct events *ev)
   {
-    if (r.code != rclcpp_action::ResultCode::SUCCEEDED)
-    {
-      RCLCPP_ERROR(get_logger(), "Arm motion failed – abort");
-      state_ = State::ABORT;
-      return;
-    }
-    RCLCPP_INFO(get_logger(), "Arm motion succeeded");
-    state_ = is_approach ? State::MOVE_TO_GRASP : State::CLOSE_GRIPPER;
+    auto node = ud->node;
+    ArmControl::Goal goal;
+    goal.target_pose = ud->place_pose;
+    goal.target_pose.position.z += 0.10; // above place
+
+    auto opt = rclcpp_action::Client<ArmControl>::SendGoalOptions();
+    opt.result_callback = [node, ev](const auto &r) {
+      if (r.code == rclcpp_action::ResultCode::SUCCEEDED)
+        produce_event(ev, E_PLACE_DONE_OK);
+      else
+        produce_event(ev, E_PLACE_DONE_FAIL);
+    };
+
+    ud->arm_client->async_send_goal(goal, opt);
+    RCLCPP_INFO(node->get_logger(), "[FSM] Place goal sent");
   }
 
-  void on_gripper_result(const rclcpp_action::ClientGoalHandle<GripperControl>::WrappedResult & r)
+  static void send_open_gripper_goal(user_data *ud, struct events *ev)
   {
-    if (r.code != rclcpp_action::ResultCode::SUCCEEDED)
-    {
-      RCLCPP_ERROR(get_logger(), "Gripper motion failed – abort");
-      state_ = State::ABORT;
-      return;
-    }
-    RCLCPP_INFO(get_logger(), "Gripper motion succeeded");
-    state_ = State::MOVE_TO_PLACE;
+    auto node = ud->node;
+    GripperControl::Goal goal;
+    goal.target_position = 0.0;
+    goal.velocity = 20.0;
+    goal.force = 10.0;
+
+    auto opt = rclcpp_action::Client<GripperControl>::SendGoalOptions();
+    opt.result_callback = [node, ev](const auto &r) {
+      if (r.code == rclcpp_action::ResultCode::SUCCEEDED)
+        produce_event(ev, E_OPEN_DONE_OK);
+      else
+        produce_event(ev, E_OPEN_DONE_FAIL);
+    };
+
+    ud->gripper_client->async_send_goal(goal, opt);
+    RCLCPP_INFO(node->get_logger(), "[FSM] Open-gripper goal sent");
   }
 
-  
-  
-  void send_place_goal()
-  {
-      auto goal          = ArmControl::Goal();
-      // goal.target_pose   = place_pose_; 
-      goal.target_pose.position.z -= 0.10; // approach 10 cm down
-      auto opt = rclcpp_action::Client<ArmControl>::SendGoalOptions();
-      opt.result_callback = [this](const auto & r){ on_place_result(r); };
-      arm_client_->async_send_goal(goal, opt);
-      RCLCPP_INFO(get_logger(), "[FSM] Place (approach) goal sent");
-      state_ = State::WAIT_PLACE_RESULT;
+  // --------------------------------------------------------------------------
+  // FSM friend declaration
+  // --------------------------------------------------------------------------
+  friend void fsm_behavior(struct events *eventData, struct user_data *ud);
+};
+
+// ============================================================================
+// FSM behavior implementation
+// ============================================================================
+void fsm_behavior(struct events *eventData, struct PickPlaceNode::user_data *ud)
+{
+  if (consume_event(eventData, E_PERCEPTION_POSE)) {
+    // Transition handled by FSM reaction
   }
 
-  void send_open_gripper_goal()
-  {
-      auto goal                 = GripperControl::Goal();
-      goal.target_position      = 0.0;  // fully open
-      goal.velocity             = 20.0;
-      goal.force                = 10.0;
-      auto opt = rclcpp_action::Client<GripperControl>::SendGoalOptions();
-      opt.result_callback = [this](const auto & r){ on_open_result(r); };
-      gripper_client_->async_send_goal(goal, opt);
-      RCLCPP_INFO(get_logger(), "[FSM] Open-gripper goal sent");
-      state_ = State::WAIT_OPEN_RESULT;
+  if (fsm.currentStateIndex == S_MOVE_TO_APPROACH)
+    PickPlaceNode::send_approach_goal(ud, eventData);
+
+  if (fsm.currentStateIndex == S_MOVE_TO_GRASP)
+    PickPlaceNode::send_grasp_goal(ud, eventData);
+
+  if (fsm.currentStateIndex == S_CLOSE_GRIPPER)
+    PickPlaceNode::send_gripper_close(ud, eventData);
+
+  if (fsm.currentStateIndex == S_MOVE_TO_PLACE)
+    PickPlaceNode::send_place_goal(ud, eventData);
+
+  if (fsm.currentStateIndex == S_OPEN_GRIPPER)
+    PickPlaceNode::send_open_gripper_goal(ud, eventData);
+
+  if (fsm.currentStateIndex == S_FINISHED) {
+    RCLCPP_INFO(ud->node->get_logger(), "Pick & Place sequence complete – back to IDLE");
+    produce_event(eventData, E_RESET);
   }
 
-  void on_place_result(const rclcpp_action::ClientGoalHandle<ArmControl>::WrappedResult & r)
-  {
-      if (r.code != rclcpp_action::ResultCode::SUCCEEDED){ state_ = State::ABORT; return; }
-      RCLCPP_INFO(get_logger(), "Place motion succeeded");
-      state_ = State::OPEN_GRIPPER;
+  if (fsm.currentStateIndex == S_ABORT) {
+    RCLCPP_WARN(ud->node->get_logger(), "Sequence aborted – resetting FSM");
+    produce_event(eventData, E_RESET);
   }
+}
 
-  void on_open_result(const rclcpp_action::ClientGoalHandle<GripperControl>::WrappedResult & r)
-  {
-      if (r.code != rclcpp_action::ResultCode::SUCCEEDED){ state_ = State::ABORT; return; }
-      RCLCPP_INFO(get_logger(), "Gripper open succeeded");
-      state_ = State::FINISHED;
-  }
-
-  // MEMBERS  
-  rclcpp::TimerBase::SharedPtr timer_;
-  rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr perception_sub_;
-  rclcpp_action::Client<ArmControl>::SharedPtr     arm_client_;
-  rclcpp_action::Client<GripperControl>::SharedPtr gripper_client_;
-
-  State state_;
-  geometry_msgs::msg::Pose target_pose_; // last perceived pose
-  geometry_msgs::msg::Pose place_pose_;   
-
-}; 
-
-// MAIN  
+// ============================================================================
+// MAIN
+// ============================================================================
 int main(int argc, char ** argv)
 {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<PickPlaceFSM>());
+  auto node = std::make_shared<PickPlaceNode>();
+  rclcpp::spin(node);
   rclcpp::shutdown();
   return 0;
 }
