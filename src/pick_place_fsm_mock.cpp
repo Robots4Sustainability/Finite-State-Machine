@@ -52,7 +52,7 @@ public:
     // hard-coded place pose (10 cm sideways same height)
     place_pose_.position.x    = 0.00;
     place_pose_.position.y    = 0.0;
-    place_pose_.position.z    = 0.20;
+    place_pose_.position.z    = 0.02;
     place_pose_.orientation.x = 0.0;
     place_pose_.orientation.y = 0.0;
     place_pose_.orientation.z = 0.0;
@@ -127,7 +127,8 @@ private:
 
     auto goal          = ArmControl::Goal();
     goal.target_pose   = target_pose_;
-    goal.target_pose.position.z -= 0.10; // 10 cm away
+    // goal.target_pose.position.z += 0.10; // 10 cm away UPDATE CHECK
+    goal.target_pose.position.y += 0.02;// UPDATE CHECK
 
     auto send_opt = rclcpp_action::Client<ArmControl>::SendGoalOptions();
     send_opt.result_callback =
@@ -191,7 +192,11 @@ private:
       return;
     }
     RCLCPP_INFO(get_logger(), "Arm motion succeeded");
-    state_ = is_approach ? State::MOVE_TO_GRASP : State::CLOSE_GRIPPER;
+    // state_ = is_approach ? State::MOVE_TO_GRASP : State::CLOSE_GRIPPER;   UPDATE CHECK
+    if (is_approach)                // we just finished the *approach* → go grasp
+        state_ = State::MOVE_TO_GRASP;
+    else                            // we just finished the *grasp* → close gripper
+        state_ = State::CLOSE_GRIPPER;
   }
 
   void on_gripper_result(const rclcpp_action::ClientGoalHandle<GripperControl>::WrappedResult & r)
@@ -203,7 +208,13 @@ private:
       return;
     }
     RCLCPP_INFO(get_logger(), "Gripper motion succeeded");
-    state_ = State::MOVE_TO_PLACE;
+    // state_ = State::MOVE_TO_PLACE;
+        // now decide what comes next depending on *why* we closed/opened
+    if (state_ == State::WAIT_GRIPPER_RESULT) {        // we just closed → go to place
+        state_ = State::MOVE_TO_PLACE;
+    } else if (state_ == State::WAIT_OPEN_RESULT) {    // we just opened → finished
+        state_ = State::FINISHED;
+    }
   }
 
   
@@ -211,8 +222,9 @@ private:
   void send_place_goal()
   {
       auto goal          = ArmControl::Goal();
-      // goal.target_pose   = place_pose_; 
-      goal.target_pose.position.z -= 0.10; // approach 10 cm down
+      goal.target_pose   = place_pose_;
+      // goal.target_pose.position.z -= 0.10; // approach 10 cm down
+      goal.target_pose.position.y -= 0.02; // approach 10 cm left
       auto opt = rclcpp_action::Client<ArmControl>::SendGoalOptions();
       opt.result_callback = [this](const auto & r){ on_place_result(r); };
       arm_client_->async_send_goal(goal, opt);
