@@ -45,16 +45,16 @@ In each terminal, source your ROS2 workspace:
 source install/setup.bash
 ```
 
-### 2. Run the Mock Servers (Terminal 1)
+### 2. Run the Servers (Terminal 1)
 
-This will start the mock action servers for the arm and gripper.
+This will start the action servers for the arm and gripper.
 
 ```bash
 ros2 run pick_place_fsm mock_servers_only
 ```
 **OR**
 ```bash
-ros2 run eddie_ros eddie_ros_interface_test --ros-args -p arm_select:=right
+ros2 launch eddie_ros eddie.launch.py ethernet_if:=<eth interface> arm_select:=right
 ```
 
 ### 3. Run the FSM (Terminal 2)
