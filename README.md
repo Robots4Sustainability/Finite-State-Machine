@@ -6,51 +6,69 @@ This ROS2 package implements a Finite-State Machine (FSM) for a pick-and-place t
 
 The core of this package is the `pick_place_fsm_mock` node, which implements the state machine logic. The FSM is illustrated below:
 
-![Pick and Place FSM](images/FSM_pick_and_place.png)
+![Pick and Place FSM](images/FSM_Final.png)
 
 
 
--   **IDLE**: The FSM is waiting for a target pose.
+-   **IDLE**:  Wait for `/perception/target_pose`, once it arrives start the pick-and-place cycle..
 -   **MOVE_TO_APPROACH**: Move the arm to an approach position near the object.
--   **MOVE_TO_GRASP**: Move the arm to the final grasping position.
--   **CLOSE_GRIPPER**: Close the gripper to grasp the object.
+-   **WAIT_APPROACH_RESULT**: Block until arm-server confirms success/failure.
+-   **MOVE_TO_GRASP**: Command arm to descend to the exact object pose, transition to waiting for result.
+-   **WAIT_GRASP_RESULT**: Block until arm-server confirms success/failure.
+-   **CLOSE_GRIPPER**: Send gripper-close goal (pos 100) and transition to waiting for result.
+-   **WAIT_GRIPPER_RESULT** Block until gripper-server confirms success/failure.
 -   **MOVE_TO_PLACE**: Move the arm to a pre-defined placing position.
+-   **WAIT_PLACE_RESULT** Block until arm-server confirms success/failure
 -   **OPEN_GRIPPER**: Open the gripper to release the object.
+-   **WAIT_OPEN_RESULT**: Block until gripper-server confirms success/failure.
 -   **FINISHED**: The sequence is complete, and the FSM returns to IDLE.
--   **ABORT**: The sequence was aborted due to an error.
+-   **ABORT**: The sequence was aborted due to an error. Reset state to `IDLE` and await next perception trigger.
 
 The FSM is triggered by publishing a `geometry_msgs/msg/PoseStamped` message to the `/perception/target_pose` topic.
 
-## ROS Topics and Actions
 
-### Subscriptions
-
--   `/perception/target_pose` (`geometry_msgs/msg/PoseStamped`): The FSM subscribes to this topic to receive the target pose for the pick-and-place task.
-
-### Actions
-
--   `right_arm/arm_control` (`eddie_ros/action/ArmControl`): The action server for controlling the arm movement.
--   `right_arm/gripper_control` (`eddie_ros/action/GripperControl`): The action server for controlling the gripper.
+## mock_servers_only.cpp
+-   Implements a mock ROS 2 node that simulates action servers for robotic arm and gripper control.
+-   Implements rclcpp_action servers to accept, execute, and respond to action goals.
+-   Every goal succeeds automatically after a short feedback loop 
 
 
-## Nodes
+## Running the FSM
 
--   `pick_place_fsm_mock`: The main FSM client node.
--   `mock_servers_only`: A node that provides mock action servers for the arm and gripper, for testing purposes(without robot).
+You will need three terminals.
 
-## Dependencies
+### 1. Source the Workspace
 
-This package depends on the following ROS2 packages:
-
--   `rclcpp`
--   `rclcpp_action`
--   `geometry_msgs`
--   `eddie_ros`: This is a custom package providing action definitions. You must have this package in your workspace and built before building this package.
-
-## Building
-
-To build this package, use `colcon`:
+In each terminal, source your ROS2 workspace:
 
 ```bash
-colcon build
+source install/setup.bash
 ```
+
+### 2. Run the Mock Servers (Terminal 1)
+
+This will start the mock action servers for the arm and gripper.
+
+```bash
+ros2 run pick_place_fsm mock_servers_only
+```
+**OR**
+```bash
+ros2 run eddie_ros eddie_ros_interface_test --ros-args -p arm_select:=right
+```
+
+### 3. Run the FSM (Terminal 2)
+
+This will start the FSM client, which will wait for a perception message.
+
+```bash
+ros2 run pick_place_fsm pick_place_fsm_mock
+```
+
+### 4. Publish Perception Data (Terminal 3)
+
+This will trigger the FSM to start the pick and place sequence. This example publishes a pose at (0.5, 0.5, 0.5).
+
+```bash
+ros2 topic pub --once /perception/target_pose geometry_msgs/msg/PoseStamped \
+  "{header: {frame_id: camera}, pose: {position: {x: 0.0, y: 0.0, z: 0.01}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}"```
