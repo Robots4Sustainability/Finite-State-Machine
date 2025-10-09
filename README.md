@@ -4,7 +4,11 @@ This ROS2 package implements a Finite-State Machine (FSM) for a pick-and-place t
 
 ## Functionality
 
-The core of this package is the `pick_place_fsm_mock` node, which implements the following states:
+The core of this package is the `pick_place_fsm_mock` node, which implements the state machine logic. The FSM is illustrated below:
+
+![Pick and Place FSM](images/FSM_pick_and_place.png)
+
+
 
 -   **IDLE**: The FSM is waiting for a target pose.
 -   **MOVE_TO_APPROACH**: Move the arm to an approach position near the object.
