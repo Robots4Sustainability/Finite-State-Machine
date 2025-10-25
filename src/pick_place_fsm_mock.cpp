@@ -77,6 +77,8 @@ private:
     geometry_msgs::msg::Pose place_pose;
     rclcpp_action::Client<ArmControl>::SharedPtr arm_client;
     rclcpp_action::Client<GripperControl>::SharedPtr gripper_client;
+    int last_state_index = S_IDLE;
+    bool action_dispatched = false;
   } user_data_;
 
   // --------------------------------------------------------------------------
@@ -92,7 +94,11 @@ private:
   // --------------------------------------------------------------------------
   void fsm_loop()
   {
-    produce_event(fsm.eventData, E_STEP);
+    if (fsm.currentStateIndex != user_data_.last_state_index) {
+      user_data_.last_state_index = fsm.currentStateIndex;
+      user_data_.action_dispatched = false;
+    }
+
     fsm_behavior(fsm.eventData, &user_data_);
     fsm_step_nbx(&fsm);
     reconfig_event_buffers(fsm.eventData);
@@ -234,20 +240,30 @@ void fsm_behavior(struct events *eventData, struct PickPlaceNode::user_data *ud)
     // Transition handled by FSM reaction
   }
 
-  if (fsm.currentStateIndex == S_MOVE_TO_APPROACH)
+  if (fsm.currentStateIndex == S_MOVE_TO_APPROACH && !ud->action_dispatched) {
     PickPlaceNode::send_approach_goal(ud, eventData);
+    ud->action_dispatched = true;
+  }
 
-  if (fsm.currentStateIndex == S_MOVE_TO_GRASP)
+  if (fsm.currentStateIndex == S_MOVE_TO_GRASP && !ud->action_dispatched) {
     PickPlaceNode::send_grasp_goal(ud, eventData);
+    ud->action_dispatched = true;
+  }
 
-  if (fsm.currentStateIndex == S_CLOSE_GRIPPER)
+  if (fsm.currentStateIndex == S_CLOSE_GRIPPER && !ud->action_dispatched) {
     PickPlaceNode::send_gripper_close(ud, eventData);
+    ud->action_dispatched = true;
+  }
 
-  if (fsm.currentStateIndex == S_MOVE_TO_PLACE)
+  if (fsm.currentStateIndex == S_MOVE_TO_PLACE && !ud->action_dispatched) {
     PickPlaceNode::send_place_goal(ud, eventData);
+    ud->action_dispatched = true;
+  }
 
-  if (fsm.currentStateIndex == S_OPEN_GRIPPER)
+  if (fsm.currentStateIndex == S_OPEN_GRIPPER && !ud->action_dispatched) {
     PickPlaceNode::send_open_gripper_goal(ud, eventData);
+    ud->action_dispatched = true;
+  }
 
   if (fsm.currentStateIndex == S_FINISHED) {
     RCLCPP_INFO(ud->node->get_logger(), "Pick & Place sequence complete – back to IDLE");
