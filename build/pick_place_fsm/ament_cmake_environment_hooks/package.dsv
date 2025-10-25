@@ -1,4 +1,0 @@
-source;share/pick_place_fsm/local_setup.bash
-source;share/pick_place_fsm/local_setup.dsv
-source;share/pick_place_fsm/local_setup.sh
-source;share/pick_place_fsm/local_setup.zsh
