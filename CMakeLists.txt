@@ -9,12 +9,13 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(eddie_ros REQUIRED)   # ← only for .action headers
+find_package(vision_msgs REQUIRED)
 
 # ----------  CLIENT NODE  ----------
 add_executable(pick_place_fsm_mock
   src/pick_place_fsm_mock.cpp)
 ament_target_dependencies(pick_place_fsm_mock
-  rclcpp rclcpp_action geometry_msgs eddie_ros)
+  rclcpp rclcpp_action geometry_msgs eddie_ros vision_msgs)
 install(TARGETS pick_place_fsm_mock
   DESTINATION lib/${PROJECT_NAME})
 

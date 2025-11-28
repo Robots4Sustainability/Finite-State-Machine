@@ -8,6 +8,8 @@
 #include "eddie_ros/action/arm_control.hpp"
 #include "eddie_ros/action/gripper_control.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
+#include "vision_msgs/msg/detection3_d_array.hpp"
+#include <optional>
 
 // STATE ENUM
 enum class State
@@ -41,10 +43,27 @@ public:
     arm_client_     = rclcpp_action::create_client<ArmControl>(this, "right_arm/arm_control");
     gripper_client_ = rclcpp_action::create_client<GripperControl>(this, "right_arm/gripper_control");
 
-    // perception sub 
-    perception_sub_ = create_subscription<geometry_msgs::msg::PoseStamped>(
-        "/perception/target_pose", 10,
-        std::bind(&PickPlaceFSM::on_perception, this, std::placeholders::_1));
+    // // perception sub 
+    // perception_sub_ = create_subscription<geometry_msgs::msg::PoseStamped>(
+    //     "/perception/target_pose", 10,
+    //     std::bind(&PickPlaceFSM::on_perception, this, std::placeholders::_1));
+
+    // perception_sub_ = create_subscription<vision_msgs::msg::Detection3DArray>(
+    // "/object_pose", 10,
+    // std::bind(&PickPlaceFSM::on_perception, this, std::placeholders::_1));
+
+    // -- subscribe to vision_msgs to pick the best detection
+    detection_sub_ = create_subscription<vision_msgs::msg::Detection3DArray>(
+        "/detections", 10,
+        std::bind(&PickPlaceFSM::on_detection, this, std::placeholders::_1));
+
+    // -- subscribe to the accompanying PoseStamped stream
+    pose_sub_ = create_subscription<geometry_msgs::msg::PoseStamped>(
+        "/object_pose", 10,
+        [this](const geometry_msgs::msg::PoseStamped::SharedPtr msg)
+        {
+          latest_pose_stamp_ = *msg;
+        });
 
     // internal timer  
     timer_ = create_wall_timer(std::chrono::milliseconds(100),
@@ -113,6 +132,78 @@ private:
     RCLCPP_INFO(get_logger(), "Perception pose received – starting sequence");
     target_pose_ = msg->pose;
     state_       = State::MOVE_TO_APPROACH;
+  }
+
+  // // 1-bis. DETECTION TRIGGER (vision_msgs)
+  // void on_detection(const vision_msgs::msg::Detection3DArray::SharedPtr msg)
+  // {
+  //   if (state_ != State::IDLE) return;          // still busy
+  //   if (msg->detections.empty()) return;        // no objects
+
+  //   // ----- find highest-score result in the entire array -----
+  //   double best_score = -1.0;
+  //   const vision_msgs::msg::ObjectHypothesisWithPose * best_result = nullptr;
+
+  //   for (const auto & det : msg->detections)
+  //   {
+  //     for (const auto & res : det.results)
+  //     {
+  //       if (res.hypothesis.score > best_score)
+  //       {
+  //         best_score   = res.hypothesis.score;
+  //         best_result  = &res;
+  //       }
+  //     }
+  //   }
+
+  //   if (!best_result) return;                   // should never happen
+
+  //   RCLCPP_INFO(get_logger(),
+  //               "Detection received – class: '%s'  score: %.3f  – starting sequence",
+  //               best_result->hypothesis.class_id.c_str(), best_score);
+
+  //   target_pose_ = best_result->pose.pose;      // geometry_msgs::Pose
+  //   state_       = State::MOVE_TO_APPROACH;
+  // }
+
+  // ----- pick best detection & use matching PoseStamped -----
+  void on_detection(const vision_msgs::msg::Detection3DArray::SharedPtr msg)
+  {
+    if (state_ != State::IDLE) return;          // arm busy
+    if (msg->detections.empty()) return;
+
+    /* ---- 1.  find highest-score result ---- */
+    double best_score = -1.0;
+    std::optional<builtin_interfaces::msg::Time> best_stamp;
+    std::string best_class;
+
+    for (const auto & det : msg->detections)
+    {
+      for (const auto & res : det.results)
+      {
+        if (res.hypothesis.score > best_score)
+        {
+          best_score  = res.hypothesis.score;
+          best_stamp  = det.header.stamp;
+          best_class  = res.hypothesis.class_id;
+        }
+      }
+    }
+    if (!best_stamp) return;                    // should never happen
+
+    /* ---- 2.  use PoseStamped with identical time stamp ---- */
+    if (rclcpp::Time(latest_pose_stamp_.header.stamp) == rclcpp::Time(*best_stamp))
+    {
+      target_pose_ = latest_pose_stamp_.pose;   // geometry_msgs::Pose
+      state_       = State::MOVE_TO_APPROACH;
+
+      RCLCPP_INFO(get_logger(),
+                  "Best detection  class: '%s'  score: %.3f  → target pose (%.3f, %.3f, %.3f)",
+                  best_class.c_str(), best_score,
+                  target_pose_.position.x,
+                  target_pose_.position.y,
+                  target_pose_.position.z);
+    }
   }
 
   // 2. APPROACH  
@@ -259,9 +350,21 @@ private:
       state_ = State::FINISHED;
   }
 
+
+
+
+
+
+
+
+
+
+  
   // MEMBERS  
   rclcpp::TimerBase::SharedPtr timer_;
-  rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr perception_sub_;
+  rclcpp::Subscription<vision_msgs::msg::Detection3DArray>::SharedPtr detection_sub_;
+  rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr pose_sub_;
+  geometry_msgs::msg::PoseStamped latest_pose_stamp_;
   rclcpp_action::Client<ArmControl>::SharedPtr     arm_client_;
   rclcpp_action::Client<GripperControl>::SharedPtr gripper_client_;
 
