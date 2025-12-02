@@ -53,9 +53,9 @@ public:
     // std::bind(&PickPlaceFSM::on_perception, this, std::placeholders::_1));
 
     // -- subscribe to vision_msgs to pick the best detection
-    detection_sub_ = create_subscription<vision_msgs::msg::Detection3DArray>(
-        "/detections", 10,
-        std::bind(&PickPlaceFSM::on_detection, this, std::placeholders::_1));
+    // detection_sub_ = create_subscription<vision_msgs::msg::Detection3DArray>(
+    //     "/detections", 10,
+    //     std::bind(&PickPlaceFSM::on_detection, this, std::placeholders::_1));
 
     // -- subscribe to the accompanying PoseStamped stream
     pose_sub_ = create_subscription<geometry_msgs::msg::PoseStamped>(
@@ -63,6 +63,7 @@ public:
         [this](const geometry_msgs::msg::PoseStamped::SharedPtr msg)
         {
           latest_pose_stamp_ = *msg;
+          on_perception(msg);
         });
 
     // internal timer  
@@ -77,7 +78,7 @@ public:
     place_pose_.orientation.z = 0.0;
     place_pose_.orientation.w = 1.0;
 
-    RCLCPP_INFO(get_logger(), "Mock FSM ready – waiting for /perception/target_pose");
+    RCLCPP_INFO(get_logger(), "Mock FSM ready – waiting for /perception");
   }
 
 private:
@@ -167,44 +168,44 @@ private:
   // }
 
   // ----- pick best detection & use matching PoseStamped -----
-  void on_detection(const vision_msgs::msg::Detection3DArray::SharedPtr msg)
-  {
-    if (state_ != State::IDLE) return;          // arm busy
-    if (msg->detections.empty()) return;
+  // void on_detection(const vision_msgs::msg::Detection3DArray::SharedPtr msg)
+  // {
+  //   if (state_ != State::IDLE) return;          // arm busy
+  //   if (msg->detections.empty()) return;
 
-    /* ---- 1.  find highest-score result ---- */
-    double best_score = -1.0;
-    std::optional<builtin_interfaces::msg::Time> best_stamp;
-    std::string best_class;
+  //   /* ---- 1.  find highest-score result ---- */
+  //   double best_score = -1.0;
+  //   std::optional<builtin_interfaces::msg::Time> best_stamp;
+  //   std::string best_class;
 
-    for (const auto & det : msg->detections)
-    {
-      for (const auto & res : det.results)
-      {
-        if (res.hypothesis.score > best_score)
-        {
-          best_score  = res.hypothesis.score;
-          best_stamp  = det.header.stamp;
-          best_class  = res.hypothesis.class_id;
-        }
-      }
-    }
-    if (!best_stamp) return;                    // should never happen
+  //   for (const auto & det : msg->detections)
+  //   {
+  //     for (const auto & res : det.results)
+  //     {
+  //       if (res.hypothesis.score > best_score)
+  //       {
+  //         best_score  = res.hypothesis.score;
+  //         best_stamp  = det.header.stamp;
+  //         best_class  = res.hypothesis.class_id;
+  //       }
+  //     }
+  //   }
+  //   if (!best_stamp) return;                    // should never happen
 
-    /* ---- 2.  use PoseStamped with identical time stamp ---- */
-    if (rclcpp::Time(latest_pose_stamp_.header.stamp) == rclcpp::Time(*best_stamp))
-    {
-      target_pose_ = latest_pose_stamp_.pose;   // geometry_msgs::Pose
-      state_       = State::MOVE_TO_APPROACH;
+  //   /* ---- 2.  use PoseStamped with identical time stamp ---- */
+  //   if (rclcpp::Time(latest_pose_stamp_.header.stamp) == rclcpp::Time(*best_stamp))
+  //   {
+  //     target_pose_ = latest_pose_stamp_.pose;   // geometry_msgs::Pose
+  //     state_       = State::MOVE_TO_APPROACH;
 
-      RCLCPP_INFO(get_logger(),
-                  "Best detection  class: '%s'  score: %.3f  → target pose (%.3f, %.3f, %.3f)",
-                  best_class.c_str(), best_score,
-                  target_pose_.position.x,
-                  target_pose_.position.y,
-                  target_pose_.position.z);
-    }
-  }
+  //     RCLCPP_INFO(get_logger(),
+  //                 "Best detection  class: '%s'  score: %.3f  → target pose (%.3f, %.3f, %.3f)",
+  //                 best_class.c_str(), best_score,
+  //                 target_pose_.position.x,
+  //                 target_pose_.position.y,
+  //                 target_pose_.position.z);
+  //   }
+  // }
 
   // 2. APPROACH  
   void send_approach_goal()
@@ -362,7 +363,7 @@ private:
   
   // MEMBERS  
   rclcpp::TimerBase::SharedPtr timer_;
-  rclcpp::Subscription<vision_msgs::msg::Detection3DArray>::SharedPtr detection_sub_;
+  // rclcpp::Subscription<vision_msgs::msg::Detection3DArray>::SharedPtr detection_sub_;
   rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr pose_sub_;
   geometry_msgs::msg::PoseStamped latest_pose_stamp_;
   rclcpp_action::Client<ArmControl>::SharedPtr     arm_client_;
