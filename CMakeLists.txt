@@ -71,6 +71,14 @@ install(TARGETS mock_servers_only
 )
 
 # --------------------------------------------------
+# Install Python script
+# --------------------------------------------------
+install(PROGRAMS
+  src/pick_place.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+# --------------------------------------------------
 # Install headers
 # --------------------------------------------------
 install(
