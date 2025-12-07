@@ -48,12 +48,16 @@ class PickPlaceNode(Node):
             'last_state': StateID.S_IDLE,
             'place_pose': self.get_default_place_pose(),
             'home_pose': self.get_home_pose(),
-            'detection_start_time': 0.0
+            'detection_start_time': 0.0,
+            'phase': 'PICK' # 'PICK' or 'PLACE'
         }
 
         # Parameters
         self.declare_parameter("ee_frame", "eddie_right_arm_robotiq_85_grasp_link")
+        self.declare_parameter("base_frame", "eddie_base_link")
+        
         self.ee_frame = self.get_parameter("ee_frame").get_parameter_value().string_value
+        self.base_frame = self.get_parameter("base_frame").get_parameter_value().string_value
 
         # ROS Interfaces
         self.cb_group = ReentrantCallbackGroup()
@@ -88,23 +92,23 @@ class PickPlaceNode(Node):
         self.get_logger().info("Pick & Place Python Node Ready. Waiting for 'Enter' to start...")
 
     def get_default_place_pose(self):
-        # NOTE: These are RELATIVE moves because the action server applies them relative to current EE
+        # RELATIVE move for place
         p = Pose()
-        # Move down 10cm (example)
         p.position.x = 0.0
-        p.position.y = 0.0
-        p.position.z = -0.1
+        p.position.y = -0.2
+        p.position.z = 0.0
         # p.orientation.w = 1.0
         return p
 
     def get_home_pose(self):
-        # NOTE: RELATIVE move
+        # ABSOLUTE move for home (Requires Action Server to support Absolute, 
+        # but previously we saw it handled Relative for some goals. 
+        # Let's assume HOME is absolute or we send a specific relative move to go up).
+        # For safety in this specific context, let's make it a relative "Move Up" 
         p = Pose()
-        # Move UP 20cm
         p.position.x = 0.0
         p.position.y = 0.0
-        p.position.z = 0.2
-        # p.orientation.w = 1.0
+        p.position.z = 0.2 # Move up 20cm
         return p
 
     def publish_marker(self, pose_stamped):
@@ -126,31 +130,24 @@ class PickPlaceNode(Node):
         # Only process pose if we are in the DETECTION state
         if self.fsm.current_state_index == StateID.S_POSE_DETECTION:
             try:
-                # Publish marker for visualization
                 self.publish_marker(msg)
-
+                
                 # Transform object pose from Camera Frame to End-Effector Frame
-                # The Action Server expects a pose relative to the EE frame (which it applies as a relative move)
-                # So we want T_EE_Object. else the gripper will crash the table or object
-                
-                
                 target_pose_in_ee = self.tf_buffer.transform(msg, self.ee_frame, timeout=rclpy.duration.Duration(seconds=1.0))
                 
-                # !!Override orientation to Identity to prevent gripper flipping.!!
-                # We only want to translate to the object's position relative to the gripper.
+                # Zero orientation for translation-only relative move
                 target_pose_in_ee.pose.orientation.x = 0.0
                 target_pose_in_ee.pose.orientation.y = 0.0
                 target_pose_in_ee.pose.orientation.z = 0.0
                 target_pose_in_ee.pose.orientation.w = 1.0
 
-                self.get_logger().info(f"Object detected. Relative pose: x={target_pose_in_ee.pose.position.x:.2f}, y={target_pose_in_ee.pose.position.y:.2f}, z={target_pose_in_ee.pose.position.z:.2f}")
+                self.get_logger().info(f"Object detected. Relative pose: {target_pose_in_ee.pose.position}")
                 
                 self.user_data['target_pose'] = target_pose_in_ee.pose
                 produce_event(self.fsm.event_data, EventID.E_PERCEPTION_POSE)
                 
             except Exception as e:
                 self.get_logger().warn(f"TF Transform failed: {e}")
-                # Wait for next message
 
     def input_loop(self):
         while rclpy.ok():
@@ -165,18 +162,24 @@ class PickPlaceNode(Node):
                 time.sleep(0.5)
 
     def fsm_loop(self):
+        # Check for exit
+        if self.fsm.current_state_index == StateID.S_EXIT:
+            self.get_logger().info("FSM Reached EXIT state. Shutting down.")
+            # This raise will be caught by the loop or main to exit cleanly
+            raise SystemExit
+
         # Log state changes
         if self.fsm.current_state_index != self.user_data['last_state']:
             state_name = StateID(self.fsm.current_state_index).name
             self.get_logger().info(f"State Changed to: {state_name}")
             
-            # Reset flags
             self.user_data['last_state'] = self.fsm.current_state_index
             self.user_data['action_dispatched'] = False
             
             # State Entry Logic
             if self.fsm.current_state_index == StateID.S_POSE_DETECTION:
                 self.user_data['detection_start_time'] = self.get_clock().now().nanoseconds / 1e9
+                self.user_data['phase'] = 'PICK' # Reset phase
                 self.get_logger().info("Listening for /object_pose for 6 seconds...")
 
         self.fsm_behavior()
@@ -193,7 +196,6 @@ class PickPlaceNode(Node):
 
         # --- S_POSE_DETECTION ---
         elif current_state == StateID.S_POSE_DETECTION:
-            # Check for timeout
             current_time = self.get_clock().now().nanoseconds / 1e9
             if (current_time - ud['detection_start_time']) > 6.0:
                 self.get_logger().warn("Perception Timeout (6s exceeded). Aborting...")
@@ -202,23 +204,32 @@ class PickPlaceNode(Node):
         # --- S_MOVE_ARM ---
         elif current_state == StateID.S_MOVE_ARM:
             if not ud['action_dispatched']:
-                if ud['target_pose'] is None:
-                    self.get_logger().error("No target pose available!")
+                target = None
+                success_event = None
+                
+                if ud['phase'] == 'PICK':
+                    target = ud['target_pose']
+                    success_event = EventID.E_PICK_MOVE_DONE
+                    self.get_logger().info("Moving to PICK pose...")
+                elif ud['phase'] == 'PLACE':
+                    target = ud['place_pose']
+                    success_event = EventID.E_PLACE_MOVE_DONE
+                    self.get_logger().info("Moving to PLACE pose...")
+                
+                if target is None:
+                    self.get_logger().error("Target pose is None!")
                     produce_event(self.fsm.event_data, EventID.E_ARM_MOVE_DONE_FAIL)
                 else:
-                    self.send_arm_goal(ud['target_pose'], EventID.E_ARM_MOVE_DONE_OK, EventID.E_ARM_MOVE_DONE_FAIL)
+                    self.send_arm_goal(target, success_event, EventID.E_ARM_MOVE_DONE_FAIL)
+                
                 ud['action_dispatched'] = True
 
         # --- S_CLOSE_GRIPPER ---
         elif current_state == StateID.S_CLOSE_GRIPPER:
             if not ud['action_dispatched']:
+                # Prepare for next phase
+                ud['phase'] = 'PLACE'
                 self.send_gripper_command(100.0, EventID.E_GRIPPER_CLOSE_DONE_OK, EventID.E_GRIPPER_CLOSE_DONE_FAIL)
-                ud['action_dispatched'] = True
-
-        # --- S_MOVE_TO_PLACE ---
-        elif current_state == StateID.S_MOVE_TO_PLACE:
-            if not ud['action_dispatched']:
-                self.send_arm_goal(ud['place_pose'], EventID.E_PLACE_DONE_OK, EventID.E_PLACE_DONE_FAIL)
                 ud['action_dispatched'] = True
 
         # --- S_OPEN_GRIPPER ---
@@ -237,20 +248,13 @@ class PickPlaceNode(Node):
         # --- S_MOVE_ARM_HOME ---
         elif current_state == StateID.S_MOVE_ARM_HOME:
             if not ud['action_dispatched']:
+                self.get_logger().info("Moving Home...")
                 self.send_arm_goal(ud['home_pose'], EventID.E_HOME_DONE_OK, EventID.E_HOME_DONE_FAIL)
-                ud['action_dispatched'] = True
-
-        # --- S_ABORT ---
-        elif current_state == StateID.S_ABORT:
-            if not ud['action_dispatched']:
-                self.get_logger().error("FSM Aborted. Resetting...")
-                produce_event(self.fsm.event_data, EventID.E_RESET)
                 ud['action_dispatched'] = True
 
     # --- Action Helpers ---
 
     def send_arm_goal(self, pose, success_evt, fail_evt):
-        self.get_logger().info(f"Sending Arm Goal... {success_evt.name}")
         if not self.arm_client.wait_for_server(timeout_sec=1.0):
             self.get_logger().error("Arm action server not available!")
             produce_event(self.fsm.event_data, fail_evt)
@@ -290,7 +294,6 @@ class PickPlaceNode(Node):
             produce_event(self.fsm.event_data, fail_evt)
 
     def send_gripper_command(self, position, success_evt, fail_evt):
-        self.get_logger().info(f"Sending Gripper Command: {position}")
         if not self.gripper_client.wait_for_server(timeout_sec=1.0):
             self.get_logger().error("Gripper action server not available!")
             produce_event(self.fsm.event_data, fail_evt)
@@ -333,19 +336,17 @@ class PickPlaceNode(Node):
 
 
 def main(args=None):
-
-
     rclpy.init(args=args)
     node = PickPlaceNode()
-    
-
     try:
         rclpy.spin(node)
+    except SystemExit:
+        node.get_logger().info("Node stopped via SystemExit")
     except KeyboardInterrupt:
-        pass
+        node.get_logger().info("Node stopped via KeyboardInterrupt")
     finally:
         node.destroy_node()
         rclpy.shutdown()
 
 if __name__ == '__main__':
-    main()        
+    main()

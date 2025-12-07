@@ -29,17 +29,15 @@ class EventID(IntEnum):
     E_GO_HOME = auto()
     E_PERCEPTION_POSE = auto()
     E_PERCEPTION_FAIL = auto()
-    E_ARM_MOVE_DONE_OK = auto()
+    E_PICK_MOVE_DONE = auto()
+    E_PLACE_MOVE_DONE = auto()
     E_ARM_MOVE_DONE_FAIL = auto()
     E_GRIPPER_CLOSE_DONE_OK = auto()
     E_GRIPPER_CLOSE_DONE_FAIL = auto()
-    E_PLACE_DONE_OK = auto()
-    E_PLACE_DONE_FAIL = auto()
     E_OPEN_DONE_OK = auto()
     E_OPEN_DONE_FAIL = auto()
     E_HOME_DONE_OK = auto()
     E_HOME_DONE_FAIL = auto()
-    E_RESET = auto()
 
 
 # State IDs
@@ -48,11 +46,9 @@ class StateID(IntEnum):
     S_POSE_DETECTION = auto()
     S_MOVE_ARM = auto()
     S_CLOSE_GRIPPER = auto()
-    S_MOVE_TO_PLACE = auto()
     S_OPEN_GRIPPER = auto()
     S_FINISHED = auto()
     S_MOVE_ARM_HOME = auto()
-    S_ABORT = auto()
     S_EXIT = auto()
 
 
@@ -63,18 +59,16 @@ class TransitionID(IntEnum):
     T_POSE_DETECTION_MOVE_ARM = auto()
     T_POSE_DETECTION_IDLE = auto()
     T_MOVE_ARM_CLOSE_GRIPPER = auto()
-    T_MOVE_ARM_ABORT = auto()
-    T_CLOSE_GRIPPER_MOVE_TO_PLACE = auto()
-    T_CLOSE_GRIPPER_ABORT = auto()
-    T_PLACE_OPEN_GRIPPER = auto()
-    T_PLACE_ABORT = auto()
+    T_MOVE_ARM_OPEN_GRIPPER = auto()
+    T_MOVE_ARM_EXIT = auto()
+    T_CLOSE_GRIPPER_MOVE_ARM = auto()
+    T_CLOSE_GRIPPER_EXIT = auto()
     T_OPEN_FINISHED = auto()
-    T_OPEN_ABORT = auto()
+    T_OPEN_EXIT = auto()
     T_FINISHED_HOME = auto()
     T_FINISHED_IDLE = auto()
     T_HOME_IDLE = auto()
-    T_HOME_ABORT = auto()
-    T_ABORT_IDLE = auto()
+    T_HOME_EXIT = auto()
 
 
 # Event reaction IDs
@@ -83,19 +77,16 @@ class ReactionID(IntEnum):
     R_E_GO_HOME_IDLE = auto()
     R_E_PERCEPTION_POSE = auto()
     R_E_PERCEPTION_FAIL = auto()
-    R_E_ARM_MOVE_DONE_OK = auto()
+    R_E_PICK_MOVE_DONE = auto()
+    R_E_PLACE_MOVE_DONE = auto()
     R_E_ARM_MOVE_DONE_FAIL = auto()
     R_E_GRIPPER_CLOSE_DONE_OK = auto()
     R_E_GRIPPER_CLOSE_DONE_FAIL = auto()
-    R_E_PLACE_DONE_OK = auto()
-    R_E_PLACE_DONE_FAIL = auto()
     R_E_OPEN_DONE_OK = auto()
     R_E_OPEN_DONE_FAIL = auto()
     R_E_GO_HOME_FINISHED = auto()
-    R_E_RESET_FINISHED = auto()
     R_E_HOME_DONE_OK = auto()
     R_E_HOME_DONE_FAIL = auto()
-    R_E_RESET_ABORT = auto()
 
 
 def create_fsm() -> FSMData:
@@ -107,18 +98,16 @@ def create_fsm() -> FSMData:
         TransitionID.T_POSE_DETECTION_MOVE_ARM: Transition(StateID.S_POSE_DETECTION, StateID.S_MOVE_ARM),
         TransitionID.T_POSE_DETECTION_IDLE: Transition(StateID.S_POSE_DETECTION, StateID.S_IDLE),
         TransitionID.T_MOVE_ARM_CLOSE_GRIPPER: Transition(StateID.S_MOVE_ARM, StateID.S_CLOSE_GRIPPER),
-        TransitionID.T_MOVE_ARM_ABORT: Transition(StateID.S_MOVE_ARM, StateID.S_ABORT),
-        TransitionID.T_CLOSE_GRIPPER_MOVE_TO_PLACE: Transition(StateID.S_CLOSE_GRIPPER, StateID.S_MOVE_TO_PLACE),
-        TransitionID.T_CLOSE_GRIPPER_ABORT: Transition(StateID.S_CLOSE_GRIPPER, StateID.S_ABORT),
-        TransitionID.T_PLACE_OPEN_GRIPPER: Transition(StateID.S_MOVE_TO_PLACE, StateID.S_OPEN_GRIPPER),
-        TransitionID.T_PLACE_ABORT: Transition(StateID.S_MOVE_TO_PLACE, StateID.S_ABORT),
+        TransitionID.T_MOVE_ARM_OPEN_GRIPPER: Transition(StateID.S_MOVE_ARM, StateID.S_OPEN_GRIPPER),
+        TransitionID.T_MOVE_ARM_EXIT: Transition(StateID.S_MOVE_ARM, StateID.S_EXIT),
+        TransitionID.T_CLOSE_GRIPPER_MOVE_ARM: Transition(StateID.S_CLOSE_GRIPPER, StateID.S_MOVE_ARM),
+        TransitionID.T_CLOSE_GRIPPER_EXIT: Transition(StateID.S_CLOSE_GRIPPER, StateID.S_EXIT),
         TransitionID.T_OPEN_FINISHED: Transition(StateID.S_OPEN_GRIPPER, StateID.S_FINISHED),
-        TransitionID.T_OPEN_ABORT: Transition(StateID.S_OPEN_GRIPPER, StateID.S_ABORT),
+        TransitionID.T_OPEN_EXIT: Transition(StateID.S_OPEN_GRIPPER, StateID.S_EXIT),
         TransitionID.T_FINISHED_HOME: Transition(StateID.S_FINISHED, StateID.S_MOVE_ARM_HOME),
         TransitionID.T_FINISHED_IDLE: Transition(StateID.S_FINISHED, StateID.S_IDLE),
         TransitionID.T_HOME_IDLE: Transition(StateID.S_MOVE_ARM_HOME, StateID.S_IDLE),
-        TransitionID.T_HOME_ABORT: Transition(StateID.S_MOVE_ARM_HOME, StateID.S_ABORT),
-        TransitionID.T_ABORT_IDLE: Transition(StateID.S_ABORT, StateID.S_IDLE),
+        TransitionID.T_HOME_EXIT: Transition(StateID.S_MOVE_ARM_HOME, StateID.S_EXIT),
     }
     trans_list = [trans_dict[i] for i in TransitionID]
 
@@ -144,34 +133,29 @@ def create_fsm() -> FSMData:
             transition_index=TransitionID.T_POSE_DETECTION_IDLE,
             fired_event_indices=[],
         ),
-        ReactionID.R_E_ARM_MOVE_DONE_OK: EventReaction(
-            condition_event_index=EventID.E_ARM_MOVE_DONE_OK,
+        ReactionID.R_E_PICK_MOVE_DONE: EventReaction(
+            condition_event_index=EventID.E_PICK_MOVE_DONE,
             transition_index=TransitionID.T_MOVE_ARM_CLOSE_GRIPPER,
+            fired_event_indices=[],
+        ),
+        ReactionID.R_E_PLACE_MOVE_DONE: EventReaction(
+            condition_event_index=EventID.E_PLACE_MOVE_DONE,
+            transition_index=TransitionID.T_MOVE_ARM_OPEN_GRIPPER,
             fired_event_indices=[],
         ),
         ReactionID.R_E_ARM_MOVE_DONE_FAIL: EventReaction(
             condition_event_index=EventID.E_ARM_MOVE_DONE_FAIL,
-            transition_index=TransitionID.T_MOVE_ARM_ABORT,
+            transition_index=TransitionID.T_MOVE_ARM_EXIT,
             fired_event_indices=[],
         ),
         ReactionID.R_E_GRIPPER_CLOSE_DONE_OK: EventReaction(
             condition_event_index=EventID.E_GRIPPER_CLOSE_DONE_OK,
-            transition_index=TransitionID.T_CLOSE_GRIPPER_MOVE_TO_PLACE,
+            transition_index=TransitionID.T_CLOSE_GRIPPER_MOVE_ARM,
             fired_event_indices=[],
         ),
         ReactionID.R_E_GRIPPER_CLOSE_DONE_FAIL: EventReaction(
             condition_event_index=EventID.E_GRIPPER_CLOSE_DONE_FAIL,
-            transition_index=TransitionID.T_CLOSE_GRIPPER_ABORT,
-            fired_event_indices=[],
-        ),
-        ReactionID.R_E_PLACE_DONE_OK: EventReaction(
-            condition_event_index=EventID.E_PLACE_DONE_OK,
-            transition_index=TransitionID.T_PLACE_OPEN_GRIPPER,
-            fired_event_indices=[],
-        ),
-        ReactionID.R_E_PLACE_DONE_FAIL: EventReaction(
-            condition_event_index=EventID.E_PLACE_DONE_FAIL,
-            transition_index=TransitionID.T_PLACE_ABORT,
+            transition_index=TransitionID.T_CLOSE_GRIPPER_EXIT,
             fired_event_indices=[],
         ),
         ReactionID.R_E_OPEN_DONE_OK: EventReaction(
@@ -181,17 +165,12 @@ def create_fsm() -> FSMData:
         ),
         ReactionID.R_E_OPEN_DONE_FAIL: EventReaction(
             condition_event_index=EventID.E_OPEN_DONE_FAIL,
-            transition_index=TransitionID.T_OPEN_ABORT,
+            transition_index=TransitionID.T_OPEN_EXIT,
             fired_event_indices=[],
         ),
         ReactionID.R_E_GO_HOME_FINISHED: EventReaction(
             condition_event_index=EventID.E_GO_HOME,
             transition_index=TransitionID.T_FINISHED_HOME,
-            fired_event_indices=[],
-        ),
-        ReactionID.R_E_RESET_FINISHED: EventReaction(
-            condition_event_index=EventID.E_RESET,
-            transition_index=TransitionID.T_FINISHED_IDLE,
             fired_event_indices=[],
         ),
         ReactionID.R_E_HOME_DONE_OK: EventReaction(
@@ -201,12 +180,7 @@ def create_fsm() -> FSMData:
         ),
         ReactionID.R_E_HOME_DONE_FAIL: EventReaction(
             condition_event_index=EventID.E_HOME_DONE_FAIL,
-            transition_index=TransitionID.T_HOME_ABORT,
-            fired_event_indices=[],
-        ),
-        ReactionID.R_E_RESET_ABORT: EventReaction(
-            condition_event_index=EventID.E_RESET,
-            transition_index=TransitionID.T_ABORT_IDLE,
+            transition_index=TransitionID.T_HOME_EXIT,
             fired_event_indices=[],
         ),
     }
