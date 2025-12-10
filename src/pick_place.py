@@ -9,12 +9,15 @@ from rclpy.callback_groups import ReentrantCallbackGroup
 from geometry_msgs.msg import PoseStamped, Pose
 from eddie_ros.action import ArmControl, GripperControl
 from visualization_msgs.msg import Marker
+from rclpy.time import Time
+from rclpy.duration import Duration
+from tf2_geometry_msgs import do_transform_pose
 
-# TF2 Imports
+
 from tf2_ros import Buffer, TransformListener
-import tf2_geometry_msgs # Imports the hook for buffer.transform
+import tf2_geometry_msgs 
 
-# FSM Imports
+
 from coord_dsl.fsm import fsm_step
 from coord_dsl.event_loop import reconfig_event_buffers, produce_event, consume_event
 import os
@@ -22,9 +25,9 @@ import os
 # Helper to find the FSM module if it's not installed in the environment
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Check for source layout (src/pick_place.py -> ../include)
+
 include_dir_src = os.path.join(current_dir, '../include')
-# Check for install layout (lib/pkg_name/pick_place.py -> ../../include)
+
 include_dir_install = os.path.join(current_dir, '../../include')
 
 if os.path.exists(os.path.join(include_dir_src, 'fsm_pick_place.py')):
@@ -35,6 +38,9 @@ elif os.path.exists(os.path.join(include_dir_install, 'fsm_pick_place.py')):
         sys.path.append(include_dir_install)
 
 from fsm_pick_place import create_fsm, StateID, EventID
+
+
+
 
 class PickPlaceNode(Node):
     def __init__(self):
@@ -52,8 +58,8 @@ class PickPlaceNode(Node):
             'phase': 'PICK' # 'PICK' or 'PLACE'
         }
 
-        # Parameters
-        self.declare_parameter("ee_frame", "eddie_right_arm_robotiq_85_grasp_link")
+        # Parameters , change ee to grasp link when gripper is available
+        self.declare_parameter("ee_frame", "eddie_right_arm_end_effector_link")
         self.declare_parameter("base_frame", "eddie_base_link")
         
         self.ee_frame = self.get_parameter("ee_frame").get_parameter_value().string_value
@@ -80,7 +86,7 @@ class PickPlaceNode(Node):
         )
         
         # Publishers
-        self.marker_pub = self.create_publisher(Marker, '/visualization_marker', 10)
+        self.marker_pub = self.create_publisher(Marker, '/picking_object', 10)
 
         # Timers
         self.fsm_timer = self.create_timer(0.1, self.fsm_loop, callback_group=self.cb_group) # 10Hz
@@ -95,20 +101,16 @@ class PickPlaceNode(Node):
         # RELATIVE move for place
         p = Pose()
         p.position.x = 0.0
-        p.position.y = -0.2
-        p.position.z = 0.0
+        p.position.y = 0.0
+        p.position.z = -0.2
         # p.orientation.w = 1.0
         return p
 
     def get_home_pose(self):
-        # ABSOLUTE move for home (Requires Action Server to support Absolute, 
-        # but previously we saw it handled Relative for some goals. 
-        # Let's assume HOME is absolute or we send a specific relative move to go up).
-        # For safety in this specific context, let's make it a relative "Move Up" 
         p = Pose()
         p.position.x = 0.0
         p.position.y = 0.0
-        p.position.z = 0.2 # Move up 20cm
+        p.position.z = -0.2
         return p
 
     def publish_marker(self, pose_stamped):
@@ -126,28 +128,45 @@ class PickPlaceNode(Node):
         marker.pose = pose_stamped.pose
         self.marker_pub.publish(marker)
 
-    def perception_callback(self, msg):
-        # Only process pose if we are in the DETECTION state
-        if self.fsm.current_state_index == StateID.S_POSE_DETECTION:
-            try:
-                self.publish_marker(msg)
-                
-                # Transform object pose from Camera Frame to End-Effector Frame
-                target_pose_in_ee = self.tf_buffer.transform(msg, self.ee_frame, timeout=rclpy.duration.Duration(seconds=1.0))
-                
-                # Zero orientation for translation-only relative move
-                target_pose_in_ee.pose.orientation.x = 0.0
-                target_pose_in_ee.pose.orientation.y = 0.0
-                target_pose_in_ee.pose.orientation.z = 0.0
-                target_pose_in_ee.pose.orientation.w = 1.0
 
-                self.get_logger().info(f"Object detected. Relative pose: {target_pose_in_ee.pose.position}")
-                
-                self.user_data['target_pose'] = target_pose_in_ee.pose
-                produce_event(self.fsm.event_data, EventID.E_PERCEPTION_POSE)
-                
-            except Exception as e:
-                self.get_logger().warn(f"TF Transform failed: {e}")
+    def perception_callback(self, msg: PoseStamped):
+        # Only process pose if we are in the DETECTION state
+        if self.fsm.current_state_index != StateID.S_POSE_DETECTION:
+            return
+
+        # Visualize the raw detection
+        self.publish_marker(msg)
+        self.get_logger().info(f"Got the pose from perception (camera frame): {msg}")
+
+        # ----- CONFIGURABLE OFFSETS -----
+        # Negative offsets on y and z as tf transform from camera link to ee is not working
+        # Extrapolation into future error
+
+        offset_y = -0.06   
+        offset_z = -0.08
+        # --------------------------------
+
+        new_pose = Pose()
+
+        new_pose.position.x = msg.pose.position.x
+        new_pose.position.y = msg.pose.position.y + offset_y
+        new_pose.position.z = msg.pose.position.z + offset_z
+
+        new_pose.orientation.x = 0.0
+        new_pose.orientation.y = 0.0
+        new_pose.orientation.z = 0.0
+        new_pose.orientation.w = 1.0
+
+        self.get_logger().info(
+            f"Using modified target pose (with offsets): "
+            f"x={new_pose.position.x:.3f}, "
+            f"y={new_pose.position.y:.3f}, "
+            f"z={new_pose.position.z:.3f}"
+        )
+
+        # Store the pose for the FSM and trigger event
+        self.user_data['target_pose'] = new_pose
+        produce_event(self.fsm.event_data, EventID.E_PERCEPTION_POSE)
 
     def input_loop(self):
         while rclpy.ok():
@@ -197,7 +216,8 @@ class PickPlaceNode(Node):
         # --- S_POSE_DETECTION ---
         elif current_state == StateID.S_POSE_DETECTION:
             current_time = self.get_clock().now().nanoseconds / 1e9
-            if (current_time - ud['detection_start_time']) > 6.0:
+            # this is will wait for 6 seconds until pose is recvd from /object_pose topic
+            if (current_time - ud['detection_start_time']) > 6.0: 
                 self.get_logger().warn("Perception Timeout (6s exceeded). Aborting...")
                 produce_event(self.fsm.event_data, EventID.E_PERCEPTION_FAIL)
 
