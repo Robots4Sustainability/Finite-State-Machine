@@ -303,11 +303,11 @@ class PickPlaceNode(Node):
     def arm_result(self, future, success_evt, fail_evt):
         try:
             result = future.result().result
-            if result.success:
+            if result.result_code == ArmControl.Result.SUCCESS:
                 self.get_logger().info("Arm Action Succeeded")
                 produce_event(self.fsm.event_data, success_evt)
             else:
-                self.get_logger().error(f"Arm Action Failed: {result.message}")
+                self.get_logger().error(f"Arm Action Failed: {result.result_message}")
                 produce_event(self.fsm.event_data, fail_evt)
         except Exception as e:
             self.get_logger().error(f"Arm Result Exception: {e}")
@@ -344,11 +344,11 @@ class PickPlaceNode(Node):
     def gripper_result(self, future, success_evt, fail_evt):
         try:
             result = future.result().result
-            if result.success:
+            if result.result_code == GripperControl.Result.SUCCESS:
                 self.get_logger().info("Gripper Action Succeeded")
                 produce_event(self.fsm.event_data, success_evt)
             else:
-                self.get_logger().error(f"Gripper Action Failed: {result.message}")
+                self.get_logger().error(f"Gripper Action Failed: {result.result_message}")
                 produce_event(self.fsm.event_data, fail_evt)
         except Exception as e:
             self.get_logger().error(f"Gripper Result Exception: {e}")
