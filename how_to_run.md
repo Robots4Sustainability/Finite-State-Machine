@@ -20,32 +20,31 @@ In each terminal, source your ROS2 workspace:
 source install/setup.bash
 ```
 
-### 2. Run the Mock Servers (Terminal 1)
-
-This will start the mock action servers for the arm and gripper.
-
-```bash
-ros2 run pick_place_fsm mock_servers_only
-```
-**OR**
-```bash
-ros2 run eddie_ros eddie_ros_interface_test --ros-args -p arm_select:=right
-```
+### 2. Run the Eddie interface (Terminal 1)
+  #### 2.1 **Ensure Zenoh is running.**
+  #### 2.2 refer docs from [Eddie-Ros Docs](https://github.com/Robots4Sustainability/eddie-ros/tree/dev)
 
 ### 3. Run the FSM (Terminal 2)
 
 This will start the FSM client, which will wait for a perception message.
 
 ```bash
-ros2 run pick_place_fsm pick_place_fsm_mock
+ros2 run pick_place_fsm pick_place
 ```
+Press Enter key once perception node is ready.
 
 ### 4. Publish Perception Data (Terminal 3)
 
-This will trigger the FSM to start the pick and place sequence. This example publishes a pose at (0.5, 0.5, 0.5).
+This will trigger the FSM to start the pick and place sequence..
+
+
+Refer docs from [Perception docs](https://github.com/Robots4Sustainability/perception)
+
+**OR**
 
 ```bash
-ros2 topic pub --once /perception/target_pose geometry_msgs/msg/PoseStamped   "{header: {frame_id: camera}, pose: {position: {x: 0.5, y: 0.0, z: 0.2}, orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}}}"
+ros2 topic pub --once /object_pose geometry_msgs/msg/PoseStamped "{header: {frame_id: 'eddie_right_arm_camera_link'}, pose: {position: {x: 0.0, y: 0.0, z: 0.4}, orientation: {}}}"
+
 ```
 
 #### You should then be able to see state transitions from FSM terminal
