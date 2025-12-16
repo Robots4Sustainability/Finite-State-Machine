@@ -92,9 +92,9 @@ class PickPlaceNode(Node):
 
     def get_home_pose(self):
         p = Pose()
-        p.position.x = 0.0
+        p.position.x = -0.4
         p.position.y = 0.0
-        p.position.z = -0.2
+        p.position.z = 0.0
         return p
 
     def perception_callback(self, msg: PoseStamped):

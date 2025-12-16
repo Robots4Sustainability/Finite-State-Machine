@@ -53,28 +53,11 @@ install(TARGETS pick_place_fsm_mock
 )
 
 # --------------------------------------------------
-# Executable: Mock servers only
-# --------------------------------------------------
-add_executable(mock_servers_only
-  src/mock_servers_only.cpp
-)
-
-ament_target_dependencies(mock_servers_only
-  rclcpp
-  rclcpp_action
-  eddie_ros
-  coord2b
-)
-
-install(TARGETS mock_servers_only
-  RUNTIME DESTINATION lib/${PROJECT_NAME}
-)
-
-# --------------------------------------------------
 # Install Python script
 # --------------------------------------------------
 install(PROGRAMS
   src/pick_place.py
+  include/fsm_pick_place.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
