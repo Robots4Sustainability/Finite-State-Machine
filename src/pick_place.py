@@ -105,18 +105,18 @@ class PickPlaceNode(Node):
         # Visualize the raw detection
         self.get_logger().info(f"Got the pose from perception (camera frame): {msg}")
 
-        # ----- CONFIGURABLE OFFSETS -----
-        # Negative offsets on y and z as tf transform from camera link to ee is not working
-        # Extrapolation into future error
-
-        offset_y = -0.06   
-        offset_z = -0.08
-        # --------------------------------
+        transform = self.tf_buffer.lookup_transform(
+            "eddie_right_arm_robotiq_85_grasp_link",
+            f"eddie_right_arm_{msg.header.frame_id}",
+            rclpy.time.Time()
+        )
+        transformed_pose = do_transform_pose(msg.pose, transform)
+        self.get_logger().info(f"Transformed pose to end-effector frame: {transformed_pose}")
 
         new_pose = Pose()
-        new_pose.position.x = msg.pose.position.x
-        new_pose.position.y = msg.pose.position.y + offset_y
-        new_pose.position.z = msg.pose.position.z + offset_z
+        new_pose.position.x = transformed_pose.position.x
+        new_pose.position.y = transformed_pose.position.y
+        new_pose.position.z = transformed_pose.position.z
 
         new_pose.orientation.x = 0.0
         new_pose.orientation.y = 0.0
