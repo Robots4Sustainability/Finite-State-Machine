@@ -58,6 +58,7 @@ install(TARGETS pick_place_fsm_mock
 install(PROGRAMS
   src/pick_place.py
   include/fsm_pick_place.py
+  src/error_handling.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
