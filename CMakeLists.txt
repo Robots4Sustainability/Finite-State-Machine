@@ -75,6 +75,7 @@ install(TARGETS mock_servers_only
 # --------------------------------------------------
 install(PROGRAMS
   src/pick_place.py
+  src/error_handling.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

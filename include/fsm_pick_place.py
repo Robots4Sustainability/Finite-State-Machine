@@ -38,6 +38,7 @@ class EventID(IntEnum):
     E_OPEN_DONE_FAIL = auto()
     E_HOME_DONE_OK = auto()
     E_HOME_DONE_FAIL = auto()
+    
 
 
 # State IDs
