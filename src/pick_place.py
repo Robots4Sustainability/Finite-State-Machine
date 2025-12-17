@@ -101,38 +101,41 @@ class PickPlaceNode(Node):
         # Only process pose if we are in the DETECTION state
         if self.fsm.current_state_index != StateID.S_POSE_DETECTION:
             return
+        try:
+            # Visualize the raw detection
+            self.get_logger().info(f"Got the pose from perception (camera frame): {msg}")
 
-        # Visualize the raw detection
-        self.get_logger().info(f"Got the pose from perception (camera frame): {msg}")
+            transform = self.tf_buffer.lookup_transform(
+                "eddie_right_arm_robotiq_85_grasp_link",
+                f"eddie_right_arm_{msg.header.frame_id}",
+                rclpy.time.Time()
+            )
+            transformed_pose = do_transform_pose(msg.pose, transform)
+            self.get_logger().info(f"Transformed pose to end-effector frame: {transformed_pose}")
 
-        transform = self.tf_buffer.lookup_transform(
-            "eddie_right_arm_robotiq_85_grasp_link",
-            f"eddie_right_arm_{msg.header.frame_id}",
-            rclpy.time.Time()
-        )
-        transformed_pose = do_transform_pose(msg.pose, transform)
-        self.get_logger().info(f"Transformed pose to end-effector frame: {transformed_pose}")
+            new_pose = Pose()
+            new_pose.position.x = transformed_pose.position.x
+            new_pose.position.y = transformed_pose.position.y
+            new_pose.position.z = transformed_pose.position.z
 
-        new_pose = Pose()
-        new_pose.position.x = transformed_pose.position.x
-        new_pose.position.y = transformed_pose.position.y
-        new_pose.position.z = transformed_pose.position.z
+            new_pose.orientation.x = 0.0
+            new_pose.orientation.y = 0.0
+            new_pose.orientation.z = 0.0
+            new_pose.orientation.w = 1.0
 
-        new_pose.orientation.x = 0.0
-        new_pose.orientation.y = 0.0
-        new_pose.orientation.z = 0.0
-        new_pose.orientation.w = 1.0
+            self.get_logger().info(
+                f"Using modified target pose (with offsets): "
+                f"x={new_pose.position.x:.3f}, "
+                f"y={new_pose.position.y:.3f}, "
+                f"z={new_pose.position.z:.3f}"
+            )
 
-        self.get_logger().info(
-            f"Using modified target pose (with offsets): "
-            f"x={new_pose.position.x:.3f}, "
-            f"y={new_pose.position.y:.3f}, "
-            f"z={new_pose.position.z:.3f}"
-        )
-
-        # Store the pose for the FSM and trigger event
-        self.user_data['target_pose'] = new_pose
-        produce_event(self.fsm.event_data, EventID.E_PERCEPTION_POSE)
+            # Store the pose for the FSM and trigger event
+            self.user_data['target_pose'] = new_pose
+            produce_event(self.fsm.event_data, EventID.E_PERCEPTION_POSE)
+        except Exception as e:
+                self.get_logger().warn(f"TF Transform failed: {e}")
+                # Wait for next message    
 
     def input_loop(self):
         while rclpy.ok():
