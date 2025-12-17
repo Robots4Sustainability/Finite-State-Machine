@@ -25,6 +25,21 @@ Key events: `E_START`, `E_PERCEPTION_POSE`, `E_PICK_MOVE_DONE`, `E_PLACE_MOVE_DO
   - `right_arm/gripper_control` (`eddie_ros/GripperControl`)
 - Planner: `spline_plan` (`cartesian_planner/PlanSpline`) for generating/executing waypoints
 
+## Object Slip Detection
+- Reference capture
+After the gripper successfully finishes a close action, the pick-and-place FSM calls the service
+/gripper_slip/capture_reference.
+At that moment, the slip detector latches the current measured gripper opening derived from the gripper joint encoder in /joint_states.
+The detector converts the joint position of eddie_right_arm_robotiq_85_left_knuckle_joint
+into a percentage opening (0–100 %) and stores this single value as the reference position.
+
+- Motion check
+During subsequent motion, the slip detector continuously listens to /joint_states and updates the current measured gripper opening in percent.
+The detector compares each incoming measurement against the stored reference.
+If the relative drift between the current value and the reference exceeds a configurable threshold (drift_thresh_percent), the node flags a slip event and publishes True on /gripper_slip
+
+drift : |current − reference| / reference
+
 ## Quick Start
 ```
 colcon build
