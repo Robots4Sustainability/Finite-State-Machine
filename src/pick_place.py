@@ -1,47 +1,29 @@
 #!/usr/bin/env python3
+import os
 import sys
 import threading
 import time
+
 import rclpy
-from rclpy.node import Node
 from rclpy.action import ActionClient
 from rclpy.callback_groups import ReentrantCallbackGroup
-from geometry_msgs.msg import PoseStamped, Pose
-from eddie_ros.action import ArmControl, GripperControl
-from visualization_msgs.msg import Marker
-from rclpy.time import Time
 from rclpy.duration import Duration
+from rclpy.node import Node
+from rclpy.time import Time
+
+from geometry_msgs.msg import Pose, PoseStamped
+from eddie_ros.action import ArmControl, GripperControl
 from tf2_geometry_msgs import do_transform_pose
-from std_msgs.msg import Bool, Float32   # NEW
-from pick_place_fsm.srv import CaptureReference
-
+import tf2_geometry_msgs
 from tf2_ros import Buffer, TransformListener
-import tf2_geometry_msgs 
 
+from cartesian_planner.action import PlanSpline
 
 from coord_dsl.fsm import fsm_step
 from coord_dsl.event_loop import reconfig_event_buffers, produce_event, consume_event
-import os
-
-# Helper to find the FSM module if it's not installed in the environment
-current_dir = os.path.dirname(os.path.abspath(__file__))
-
-
-include_dir_src = os.path.join(current_dir, '../include')
-
-include_dir_install = os.path.join(current_dir, '../../include')
-
-if os.path.exists(os.path.join(include_dir_src, 'fsm_pick_place.py')):
-    if include_dir_src not in sys.path:
-        sys.path.append(include_dir_src)
-elif os.path.exists(os.path.join(include_dir_install, 'fsm_pick_place.py')):
-    if include_dir_install not in sys.path:
-        sys.path.append(include_dir_install)
-
 from fsm_pick_place import create_fsm, StateID, EventID
-
-
-
+from std_msgs.msg import Bool, Float32
+from pick_place_fsm.srv import CaptureReference
 
 class PickPlaceNode(Node):
     def __init__(self):
@@ -62,10 +44,12 @@ class PickPlaceNode(Node):
         # Parameters , change ee to grasp link when gripper is available
         self.declare_parameter("ee_frame", "eddie_right_arm_end_effector_link")
         self.declare_parameter("base_frame", "eddie_base_link")
+        self.declare_parameter("spline_step", 0.05)
         
         self.ee_frame = self.get_parameter("ee_frame").get_parameter_value().string_value
         self.base_frame = self.get_parameter("base_frame").get_parameter_value().string_value
-
+        self.spline_step = self.get_parameter("spline_step").get_parameter_value().double_value
+        self.object_pose_topic = "/object_pose"
         # ROS Interfaces
         self.cb_group = ReentrantCallbackGroup()
 
@@ -76,18 +60,18 @@ class PickPlaceNode(Node):
         # Action Clients
         self.arm_client = ActionClient(self, ArmControl, 'right_arm/arm_control', callback_group=self.cb_group)
         self.gripper_client = ActionClient(self, GripperControl, 'right_arm/gripper_control', callback_group=self.cb_group)
+        self.spline_client = ActionClient(self, PlanSpline, 'spline_plan', callback_group=self.cb_group)
 
         # Subscribers
         self.perception_sub = self.create_subscription(
             PoseStamped,
-            '/object_pose',
+            self.object_pose_topic,
             self.perception_callback,
             10,
             callback_group=self.cb_group
         )
         
         # Publishers
-        self.marker_pub = self.create_publisher(Marker, '/picking_object', 10)
 
         # Timers
         self.fsm_timer = self.create_timer(0.1, self.fsm_loop, callback_group=self.cb_group) # 10Hz
@@ -97,17 +81,6 @@ class PickPlaceNode(Node):
         self.input_thread.start()
 
         self.get_logger().info("Pick & Place Python Node Ready. Waiting for 'Enter' to start...")
-
-        # NEW – expose commanded position ---------------------------------
-        self.gripper_cmd_pub = self.create_publisher(
-            Float32, '/right_arm/gripper_pos_cmd', 10)
-        # -------------------------------------------------------------------
-
-        # NEW – listen to slip detector -------------------------------------
-        self.create_subscription(
-            Bool, '/gripper_slip', self.on_slip, 10,
-            callback_group=self.cb_group)
-        # ------------------------------------------------------------------
 
     def get_default_place_pose(self):
         # RELATIVE move for place
@@ -125,59 +98,45 @@ class PickPlaceNode(Node):
         p.position.z = 0.0
         return p
 
-    def publish_marker(self, pose_stamped):
-        marker = Marker()
-        marker.header = pose_stamped.header
-        marker.type = Marker.SPHERE
-        marker.action = Marker.ADD
-        marker.scale.x = 0.05
-        marker.scale.y = 0.05
-        marker.scale.z = 0.05
-        marker.color.a = 1.0
-        marker.color.r = 0.0
-        marker.color.g = 1.0
-        marker.color.b = 1.0
-        marker.pose = pose_stamped.pose
-        self.marker_pub.publish(marker)
-
-
     def perception_callback(self, msg: PoseStamped):
         # Only process pose if we are in the DETECTION state
         if self.fsm.current_state_index != StateID.S_POSE_DETECTION:
             return
+        try:
+            # Visualize the raw detection
+            self.get_logger().info(f"Got the pose from perception (camera frame): {msg}")
 
-        # Visualize the raw detection
-        self.publish_marker(msg)
-        self.get_logger().info(f"Got the pose from perception (camera frame): {msg}")
+            transform = self.tf_buffer.lookup_transform(
+                "eddie_right_arm_robotiq_85_grasp_link",
+                f"eddie_right_arm_{msg.header.frame_id}",
+                rclpy.time.Time()
+            )
+            transformed_pose = do_transform_pose(msg.pose, transform)
+            self.get_logger().info(f"Transformed pose to end-effector frame: {transformed_pose}")
 
-        transform = self.tf_buffer.lookup_transform(
-            "eddie_right_arm_robotiq_85_grasp_link",
-            f"eddie_right_arm_{msg.header.frame_id}",
-            rclpy.time.Time()
-        )
-        transformed_pose = do_transform_pose(msg.pose, transform)
-        self.get_logger().info(f"Transformed pose to end-effector frame: {transformed_pose}")
+            new_pose = Pose()
+            new_pose.position.x = transformed_pose.position.x
+            new_pose.position.y = transformed_pose.position.y
+            new_pose.position.z = transformed_pose.position.z
 
-        new_pose = Pose()
-        new_pose.position.x = transformed_pose.position.x
-        new_pose.position.y = transformed_pose.position.y
-        new_pose.position.z = transformed_pose.position.z
+            new_pose.orientation.x = 0.0
+            new_pose.orientation.y = 0.0
+            new_pose.orientation.z = 0.0
+            new_pose.orientation.w = 1.0
 
-        new_pose.orientation.x = 0.0
-        new_pose.orientation.y = 0.0
-        new_pose.orientation.z = 0.0
-        new_pose.orientation.w = 1.0
+            self.get_logger().info(
+                f"Using modified target pose (with offsets): "
+                f"x={new_pose.position.x:.3f}, "
+                f"y={new_pose.position.y:.3f}, "
+                f"z={new_pose.position.z:.3f}"
+            )
 
-        self.get_logger().info(
-            f"Using modified target pose (with offsets): "
-            f"x={new_pose.position.x:.3f}, "
-            f"y={new_pose.position.y:.3f}, "
-            f"z={new_pose.position.z:.3f}"
-        )
-
-        # Store the pose for the FSM and trigger event
-        self.user_data['target_pose'] = new_pose
-        produce_event(self.fsm.event_data, EventID.E_PERCEPTION_POSE)
+            # Store the pose for the FSM and trigger event
+            self.user_data['target_pose'] = new_pose
+            produce_event(self.fsm.event_data, EventID.E_PERCEPTION_POSE)
+        except Exception as e:
+                self.get_logger().warn(f"TF Transform failed: {e}")
+                # Wait for next message    
 
     def input_loop(self):
         while rclpy.ok():
@@ -210,7 +169,7 @@ class PickPlaceNode(Node):
             if self.fsm.current_state_index == StateID.S_POSE_DETECTION:
                 self.user_data['detection_start_time'] = self.get_clock().now().nanoseconds / 1e9
                 self.user_data['phase'] = 'PICK' # Reset phase
-                self.get_logger().info("Listening for /object_pose for 6 seconds...")
+                self.get_logger().info(f"Listening for {self.object_pose_topic} for 6 seconds...")
 
         self.fsm_behavior()
         fsm_step(self.fsm)
@@ -286,16 +245,87 @@ class PickPlaceNode(Node):
     # --- Action Helpers ---
 
     def send_arm_goal(self, pose, success_evt, fail_evt):
+        # Default: go through spline planner action server
+        #self._send_via_spline_planner(pose, success_evt, fail_evt)
+        # If you need to bypass the planner and send directly to ArmControl,
+        # uncomment the next line:
+        self._send_direct_arm_goal(pose, success_evt, fail_evt)
+
+    def _send_via_spline_planner(self, pose, success_evt, fail_evt):
+        if not self.spline_client.wait_for_server(timeout_sec=1.0):
+            self.get_logger().error("Spline planner action server not available!")
+            produce_event(self.fsm.event_data, fail_evt)
+            return
+
+        goal = PlanSpline.Goal()
+        goal.target_pose = pose
+        future = self.spline_client.send_goal_async(goal)
+        future.add_done_callback(lambda fut: self._planner_goal_response(fut, success_evt, fail_evt))
+
+    def _planner_goal_response(self, future, success_evt, fail_evt):
+        try:
+            goal_handle = future.result()
+            if not goal_handle.accepted:
+                self.get_logger().error("Spline planner goal rejected")
+                produce_event(self.fsm.event_data, fail_evt)
+                return
+
+            res_future = goal_handle.get_result_async()
+            res_future.add_done_callback(lambda fut: self._planner_result(fut, success_evt, fail_evt))
+        except Exception as e:
+            self.get_logger().error(f"Spline planner Goal Exception: {e}")
+            produce_event(self.fsm.event_data, fail_evt)
+
+    def _planner_result(self, future, success_evt, fail_evt):
+        try:
+            result = future.result().result
+            if result.success:
+                self.get_logger().info("Spline planner execution succeeded")
+                produce_event(self.fsm.event_data, success_evt)
+            else:
+                self.get_logger().error(f"Spline planner failed: {result.message}")
+                produce_event(self.fsm.event_data, fail_evt)
+        except Exception as e:
+            self.get_logger().error(f"Spline planner Result Exception: {e}")
+            produce_event(self.fsm.event_data, fail_evt)
+
+    # Direct ArmControl path (bypasses planner) — keep commented unless needed.
+    def _send_direct_arm_goal(self, pose, success_evt, fail_evt):
         if not self.arm_client.wait_for_server(timeout_sec=1.0):
             self.get_logger().error("Arm action server not available!")
             produce_event(self.fsm.event_data, fail_evt)
             return
-
         goal = ArmControl.Goal()
         goal.target_pose = pose
-
         future = self.arm_client.send_goal_async(goal)
-        future.add_done_callback(lambda fut: self.arm_goal_response(fut, success_evt, fail_evt))
+        future.add_done_callback(lambda fut: self._arm_goal_response(fut, success_evt, fail_evt))
+
+    def _arm_goal_response(self, future, success_evt, fail_evt):
+        try:
+            goal_handle = future.result()
+            if not goal_handle.accepted:
+                self.get_logger().error("Arm goal rejected")
+                produce_event(self.fsm.event_data, fail_evt)
+                return
+            res_future = goal_handle.get_result_async()
+            res_future.add_done_callback(lambda fut: self._arm_result(fut, success_evt, fail_evt))
+        except Exception as e:
+            self.get_logger().error(f"Arm Goal Exception: {e}")
+            produce_event(self.fsm.event_data, fail_evt)
+
+    def _arm_result(self, future, success_evt, fail_evt):
+        try:
+            result = future.result().result
+            if result.result_code == ArmControl.Result.SUCCESS:
+                self.get_logger().info("Arm Action Succeeded")
+                produce_event(self.fsm.event_data, success_evt)
+            else:
+                msg = result.result_message if hasattr(result, "result_message") else result.message
+                self.get_logger().error(f"Arm Action Failed: {msg}")
+                produce_event(self.fsm.event_data, fail_evt)
+        except Exception as e:
+            self.get_logger().error(f"Arm Result Exception: {e}")
+            produce_event(self.fsm.event_data, fail_evt)
 
     def arm_goal_response(self, future, success_evt, fail_evt):
         try:
@@ -314,11 +344,12 @@ class PickPlaceNode(Node):
     def arm_result(self, future, success_evt, fail_evt):
         try:
             result = future.result().result
-            if result.success:
+            if result.result_code == ArmControl.Result.SUCCESS:
                 self.get_logger().info("Arm Action Succeeded")
                 produce_event(self.fsm.event_data, success_evt)
             else:
-                self.get_logger().error(f"Arm Action Failed: {result.message}")
+                msg = result.result_message if hasattr(result, "result_message") else result.message
+                self.get_logger().error(f"Arm Action Failed: {msg}")
                 produce_event(self.fsm.event_data, fail_evt)
         except Exception as e:
             self.get_logger().error(f"Arm Result Exception: {e}")
@@ -334,11 +365,6 @@ class PickPlaceNode(Node):
         goal.target_position = position
         goal.velocity = 20.0
         goal.force = 10.0
-        # NEW – broadcast commanded value for slip detector -----------------
-        cmd_msg = Float32()
-        cmd_msg.data = float(position)
-        self.gripper_cmd_pub.publish(cmd_msg)
-        # -------------------------------------------------------------------
 
         future = self.gripper_client.send_goal_async(goal)
         future.add_done_callback(lambda fut: self.gripper_goal_response(fut, success_evt, fail_evt))
@@ -348,6 +374,10 @@ class PickPlaceNode(Node):
             goal_handle = future.result()
             if not goal_handle.accepted:
                 self.get_logger().error("Gripper goal rejected")
+                # ---- NEW: tell slip-node to capture final encoder value ----
+                capture_cli = self.create_client(CaptureReference, '/gripper_slip/capture_reference')
+                if capture_cli.wait_for_server(timeout_sec=1.0):
+                    capture_cli.call_async(CaptureReference.Request())
                 produce_event(self.fsm.event_data, fail_evt)
                 return
 
@@ -360,27 +390,16 @@ class PickPlaceNode(Node):
     def gripper_result(self, future, success_evt, fail_evt):
         try:
             result = future.result().result
-            if result.success:
+            if result.result_code == GripperControl.Result.SUCCESS:
                 self.get_logger().info("Gripper Action Succeeded")
-                # ---- NEW: tell slip-node to capture final encoder value ----
-                capture_cli = self.create_client(CaptureReference, '/gripper_slip/capture_reference')
-                if capture_cli.wait_for_server(timeout_sec=1.0):
-                    capture_cli.call_async(CaptureReference.Request())
-                # -----------------------------------------------------------
                 produce_event(self.fsm.event_data, success_evt)
             else:
-                self.get_logger().error(f"Gripper Action Failed: {result.message}")
+                msg = result.result_message if hasattr(result, "result_message") else result.message
+                self.get_logger().error(f"Gripper Action Failed: {msg}")
                 produce_event(self.fsm.event_data, fail_evt)
         except Exception as e:
             self.get_logger().error(f"Gripper Result Exception: {e}")
             produce_event(self.fsm.event_data, fail_evt)
-    
-    # ==================  NEW  ==================
-    def on_slip(self, msg: Bool):
-        if msg.data:   # True = object lost
-            self.get_logger().warn('Gripper slip detected – treating as CLOSE_FAIL')
-            produce_event(self.fsm.event_data, EventID.E_GRIPPER_CLOSE_DONE_FAIL)
-    # ===========================================
 
 
 def main(args=None):
@@ -394,7 +413,11 @@ def main(args=None):
         node.get_logger().info("Node stopped via KeyboardInterrupt")
     finally:
         node.destroy_node()
-        rclpy.shutdown()
+        try:
+            if rclpy.ok():
+                rclpy.shutdown()
+        except Exception:
+            pass
 
 if __name__ == '__main__':
     main()
