@@ -14,9 +14,13 @@
   <depend>geometry_msgs</depend>
   <depend>eddie_ros</depend>
   <depend>coord_dsl</depend>
+  <build_depend>rosidl_default_generators</build_depend>
 
   <exec_depend>rclpy</exec_depend>
   <exec_depend>rosidl_runtime_py</exec_depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+
+  <member_of_group>rosidl_interface_packages</member_of_group>
 
   <export>
     <build_type>ament_cmake</build_type>
