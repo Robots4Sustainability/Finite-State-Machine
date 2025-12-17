@@ -18,12 +18,15 @@ import tf2_geometry_msgs
 from tf2_ros import Buffer, TransformListener
 
 from cartesian_planner.action import PlanSpline
-
+from visualization_msgs.msg import Marker
 from coord_dsl.fsm import fsm_step
 from coord_dsl.event_loop import reconfig_event_buffers, produce_event, consume_event
 from fsm_pick_place import create_fsm, StateID, EventID
 from std_msgs.msg import Bool, Float32
 from pick_place_fsm.srv import CaptureReference
+
+
+
 
 class PickPlaceNode(Node):
     def __init__(self):
@@ -72,6 +75,7 @@ class PickPlaceNode(Node):
         )
         
         # Publishers
+        self.marker_pub = self.create_publisher(Marker, '/picking_object', 10)
 
         # Timers
         self.fsm_timer = self.create_timer(0.1, self.fsm_loop, callback_group=self.cb_group) # 10Hz
@@ -81,6 +85,19 @@ class PickPlaceNode(Node):
         self.input_thread.start()
 
         self.get_logger().info("Pick & Place Python Node Ready. Waiting for 'Enter' to start...")
+        
+        # NEW – expose commanded position ---------------------------------
+
+        self.gripper_cmd_pub = self.create_publisher(
+            Float32, '/right_arm/gripper_pos_cmd', 10)
+        # -------------------------------------------------------------------
+
+        # NEW – listen to slip detector -------------------------------------
+        self.create_subscription(
+            Bool, '/gripper_slip', self.on_slip, 10,
+            callback_group=self.cb_group)
+        # ------------------------------------------------------------------
+
 
     def get_default_place_pose(self):
         # RELATIVE move for place
@@ -97,6 +114,21 @@ class PickPlaceNode(Node):
         p.position.y = 0.0
         p.position.z = 0.0
         return p
+    
+    def publish_marker(self, pose_stamped):
+        marker = Marker()
+        marker.header = pose_stamped.header
+        marker.type = Marker.SPHERE
+        marker.action = Marker.ADD
+        marker.scale.x = 0.05
+        marker.scale.y = 0.05
+        marker.scale.z = 0.05
+        marker.color.a = 1.0
+        marker.color.r = 0.0
+        marker.color.g = 1.0
+        marker.color.b = 1.0
+        marker.pose = pose_stamped.pose
+        self.marker_pub.publish(marker)
 
     def perception_callback(self, msg: PoseStamped):
         # Only process pose if we are in the DETECTION state
@@ -365,6 +397,11 @@ class PickPlaceNode(Node):
         goal.target_position = position
         goal.velocity = 20.0
         goal.force = 10.0
+        # NEW – broadcast commanded value for slip detector -----------------
+        cmd_msg = Float32()
+        cmd_msg.data = float(position)
+        self.gripper_cmd_pub.publish(cmd_msg)
+        # -------------------------------------------------------------------
 
         future = self.gripper_client.send_goal_async(goal)
         future.add_done_callback(lambda fut: self.gripper_goal_response(fut, success_evt, fail_evt))
@@ -374,10 +411,6 @@ class PickPlaceNode(Node):
             goal_handle = future.result()
             if not goal_handle.accepted:
                 self.get_logger().error("Gripper goal rejected")
-                # ---- NEW: tell slip-node to capture final encoder value ----
-                capture_cli = self.create_client(CaptureReference, '/gripper_slip/capture_reference')
-                if capture_cli.wait_for_server(timeout_sec=1.0):
-                    capture_cli.call_async(CaptureReference.Request())
                 produce_event(self.fsm.event_data, fail_evt)
                 return
 
@@ -392,6 +425,10 @@ class PickPlaceNode(Node):
             result = future.result().result
             if result.result_code == GripperControl.Result.SUCCESS:
                 self.get_logger().info("Gripper Action Succeeded")
+                # tells slip-node to capture final encoder value ----
+                capture_cli = self.create_client(CaptureReference, '/gripper_slip/capture_reference')
+                if capture_cli.wait_for_service(timeout_sec=1.0):
+                    capture_cli.call_async(CaptureReference.Request())
                 produce_event(self.fsm.event_data, success_evt)
             else:
                 msg = result.result_message if hasattr(result, "result_message") else result.message
@@ -400,6 +437,12 @@ class PickPlaceNode(Node):
         except Exception as e:
             self.get_logger().error(f"Gripper Result Exception: {e}")
             produce_event(self.fsm.event_data, fail_evt)
+
+    # ==================  NEW  ==================
+    def on_slip(self, msg: Bool):
+        if msg.data:   # True = object lost
+            self.get_logger().warn('Gripper slip detected – treating as CLOSE_FAIL')
+            produce_event(self.fsm.event_data, EventID.E_GRIPPER_CLOSE_DONE_FAIL)
 
 
 def main(args=None):
