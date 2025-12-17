@@ -1,0 +1,3 @@
+bool placeholder   # request field (can be empty, but something is required)
+---
+bool success       # response field (required)

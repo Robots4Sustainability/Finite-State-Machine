@@ -14,7 +14,7 @@ from rclpy.duration import Duration
 from tf2_geometry_msgs import do_transform_pose
 from std_msgs.msg import Bool, Float32   # NEW
 from pick_place_fsm.action import RunVision
-
+from pick_place_fsm.srv import CaptureReference
 
 from tf2_ros import Buffer, TransformListener
 import tf2_geometry_msgs 
@@ -429,6 +429,11 @@ class PickPlaceNode(Node):
             result = future.result().result
             if result.success:
                 self.get_logger().info("Gripper Action Succeeded")
+                # ---- NEW: tell slip-node to capture final encoder value ----
+                capture_cli = self.create_client(CaptureReference, '/gripper_slip/capture_reference')
+                if capture_cli.wait_for_server(timeout_sec=1.0):
+                    capture_cli.call_async(CaptureReference.Request())
+                # -----------------------------------------------------------
                 produce_event(self.fsm.event_data, success_evt)
             else:
                 self.get_logger().error(f"Gripper Action Failed: {result.message}")

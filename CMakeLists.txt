@@ -56,6 +56,7 @@ install(TARGETS pick_place_fsm_mock
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "action/RunVision.action"
+  "srv/CaptureReference.srv"
   DEPENDENCIES geometry_msgs
 )
 
