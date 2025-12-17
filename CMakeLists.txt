@@ -19,6 +19,8 @@ find_package(rclcpp_action REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(eddie_ros REQUIRED)
 find_package(coord2b REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
 # --------------------------------------------------
 # Include directories
@@ -52,23 +54,29 @@ install(TARGETS pick_place_fsm_mock
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
-# --------------------------------------------------
-# Executable: Mock servers only
-# --------------------------------------------------
-add_executable(mock_servers_only
-  src/mock_servers_only.cpp
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "action/RunVision.action"
+  DEPENDENCIES geometry_msgs
 )
 
-ament_target_dependencies(mock_servers_only
-  rclcpp
-  rclcpp_action
-  eddie_ros
-  coord2b
-)
 
-install(TARGETS mock_servers_only
-  RUNTIME DESTINATION lib/${PROJECT_NAME}
-)
+# # --------------------------------------------------
+# # Executable: Mock servers only
+# # --------------------------------------------------
+# add_executable(mock_servers_only
+#   src/mock_servers_only.cpp
+# )
+
+# ament_target_dependencies(mock_servers_only
+#   rclcpp
+#   rclcpp_action
+#   eddie_ros
+#   coord2b
+# )
+
+# install(TARGETS mock_servers_only
+#   RUNTIME DESTINATION lib/${PROJECT_NAME}
+# )
 
 # --------------------------------------------------
 # Install Python script

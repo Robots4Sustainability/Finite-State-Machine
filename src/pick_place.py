@@ -13,6 +13,7 @@ from rclpy.time import Time
 from rclpy.duration import Duration
 from tf2_geometry_msgs import do_transform_pose
 from std_msgs.msg import Bool, Float32   # NEW
+from pick_place_fsm.action import RunVision
 
 
 from tf2_ros import Buffer, TransformListener
@@ -56,7 +57,9 @@ class PickPlaceNode(Node):
             'place_pose': self.get_default_place_pose(),
             'home_pose': self.get_home_pose(),
             'detection_start_time': 0.0,
-            'phase': 'PICK' # 'PICK' or 'PLACE'
+            'phase': 'PICK', # 'PICK' or 'PLACE'
+            'vision_goal_handle': None,  # NEW: Store vision action goal handle
+            'vision_result': None,  # NEW: Store vision action result
         }
 
         # Parameters , change ee to grasp link when gripper is available
@@ -77,14 +80,17 @@ class PickPlaceNode(Node):
         self.arm_client = ActionClient(self, ArmControl, 'right_arm/arm_control', callback_group=self.cb_group)
         self.gripper_client = ActionClient(self, GripperControl, 'right_arm/gripper_control', callback_group=self.cb_group)
 
-        # Subscribers
-        self.perception_sub = self.create_subscription(
-            PoseStamped,
-            '/object_pose',
-            self.perception_callback,
-            10,
-            callback_group=self.cb_group
-        )
+        # NEW: Vision Action Client (replaces the subscriber)
+        self.vision_client = ActionClient(self, RunVision, 'run_vision_pipeline', callback_group=self.cb_group)
+
+        # # Subscribers
+        # self.perception_sub = self.create_subscription(
+        #     PoseStamped,
+        #     '/object_pose',
+        #     self.perception_callback,
+        #     10,
+        #     callback_group=self.cb_group
+        # )
         
         # Publishers
         self.marker_pub = self.create_publisher(Marker, '/picking_object', 10)
@@ -139,16 +145,67 @@ class PickPlaceNode(Node):
         marker.color.b = 1.0
         marker.pose = pose_stamped.pose
         self.marker_pub.publish(marker)
+    
+    # NEW: Action-based perception method (replaces subscriber callback)
+    def start_vision_detection(self):
+        """Start the vision detection action"""
+        if not self.vision_client.wait_for_server(timeout_sec=1.0):
+            self.get_logger().error("Vision action server not available!")
+            produce_event(self.fsm.event_data, EventID.E_PERCEPTION_FAIL)
+            return False
+
+        goal = RunVision.Goal()
+        goal.duration_seconds = 6.0  # Request 6 seconds of detection time
+        
+        self.get_logger().info("Starting vision detection action...")
+        
+        future = self.vision_client.send_goal_async(goal)
+        future.add_done_callback(self.vision_goal_response)
+        return True
+    
+    def vision_goal_response(self, future):
+        """Handle vision action goal response"""
+        try:
+            goal_handle = future.result()
+            if not goal_handle.accepted:
+                self.get_logger().error("Vision goal rejected")
+                produce_event(self.fsm.event_data, EventID.E_PERCEPTION_FAIL)
+                return
+
+            self.get_logger().info("Vision goal accepted, waiting for result...")
+            self.user_data['vision_goal_handle'] = goal_handle
+            
+            result_future = goal_handle.get_result_async()
+            result_future.add_done_callback(self.vision_result_callback)
+            
+        except Exception as e:
+            self.get_logger().error(f"Vision Goal Exception: {e}")
+            produce_event(self.fsm.event_data, EventID.E_PERCEPTION_FAIL)
+
+    def vision_result_callback(self, future):
+        """Handle vision action result"""
+        try:
+            result = future.result().result
+            self.user_data['vision_result'] = result
+            
+            if result.success:
+                self.get_logger().info(f"Vision detection succeeded: {result.message}")
+                self.perception_callback(result.pose)
+            else:
+                self.get_logger().error(f"Vision detection failed: {result.message}")
+                produce_event(self.fsm.event_data, EventID.E_PERCEPTION_FAIL)
+                
+        except Exception as e:
+            self.get_logger().error(f"Vision Result Exception: {e}")
+            produce_event(self.fsm.event_data, EventID.E_PERCEPTION_FAIL)
 
 
-    def perception_callback(self, msg: PoseStamped):
+    def perception_callback(self, pose_stamped):
         # Only process pose if we are in the DETECTION state
-        if self.fsm.current_state_index != StateID.S_POSE_DETECTION:
-            return
-
+        """Process the detected pose from vision action (similar to old perception_callback)"""
         # Visualize the raw detection
-        self.publish_marker(msg)
-        self.get_logger().info(f"Got the pose from perception (camera frame): {msg}")
+        self.publish_marker(pose_stamped)
+        self.get_logger().info(f"Got the pose from perception (camera frame): {pose_stamped}")
 
         # ----- CONFIGURABLE OFFSETS -----
         # Negative offsets on y and z as tf transform from camera link to ee is not working
@@ -160,9 +217,9 @@ class PickPlaceNode(Node):
 
         new_pose = Pose()
 
-        new_pose.position.x = msg.pose.position.x
-        new_pose.position.y = msg.pose.position.y + offset_y
-        new_pose.position.z = msg.pose.position.z + offset_z
+        new_pose.position.x = pose_stamped.pose.position.x
+        new_pose.position.y = pose_stamped.pose.position.y + offset_y
+        new_pose.position.z = pose_stamped.pose.position.z + offset_z
 
         new_pose.orientation.x = 0.0
         new_pose.orientation.y = 0.0
@@ -212,6 +269,8 @@ class PickPlaceNode(Node):
                 self.user_data['detection_start_time'] = self.get_clock().now().nanoseconds / 1e9
                 self.user_data['phase'] = 'PICK' # Reset phase
                 self.get_logger().info("Listening for /object_pose for 6 seconds...")
+                self.start_vision_detection()
+
 
         self.fsm_behavior()
         fsm_step(self.fsm)
@@ -227,11 +286,18 @@ class PickPlaceNode(Node):
 
         # --- S_POSE_DETECTION ---
         elif current_state == StateID.S_POSE_DETECTION:
-            current_time = self.get_clock().now().nanoseconds / 1e9
-            # this is will wait for 6 seconds until pose is recvd from /object_pose topic
-            if (current_time - ud['detection_start_time']) > 6.0: 
-                self.get_logger().warn("Perception Timeout (6s exceeded). Aborting...")
-                produce_event(self.fsm.event_data, EventID.E_PERCEPTION_FAIL)
+            # current_time = self.get_clock().now().nanoseconds / 1e9
+            # # this is will wait for 6 seconds until pose is recvd from /object_pose topic
+            # if (current_time - ud['detection_start_time']) > 6.0: 
+            #     self.get_logger().warn("Perception Timeout (6s exceeded). Aborting...")
+            #     produce_event(self.fsm.event_data, EventID.E_PERCEPTION_FAIL)
+
+
+            # MODIFIED: We no longer need the timeout logic here since we're using action
+            # The action server handles the timeout and provides feedback
+            # We just need to wait for the action result callback to trigger the event
+            pass
+
 
         # --- S_MOVE_ARM ---
         elif current_state == StateID.S_MOVE_ARM:
