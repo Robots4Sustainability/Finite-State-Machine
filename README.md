@@ -34,6 +34,7 @@ source install/setup.bash
 ros2 run cartesian_planner spline_planner     # planner
 ros2 run pick_place_fsm pick_place            # FSM client
 ```
+### Refer [Detail steps](how_to_run.md) on how to run with complete robot setup
 
 ## Regenerating FSM Code(.fsm)
 Requires `coord-dsl`:
