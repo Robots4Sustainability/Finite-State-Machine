@@ -1,21 +1,20 @@
 # Finite State Machine Package
 
-Door disassemble documentation is kept in [src/README.md](/home/ashlesh/r4s/src/Finite-State-Machine/src/README.md).
 # Door Disassemble FSM
 
 This document covers the `door_disassemble` workflow and the helper nodes used with it.
 
 ## Main Files
 
-- [door_disassemble.py](door_disassemble.py)
+- [door_disassemble.py](src/door_disassemble.py)
   Python FSM node for the door workflow.
-- [door_disassemble.fsm](../include/door_disassemble.fsm)
+- [door_disassemble.fsm](include/door_disassemble.fsm)
   Source FSM definition.
-- [fsm_door_disassemble.py](../include/fsm_door_disassemble.py)
+- [fsm_door_disassemble.py](include/fsm_door_disassemble.py)
   Generated Python FSM datastructures.
-- [mock_perception_server.py](mock_perception_server.py)
+- [mock_perception_server.py](src/mock_perception_server.py)
   Mock perception action server used during testing.
-- [Perception.action](../action/Perception.action)
+- [Perception.action](action/Perception.action)
   Mock Perception action definition used by the FSM.
 
 ## Flow
