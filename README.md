@@ -1,43 +1,80 @@
-# Pick and Place FSM (Python)
+# Finite State Machine Package
 
-This package contains a Python pick-and-place FSM client that talks to the arm/gripper action servers and delegates arm motion to the spline planner.
+Door disassemble documentation is kept in [src/README.md](/home/ashlesh/r4s/src/Finite-State-Machine/src/README.md).
+# Door Disassemble FSM
 
-## FSM Overview
+This document covers the `door_disassemble` workflow and the helper nodes used with it.
 
-![FSM diagram](images/fsm_diagram.png)
+## Main Files
 
-States (see `include/pick_place_py.fsm`):
-- `S_IDLE` → waits for start
-- `S_POSE_DETECTION` → listens for `/object_pose`
-- `S_MOVE_ARM` → send arm motion (via spline planner action)
-- `S_CLOSE_GRIPPER` → close on object
-- `S_OPEN_GRIPPER` → release object
-- `S_FINISHED` → success path
-- `S_MOVE_ARM_HOME` → return home
-- `S_EXIT` → terminal state
+- [door_disassemble.py](door_disassemble.py)
+  Python FSM node for the door workflow.
+- [door_disassemble.fsm](../include/door_disassemble.fsm)
+  Source FSM definition.
+- [fsm_door_disassemble.py](../include/fsm_door_disassemble.py)
+  Generated Python FSM datastructures.
+- [mock_perception_server.py](mock_perception_server.py)
+  Mock perception action server used during testing.
+- [Perception.action](../action/Perception.action)
+  Mock Perception action definition used by the FSM.
 
-Key events: `E_START`, `E_PERCEPTION_POSE`, `E_PICK_MOVE_DONE`, `E_PLACE_MOVE_DONE`, `E_GRIPPER_CLOSE_DONE_OK`, `E_OPEN_DONE_OK`, `E_HOME_DONE_OK`, `E_ARM_MOVE_DONE_FAIL`, `E_HOME_DONE_FAIL`, `E_PERCEPTION_FAIL`, `E_GO_HOME`.
+## Flow
 
-## Runtime Topics & Actions
-- Subscribes: `/object_pose` (`geometry_msgs/PoseStamped`)
-- Actions (real or mock):
-  - `right_arm/arm_control` (`eddie_ros/ArmControl`)
-  - `right_arm/gripper_control` (`eddie_ros/GripperControl`)
-- Planner: `spline_plan` (`cartesian_planner/PlanSpline`) for generating/executing waypoints
+The `door_disassemble` FSM currently runs this loop:
+
+1. Initialize.
+2. Move to the default view pose.
+3. Request subdoor poses from perception.
+4. Request car object poses from perception.
+5. Execute raster scan for screw detection (Needs raster scanner node to be running).
+6. Return to the default home/view pose.
+7. Select the next object.
+8. Move to the object pre-pick pose.
+9. Advance to the object pick pose.
+10. Close gripper.
+11. Retreat with object.
+12. Move to the table drop pose.
+13. Open gripper.
+14. Return to home/view pose.
+15. Repeat until no objects remain.
+
+## Mock Perception
+
+`mock_perception_server` provides a mock action server on `perception`.
+
+Supported task names:
+- `subdoor`
+- `car_objects`
+
+Run it with:
+
+```bash
+ros2 run pick_place_fsm mock_perception_server
+```
+
+Example calls:
+
+```bash
+ros2 action send_goal /perception pick_place_fsm/action/Perception "{task_name: subdoor}"
+ros2 action send_goal /perception pick_place_fsm/action/Perception "{task_name: car_objects}"
+```
 
 ## Quick Start
-```
+
+```bash
 colcon build
-source install/setup.bash
-# Eddie interface depending on simulation or real hardware
-
-ros2 run cartesian_planner spline_planner     # planner
-ros2 run pick_place_fsm pick_place            # FSM client
+source /opt/ros/jazzy/setup.bash
+source ~/r4s/install/setup.bash
 ```
-### Refer [Detail steps](how_to_run.md) on how to run with complete robot setup
 
-## Regenerating FSM Code(.fsm)
-Requires `coord-dsl`:
-```
-textx generate include/pick_place_py.fsm --target fsm_py -o include/fsm_pick_place.py
+Run the door workflow:
+Preferrably run each command in a new terminal
+
+```bash
+ros2 run rmw_zenoh_cpp rmw_zenohd
+ros2 launch eddie_ros eddie.launch.py use_sim:=true arm_select:=right
+ros2 launch eddie_ros rviz.launch.py
+ros2 run cartesian_planner spline_planner
+ros2 run pick_place_fsm mock_perception_server
+ros2 run pick_place_fsm door_disassemble
 ```
