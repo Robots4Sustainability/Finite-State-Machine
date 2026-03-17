@@ -3,9 +3,12 @@ project(pick_place_fsm)
 
 find_package(ament_cmake REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/CaptureReference.srv"
+  "action/Perception.action"
+  DEPENDENCIES geometry_msgs
 )
 
 install(PROGRAMS
@@ -15,7 +18,26 @@ install(PROGRAMS
 )
 
 install(PROGRAMS
+  src/door_disassemble.py
+  DESTINATION lib/${PROJECT_NAME}
+  RENAME door_disassemble
+)
+
+install(PROGRAMS
+  src/mock_perception_server.py
+  DESTINATION lib/${PROJECT_NAME}
+  RENAME mock_perception_server
+)
+
+install(PROGRAMS
+  scripts/record_pregrasp_knots.py
+  DESTINATION lib/${PROJECT_NAME}
+  RENAME record_pregrasp_knots
+)
+
+install(PROGRAMS
   include/fsm_pick_place.py
+  include/fsm_door_disassemble.py
   src/error_handling.py
   DESTINATION lib/${PROJECT_NAME}
 )

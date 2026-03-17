@@ -1,0 +1,9 @@
+# Mock perception action interface
+# --- GOAL ---
+string task_name
+---
+# --- RESULT ---
+bool success
+string message
+geometry_msgs/PoseStamped[] poses
+---
