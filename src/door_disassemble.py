@@ -84,7 +84,7 @@ class DoorDisassembleNode(Node):
 
     def get_default_view_pose_global(self) -> Pose:
         p = Pose()
-        p.position.x = 0.649
+        p.position.x = 0.749
         p.position.y = 0.003
         p.position.z = 0.339
         p.orientation.x = 0.475857
@@ -195,10 +195,10 @@ class DoorDisassembleNode(Node):
             req.top_right = ud["subdoor_poses"][1]
             req.bottom_right = ud["subdoor_poses"][2]
             req.bottom_left = ud["subdoor_poses"][3]
-            
-            future = self.scan_client.call_async(req)
-            future.add_done_callback(self.on_scan_response)
-            # produce_event(self.fsm.event_data, EventID.E_SCAN_DONE)
+            # Uncomment below two lines and comment out produce event line to enable raster scan
+            # future = self.scan_client.call_async(req)
+            # future.add_done_callback(self.on_scan_response)
+            produce_event(self.fsm.event_data, EventID.E_SCAN_DONE)
             ud["action_dispatched"] = True
             return
 

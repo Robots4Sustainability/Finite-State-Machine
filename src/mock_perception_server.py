@@ -70,8 +70,8 @@ class MockPerceptionServer(Node):
     def mock_car_object_poses(self):
         return [
 
-            self.make_pose_stamped(self.base_frame, 0.608347, 0.348875, 0.433091),
-            self.make_pose_stamped(self.base_frame, 0.609329, 0.000823, 0.426174),
+            self.make_pose_stamped(self.base_frame, 0.75, 0.348875, 0.433091),
+            self.make_pose_stamped(self.base_frame, 0.75, 0.000823, 0.426174),
         ]
 
     def make_pose_stamped(self, frame_id: str, x: float, y: float, z: float) -> PoseStamped:
