@@ -57,7 +57,13 @@ Example calls:
 ros2 action send_goal /perception pick_place_fsm/action/Perception "{task_name: subdoor}"
 ros2 action send_goal /perception pick_place_fsm/action/Perception "{task_name: car_objects}"
 ```
-
+## Dependencies
+Ensure coord-dsl(main branch) is present in r4s/src/
+```bash
+cd ~/r4s
+pip install src/coord-dsl
+pip install PyYAML
+```
 ## Quick Start
 
 ```bash
