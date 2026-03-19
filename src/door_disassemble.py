@@ -32,22 +32,27 @@ class DoorDisassembleNode(Node):
             "view_pose_global": self.get_default_view_pose_global(),
             "table_drop_pose_global": self.get_default_table_drop_pose_global(),
             "subdoor_poses": [],
-            "object_detections": [],
+            "car_objects": {},
             "active_object_detection": None,
+            "active_object_radius": 0.0,
+            "active_object_class": "",
             "scan_message": "",
             "scan_screw_poses": [],
             "arm_motion_mode": "",
+            "pending_object_classes": [],
         }
 
         self.declare_parameter("base_frame", "eddie_base_link")
         self.declare_parameter("ee_frame", "eddie_right_arm_robotiq_85_grasp_link")
         self.declare_parameter("camera_frame", "eddie_right_arm_camera_link")
         self.declare_parameter("perception_action_server", "perception")
+        self.declare_parameter("car_object_classes", ["motor", "unit"])
 
         self.base_frame = self.get_parameter("base_frame").value
         self.ee_frame = self.get_parameter("ee_frame").value
         self.camera_frame = self.get_parameter("camera_frame").value
         self.perception_action_server = self.get_parameter("perception_action_server").value
+        self.car_object_classes = list(self.get_parameter("car_object_classes").value)
         self.object_pick_z_offset = 0.1
 
         self.cb_group = ReentrantCallbackGroup()
@@ -166,13 +171,16 @@ class DoorDisassembleNode(Node):
 
         if cs == StateID.S_GET_SUBDOOR and not ud["action_dispatched"]:
             self.get_logger().info("Requesting subdoor poses from perception action...")
-            self.request_perception("subdoor", self.on_subdoor_result)
+            self.request_perception("subdoor", "", self.on_subdoor_result)
             ud["action_dispatched"] = True
             return
 
         if cs == StateID.S_GET_OBJECTS and not ud["action_dispatched"]:
-            self.get_logger().info("Requesting car object poses from perception action...")
-            self.request_perception("car_objects", self.on_object_result)
+            self.get_logger().info(
+                "Requesting car object poses from perception action for classes "
+                f"{self.car_object_classes}..."
+            )
+            self.request_car_objects()
             ud["action_dispatched"] = True
             return
 
@@ -289,12 +297,15 @@ class DoorDisassembleNode(Node):
             return
 
         if cs == StateID.S_SELECT_NEXT_OBJECT and not ud["action_dispatched"]:
-            if not ud["object_detections"]:
+            if not self.select_next_car_object():
                 self.get_logger().info("No more objects left to pick.")
                 produce_event(self.fsm.event_data, EventID.E_NO_MORE_OBJECTS)
             else:
-                ud["active_object_detection"] = ud["object_detections"][0]
-                self.get_logger().info("Selected next object pose from perception results.")
+                self.get_logger().info(
+                    "Selected next object pose from perception results "
+                    f"class='{ud['active_object_class']}' "
+                    f"with radius {ud['active_object_radius']}."
+                )
                 ud["arm_motion_mode"] = "PICK_OBJECT"
                 produce_event(self.fsm.event_data, EventID.E_OBJECT_READY)
             ud["action_dispatched"] = True
@@ -344,7 +355,7 @@ class DoorDisassembleNode(Node):
         if cs == StateID.S_CONFIRM_DATA and not ud["action_dispatched"]:
             self.get_logger().info("Confirm step reached. Stored data summary:")
             self.get_logger().info(f"Subdoor poses: {len(ud['subdoor_poses'])}")
-            self.get_logger().info(f"Objects: {len(ud['object_detections'])}")
+            self.get_logger().info(f"Car objects: {list(ud['car_objects'].keys())}")
             self.get_logger().info(f"Raster scan message: {ud['scan_message']}")
             self.get_logger().info(f"Raster screws: {len(ud['scan_screw_poses'])}")
             produce_event(self.fsm.event_data, EventID.E_CONFIRM_DONE)
@@ -391,6 +402,28 @@ class DoorDisassembleNode(Node):
         transformed_pose.orientation.w = 1.0
         transformed_pose.position.z -= z_offset
         return transformed_pose
+
+    def get_next_available_object_class(self) -> str | None:
+        for object_class in self.car_object_classes:
+            if object_class in self.user_data["car_objects"]:
+                return object_class
+        return None
+
+    def select_next_car_object(self) -> bool:
+        object_class = self.get_next_available_object_class()
+        if object_class is None:
+            return False
+
+        active_object = self.user_data["car_objects"][object_class]
+        self.user_data["active_object_class"] = object_class
+        self.user_data["active_object_detection"] = active_object["pose"]
+        self.user_data["active_object_radius"] = active_object["radius"]
+        return True
+
+    def clear_active_car_object(self):
+        self.user_data["active_object_detection"] = None
+        self.user_data["active_object_radius"] = 0.0
+        self.user_data["active_object_class"] = ""
 
     def transform_pose_stamped_to_base(self, pose_stamped: PoseStamped) -> PoseStamped | None:
         transformed_pose = self.relative_pose_to_global_pose(
@@ -464,7 +497,7 @@ class DoorDisassembleNode(Node):
         self.get_logger().info("Screwdriver probe execution is currently disabled.")
         produce_event(self.fsm.event_data, EventID.E_SCREWDRIVER_PROBE_DONE)
 
-    def request_perception(self, task_name, result_callback):
+    def request_perception(self, task_name, object_class, result_callback):
         if not self.perception_client.wait_for_server(timeout_sec=2.0):
             self.get_logger().error("Perception action server not available.")
             result_callback(None)
@@ -472,16 +505,22 @@ class DoorDisassembleNode(Node):
 
         goal = Perception.Goal()
         goal.task_name = task_name
+        goal.object_class = object_class
         future = self.perception_client.send_goal_async(goal)
         future.add_done_callback(
-            lambda fut: self._perception_goal_response(fut, task_name, result_callback)
+            lambda fut: self._perception_goal_response(
+                fut, task_name, object_class, result_callback
+            )
         )
 
-    def _perception_goal_response(self, future, task_name, result_callback):
+    def _perception_goal_response(self, future, task_name, object_class, result_callback):
         try:
             goal_handle = future.result()
             if goal_handle is None or not goal_handle.accepted:
-                self.get_logger().error(f"Perception goal rejected for task '{task_name}'.")
+                self.get_logger().error(
+                    "Perception goal rejected for task "
+                    f"'{task_name}' object_class='{object_class}'."
+                )
                 result_callback(None)
                 return
 
@@ -490,8 +529,33 @@ class DoorDisassembleNode(Node):
                 lambda fut: result_callback(fut.result().result if fut.result() else None)
             )
         except Exception as e:
-            self.get_logger().error(f"Perception goal exception for task '{task_name}': {e}")
+            self.get_logger().error(
+                "Perception goal exception for task "
+                f"'{task_name}' object_class='{object_class}': {e}"
+            )
             result_callback(None)
+
+    def request_car_objects(self):
+        self.user_data["car_objects"] = {}
+        self.clear_active_car_object()
+        self.user_data["pending_object_classes"] = list(self.car_object_classes)
+        self._request_next_car_object_class()
+
+    def _request_next_car_object_class(self):
+        if not self.user_data["pending_object_classes"]:
+            self.get_logger().info(
+                f"Stored car objects in {self.base_frame}: "
+                f"{list(self.user_data['car_objects'].keys())}."
+            )
+            produce_event(self.fsm.event_data, EventID.E_OBJECTS_DONE)
+            return
+
+        object_class = self.user_data["pending_object_classes"][0]
+        self.request_perception(
+            "car_objects",
+            object_class,
+            lambda result: self._handle_car_object_result(object_class, result),
+        )
 
     def on_subdoor_result(self, result):
         self._store_perception_poses(
@@ -502,14 +566,45 @@ class DoorDisassembleNode(Node):
             EventID.E_SUBDOOR_FAIL,
         )
 
-    def on_object_result(self, result):
-        self._store_perception_poses(
-            result,
-            "object_detections",
-            "object",
-            EventID.E_OBJECTS_DONE,
-            EventID.E_OBJECTS_FAIL,
+    def _handle_car_object_result(self, object_class, result):
+        if not self.store_car_object(object_class, result):
+            produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
+            return
+
+        if self.user_data["pending_object_classes"]:
+            self.user_data["pending_object_classes"].pop(0)
+        self._request_next_car_object_class()
+
+    def store_car_object(self, object_class, result):
+        if result is None or not result.success:
+            message = "No object pose or resulted in failure" if result is None else result.message
+            self.get_logger().error(
+                f"Object perception failed for class '{object_class}': {message}"
+            )
+            return False
+
+        transformed_poses = self.transform_pose_array_to_base(result.poses)
+        if transformed_poses is None or len(transformed_poses) < 1:
+            self.get_logger().error(
+                f"Object perception returned no valid poses for class '{object_class}'."
+            )
+            return False
+
+        if len(transformed_poses) > 1:
+            self.get_logger().warn(
+                f"Object perception returned {len(transformed_poses)} poses for class "
+                f"'{object_class}'. Using the first one."
+            )
+
+        self.user_data["car_objects"][object_class] = {
+            "pose": transformed_poses[0],
+            "radius": result.estimated_value,
+        }
+        self.get_logger().info(
+            f"Stored {object_class} object pose in {self.base_frame} "
+            f"with radius {result.estimated_value}."
         )
+        return True
 
     def _store_perception_poses(self, result, storage_key, label, success_evt, fail_evt):
         if result is None or not result.success:
@@ -664,10 +759,12 @@ class DoorDisassembleNode(Node):
             result = future.result().result
             if result.result_code == GripperControl.Result.SUCCESS:
                 self.get_logger().info(f"Gripper action succeeded during {context}.")
-                if success_evt == EventID.E_GRIPPER_OPEN_DONE and self.user_data["object_detections"]:
-                    self.user_data["object_detections"].pop(0)
-                    self.get_logger().info("Dropped object and removed it from pending list.")
-                    self.user_data["active_object_detection"] = None
+                if success_evt == EventID.E_GRIPPER_OPEN_DONE and self.user_data["active_object_class"]:
+                    self.user_data["car_objects"].pop(self.user_data["active_object_class"], None)
+                    self.get_logger().info(
+                        "Dropped object and removed it from pending list."
+                    )
+                    self.clear_active_car_object()
                 produce_event(self.fsm.event_data, success_evt)
             else:
                 msg = (

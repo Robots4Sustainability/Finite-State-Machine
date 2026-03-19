@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+import random
+import time
+
 import rclpy
 from geometry_msgs.msg import PoseStamped
 from rclpy.action import ActionServer
@@ -32,9 +35,17 @@ class MockPerceptionServer(Node):
 
     def execute_callback(self, goal_handle):
         task_name = goal_handle.request.task_name.strip().lower()
-        self.get_logger().info(f"Received perception request for task '{task_name}'.")
+        object_class = goal_handle.request.object_class.strip().lower()
+        self.get_logger().info(
+            "Received perception request for task "
+            f"'{task_name}' object_class='{object_class}'."
+        )
+        delay = random.uniform(2.0, 3.0)
+        self.get_logger().info(f"Mock perception delay: sleeping for {delay:.2f}s.")
+        time.sleep(delay)
 
         result = Perception.Result()
+        result.estimated_value = 0.0
 
         if task_name == "subdoor":
             result.success = True
@@ -44,9 +55,24 @@ class MockPerceptionServer(Node):
             return result
 
         if task_name == "car_objects":
+            mock_result = self.mock_car_object_result(object_class)
+            if mock_result is None:
+                result.success = False
+                result.message = (
+                    f"Unsupported mock object_class '{object_class}' for task '{task_name}'. "
+                    "Supported classes: motor, unit."
+                )
+                result.poses = []
+                goal_handle.abort()
+                return result
+
+            poses, radius = mock_result
             result.success = True
-            result.message = "Returned 2 mock car object pos"
-            result.poses = self.mock_car_object_poses()
+            result.message = (
+                f"Returned {len(poses)} mock car object poses for class '{object_class}'."
+            )
+            result.poses = poses
+            result.estimated_value = radius
             goal_handle.succeed()
             return result
 
@@ -67,12 +93,24 @@ class MockPerceptionServer(Node):
             self.make_pose_stamped(self.base_frame, 0.61, 0.30, 0.42),
         ]
 
-    def mock_car_object_poses(self):
-        return [
+    def mock_car_object_result(self, object_class: str):
+        if object_class == "motor":
+            return (
+                [
+                    self.make_pose_stamped(self.base_frame, 0.75, 0.348875, 0.433091),
+                ],
+                0.045,
+            )
 
-            self.make_pose_stamped(self.base_frame, 0.75, 0.348875, 0.433091),
-            self.make_pose_stamped(self.base_frame, 0.75, 0.000823, 0.426174),
-        ]
+        if object_class == "unit":
+            return (
+                [
+                    self.make_pose_stamped(self.base_frame, 0.75, 0.000823, 0.426174),
+                ],
+                0.065,
+            )
+
+        return None
 
     def make_pose_stamped(self, frame_id: str, x: float, y: float, z: float) -> PoseStamped:
         msg = PoseStamped()
