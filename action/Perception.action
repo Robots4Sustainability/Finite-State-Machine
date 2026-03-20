@@ -1,9 +1,15 @@
 # Mock perception action interface
 # --- GOAL ---
 string task_name
+string object_class
+float32 time_duration
 ---
 # --- RESULT ---
 bool success
 string message
 geometry_msgs/PoseStamped[] poses
+float32 estimated_value
 ---
+# --- FEEDBACK ---
+string current_phase
+float32 time_elapsed
