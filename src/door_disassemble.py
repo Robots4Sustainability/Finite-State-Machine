@@ -8,12 +8,13 @@ from rclpy.action import ActionClient
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.node import Node
 
+from control_msgs.action import GripperCommand
 from geometry_msgs.msg import Pose, PoseStamped
 from std_msgs.msg import Bool
 from tf2_geometry_msgs import do_transform_pose
 from tf2_ros import Buffer, TransformListener
 
-from eddie_ros.action import ArmControl, GripperControl
+from eddie_ros.action import ArmControl
 from cartesian_planner.srv import PlanScanPath
 from pick_place_fsm.action import Perception
 from coord_dsl.fsm import fsm_step
@@ -63,7 +64,10 @@ class DoorDisassembleNode(Node):
             self, ArmControl, "right_arm/arm_control", callback_group=self.cb_group
         )
         self.gripper_client = ActionClient(
-            self, GripperControl, "right_arm/gripper_control", callback_group=self.cb_group
+            self,
+            GripperCommand,
+            "robotiq_gripper_controller/gripper_cmd",
+            callback_group=self.cb_group,
         )
         self.perception_client = ActionClient(
             self, Perception, self.perception_action_server, callback_group=self.cb_group
@@ -313,7 +317,7 @@ class DoorDisassembleNode(Node):
 
         if cs == StateID.S_CLOSE_GRIPPER and not ud["action_dispatched"]:
             self.send_gripper_command(
-                100.0,
+                0.79,
                 EventID.E_GRIPPER_CLOSE_DONE,
                 EventID.E_GRIPPER_FAIL,
                 "close gripper on object",
@@ -644,10 +648,9 @@ class DoorDisassembleNode(Node):
             produce_event(self.fsm.event_data, fail_evt)
             return
 
-        goal = GripperControl.Goal()
-        goal.target_position = position
-        goal.velocity = 20.0
-        goal.force = 10.0
+        goal = GripperCommand.Goal()
+        goal.command.position = position
+        goal.command.max_effort = 20.0
 
         future = self.gripper_client.send_goal_async(goal)
         future.add_done_callback(
@@ -757,7 +760,7 @@ class DoorDisassembleNode(Node):
     def _gripper_result(self, future, success_evt, fail_evt, context):
         try:
             result = future.result().result
-            if result.result_code == GripperControl.Result.SUCCESS:
+            if result.reached_goal or result.stalled:
                 self.get_logger().info(f"Gripper action succeeded during {context}.")
                 if success_evt == EventID.E_GRIPPER_OPEN_DONE and self.user_data["active_object_class"]:
                     self.user_data["car_objects"].pop(self.user_data["active_object_class"], None)
@@ -768,9 +771,10 @@ class DoorDisassembleNode(Node):
                 produce_event(self.fsm.event_data, success_evt)
             else:
                 msg = (
-                    result.result_message
-                    if hasattr(result, "result_message")
-                    else result.message
+                    f"reached_goal={result.reached_goal}, "
+                    f"stalled={result.stalled}, "
+                    f"position={result.position:.4f}, "
+                    f"effort={result.effort:.4f}"
                 )
                 self.get_logger().error(f"Gripper action failed during {context}: {msg}")
                 produce_event(self.fsm.event_data, fail_evt)
