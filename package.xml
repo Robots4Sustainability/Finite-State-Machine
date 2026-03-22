@@ -19,6 +19,7 @@
   <exec_depend>tf_transformations</exec_depend>
   <exec_depend>interactive_markers</exec_depend>
   <exec_depend>visualization_msgs</exec_depend>
+  <exec_depend>control_msgs</exec_depend>
   <exec_depend>cartesian_planner</exec_depend>
   <exec_depend>eddie_ros</exec_depend>
   <exec_depend>coord_dsl</exec_depend>

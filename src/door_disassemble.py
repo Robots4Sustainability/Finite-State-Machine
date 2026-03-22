@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 import json
+import math
 import threading
 import time
 
 import rclpy
 from rclpy.action import ActionClient
 from rclpy.callback_groups import ReentrantCallbackGroup
+from rclpy.duration import Duration
 from rclpy.node import Node
 
 from geometry_msgs.msg import Pose, PoseStamped
@@ -14,6 +16,7 @@ from tf2_geometry_msgs import do_transform_pose
 from tf2_ros import Buffer, TransformListener
 
 from eddie_ros.action import ArmControl, GripperControl
+# from control_msgs.action import GripperCommand
 from cartesian_planner.srv import PlanScanPath
 from pick_place_fsm.action import Perception
 from coord_dsl.fsm import fsm_step
@@ -31,6 +34,7 @@ class DoorDisassembleNode(Node):
             "action_dispatched": False,
             "view_pose_global": self.get_default_view_pose_global(),
             "table_drop_pose_global": self.get_default_table_drop_pose_global(),
+            "active_place_pose_global": None,
             "subdoor_poses": [],
             "car_objects": {},
             "active_object_detection": None,
@@ -39,6 +43,9 @@ class DoorDisassembleNode(Node):
             "scan_message": "",
             "scan_screw_poses": [],
             "arm_motion_mode": "",
+            "view_pose_phase": "",
+            "pre_place_phase": "",
+            "pick_motion_phase": "",
             "pending_object_classes": [],
         }
 
@@ -47,12 +54,14 @@ class DoorDisassembleNode(Node):
         self.declare_parameter("camera_frame", "eddie_right_arm_camera_link")
         self.declare_parameter("perception_action_server", "perception")
         self.declare_parameter("car_object_classes", ["motor", "unit"])
+        self.declare_parameter("enable_raster_scan", False)
 
         self.base_frame = self.get_parameter("base_frame").value
         self.ee_frame = self.get_parameter("ee_frame").value
         self.camera_frame = self.get_parameter("camera_frame").value
         self.perception_action_server = self.get_parameter("perception_action_server").value
         self.car_object_classes = list(self.get_parameter("car_object_classes").value)
+        self.enable_raster_scan = bool(self.get_parameter("enable_raster_scan").value)
         self.object_pick_z_offset = 0.1
 
         self.cb_group = ReentrantCallbackGroup()
@@ -65,6 +74,12 @@ class DoorDisassembleNode(Node):
         self.gripper_client = ActionClient(
             self, GripperControl, "right_arm/gripper_control", callback_group=self.cb_group
         )
+        # self.gripper_client = ActionClient(
+        #     self,
+        #     GripperCommand,
+        #     "robotiq_gripper_controller/gripper_cmd",
+        #     callback_group=self.cb_group,
+        # )
         self.perception_client = ActionClient(
             self, Perception, self.perception_action_server, callback_group=self.cb_group
         )
@@ -99,6 +114,32 @@ class DoorDisassembleNode(Node):
         return p
 
     def get_default_table_drop_pose_global(self) -> Pose:
+        p = Pose()
+        p.position.x = 0.60
+        p.position.y = -0.66
+        p.position.z = 0.343951
+        p.orientation.x = 0.475857
+        p.orientation.y = 0.493639
+        p.orientation.z = 0.546011
+        p.orientation.w = 0.481407
+        return p
+
+    def get_place_target_pose_global(self) -> Pose | None:
+        active_place_pose = self.user_data["active_place_pose_global"]
+        if active_place_pose is None:
+            return None
+
+        target = Pose()
+        target.position.x = active_place_pose.position.x
+        target.position.y = active_place_pose.position.y
+        target.position.z = active_place_pose.position.z
+
+        # Keep the wrist orientation fixed during placement. The place pose from
+        # perception only provides where to put the object, not a new EE attitude.
+        target.orientation = self.user_data["table_drop_pose_global"].orientation
+        return target
+
+    def get_default_table_perceive_pose_global(self) -> Pose:
         p = Pose()
         p.position.x = 0.60
         p.position.y = -0.66
@@ -156,9 +197,13 @@ class DoorDisassembleNode(Node):
 
         if cs == StateID.S_INITIALIZE and not ud["action_dispatched"]:
             self.get_logger().info("Initializing...")
-            time.sleep(3.0)
-            self.get_logger().info("Initialized.")
-            produce_event(self.fsm.event_data, EventID.E_INIT_DONE)
+            ud["view_pose_phase"] = "INITIAL"
+            if self.check_system_readiness():
+                self.get_logger().info("Initialization checks passed.")
+                produce_event(self.fsm.event_data, EventID.E_INIT_DONE)
+            else:
+                self.get_logger().error("Initialization checks failed.")
+                produce_event(self.fsm.event_data, EventID.E_ABORT)
             ud["action_dispatched"] = True
             return
 
@@ -170,6 +215,24 @@ class DoorDisassembleNode(Node):
             return
 
         if cs == StateID.S_GET_SUBDOOR and not ud["action_dispatched"]:
+            if ud["view_pose_phase"] == "AFTER_SCAN":
+                self.get_logger().info(
+                    "Post-scan view pose reached. Skipping subdoor request and "
+                    "continuing to screwdriver probe stage."
+                )
+                ud["view_pose_phase"] = ""
+                ud["action_dispatched"] = False
+                self.fsm.current_state_index = StateID.S_EXECUTE_SCREWDRIVER_PROBE
+                return
+            if ud["view_pose_phase"] == "BEFORE_PICK":
+                self.get_logger().info(
+                    "View pose reached before pick. Skipping subdoor request and "
+                    "continuing to object pick motion."
+                )
+                ud["view_pose_phase"] = ""
+                ud["action_dispatched"] = False
+                self.fsm.current_state_index = StateID.S_MOVE_TO_PICK_OBJECT
+                return
             self.get_logger().info("Requesting subdoor poses from perception action...")
             self.request_perception("subdoor", "", self.on_subdoor_result)
             ud["action_dispatched"] = True
@@ -185,6 +248,12 @@ class DoorDisassembleNode(Node):
             return
 
         if cs == StateID.S_RASTER_SCAN and not ud["action_dispatched"]:
+            if not self.enable_raster_scan:
+                self.get_logger().info("Raster scan disabled. Skipping planner call.")
+                self.fsm.current_state_index = StateID.S_EXECUTE_SCREWDRIVER_PROBE
+                ud["action_dispatched"] = False
+                return
+
             self.get_logger().info("Calling raster scan service /plan_scan_path ...")
             if not self.scan_client.wait_for_service(timeout_sec=2.0):
                 self.get_logger().error("Raster scan service not available.")
@@ -206,15 +275,8 @@ class DoorDisassembleNode(Node):
             # Uncomment below two lines and comment out produce event line to enable raster scan
             # future = self.scan_client.call_async(req)
             # future.add_done_callback(self.on_scan_response)
-            produce_event(self.fsm.event_data, EventID.E_SCAN_DONE)
-            ud["action_dispatched"] = True
-            return
-
-        if cs == StateID.S_RETURN_TO_HOME_POSE and not ud["action_dispatched"]:
-            self.get_logger().info("Returning to default home/view pose after scan...")
-            ud["arm_motion_mode"] = "RETURN_HOME"
-            produce_event(self.fsm.event_data, EventID.E_GO_MOVE_ARM)
-            ud["action_dispatched"] = True
+            self.fsm.current_state_index = StateID.S_EXECUTE_SCREWDRIVER_PROBE
+            ud["action_dispatched"] = False
             return
 
         if cs == StateID.S_MOVE_ARM and not ud["action_dispatched"]:
@@ -230,13 +292,35 @@ class DoorDisassembleNode(Node):
                 success_evt = EventID.E_VIEW_POSE_DONE
                 fail_evt = EventID.E_VIEW_POSE_FAIL
                 context = "move to global view pose"
-            elif ud["arm_motion_mode"] == "RETURN_HOME":
+            elif ud["arm_motion_mode"] == "MOVE_TO_PRE_PLACE":
                 target = self.global_pose_to_relative_pose(
-                    ud["view_pose_global"], self.base_frame, self.ee_frame
+                    ud["table_drop_pose_global"], self.base_frame, self.ee_frame
                 )
-                success_evt = EventID.E_RETURN_HOME_DONE
-                fail_evt = EventID.E_RETURN_HOME_FAIL
-                context = "return to default home/view pose"
+                if ud["pre_place_phase"] == "TABLE_PERCEIVE":
+                    success_evt = EventID.E_PRE_PLACE_DONE
+                    fail_evt = EventID.E_ARM_MOVE_FAIL
+                    context = "move to pre-place pose for table perception"
+                elif ud["pre_place_phase"] == "BEFORE_PICK":
+                    fail_evt = EventID.E_ARM_MOVE_FAIL
+                    context = "return to pre-place pose before pick"
+                    self.get_logger().info(f"Executing arm motion: {context}")
+                    self._send_direct_arm_goal(
+                        target,
+                        None,
+                        fail_evt,
+                        context,
+                        result_callback=self._pre_place_before_pick_result,
+                    )
+                    ud["action_dispatched"] = True
+                    return
+                elif ud["pre_place_phase"] == "WITH_OBJECT":
+                    success_evt = EventID.E_PRE_PLACE_WITH_OBJECT_DONE
+                    fail_evt = EventID.E_ARM_MOVE_FAIL
+                    context = "return to pre-place pose with object"
+                elif ud["pre_place_phase"] == "AFTER_DROP":
+                    success_evt = EventID.E_PRE_PLACE_AFTER_DROP_DONE
+                    fail_evt = EventID.E_PRE_PLACE_AFTER_DROP_FAIL
+                    context = "return to pre-place pose after drop"
             elif ud["arm_motion_mode"] == "PICK_OBJECT":
                 target = self.object_pose_to_relative_pose(
                     ud["active_object_detection"], z_offset=self.object_pick_z_offset
@@ -257,25 +341,29 @@ class DoorDisassembleNode(Node):
                     )
                 ud["action_dispatched"] = True
                 return
-            elif ud["arm_motion_mode"] == "RETREAT_WITH_OBJECT":
+            elif ud["arm_motion_mode"] == "PICK_OBJECT_RETREAT":
                 target = self.make_relative_offset_pose(dz=-self.object_pick_z_offset)
-                success_evt = EventID.E_RETREAT_WITH_OBJECT_DONE
+                success_evt = EventID.E_PICK_OBJECT_RETREAT_DONE
                 fail_evt = EventID.E_ARM_MOVE_FAIL
                 context = "retreat with grasped object"
-            elif ud["arm_motion_mode"] == "MOVE_TO_TABLE_DROP":
+            elif ud["arm_motion_mode"] == "MOVE_TO_PLACE":
+                if ud["active_place_pose_global"] is None:
+                    self.get_logger().error("No active place pose available.")
+                    produce_event(self.fsm.event_data, EventID.E_ARM_MOVE_FAIL)
+                    ud["action_dispatched"] = True
+                    return
+                place_target = self.get_place_target_pose_global()
+                if place_target is None:
+                    self.get_logger().error("Failed to build place target pose.")
+                    produce_event(self.fsm.event_data, EventID.E_ARM_MOVE_FAIL)
+                    ud["action_dispatched"] = True
+                    return
                 target = self.global_pose_to_relative_pose(
-                    ud["table_drop_pose_global"], self.base_frame, self.ee_frame
+                    place_target, self.base_frame, self.ee_frame
                 )
-                success_evt = EventID.E_MOVE_TO_TABLE_DONE
+                success_evt = EventID.E_MOVE_TO_PLACE_DONE
                 fail_evt = EventID.E_ARM_MOVE_FAIL
-                context = "move to table drop pose"
-            elif ud["arm_motion_mode"] == "POST_DROP_HOME":
-                target = self.global_pose_to_relative_pose(
-                    ud["view_pose_global"], self.base_frame, self.ee_frame
-                )
-                success_evt = EventID.E_POST_DROP_HOME_DONE
-                fail_evt = EventID.E_POST_DROP_HOME_FAIL
-                context = "return to default home/view pose after drop"
+                context = "move to place pose"
 
             if success_evt is None or fail_evt is None:
                 self.get_logger().error(
@@ -306,12 +394,44 @@ class DoorDisassembleNode(Node):
                     f"class='{ud['active_object_class']}' "
                     f"with radius {ud['active_object_radius']}."
                 )
-                ud["arm_motion_mode"] = "PICK_OBJECT"
+                ud["pre_place_phase"] = "TABLE_PERCEIVE"
+                ud["active_place_pose_global"] = None
                 produce_event(self.fsm.event_data, EventID.E_OBJECT_READY)
             ud["action_dispatched"] = True
             return
 
+        if cs == StateID.S_MOVE_TO_PRE_PLACE_POSE and not ud["action_dispatched"]:
+            self.get_logger().info(f"Moving to pre-place pose. phase={ud['pre_place_phase']}")
+            ud["arm_motion_mode"] = "MOVE_TO_PRE_PLACE"
+            produce_event(self.fsm.event_data, EventID.E_GO_MOVE_ARM)
+            ud["action_dispatched"] = True
+            return
+
+        if cs == StateID.S_TABLE_PERCEIVE and not ud["action_dispatched"]:
+            self.get_logger().info(
+                "Tilting end-effector 45 degrees downward for table perceive, then "
+                f"requesting place pose for class='{ud['active_object_class']}' "
+                f"with radius {ud['active_object_radius']}."
+            )
+            self.send_table_perceive_tilt()
+            ud["action_dispatched"] = True
+            return
+
+        if cs == StateID.S_MOVE_TO_PICK_OBJECT and not ud["action_dispatched"]:
+            if ud["pick_motion_phase"] == "RETREAT":
+                self.get_logger().info("Retreating 10 cm with grasped object...")
+                ud["arm_motion_mode"] = "PICK_OBJECT_RETREAT"
+            else:
+                self.get_logger().info("Executing pick approach: pre-pick then advance 10 cm.")
+                ud["pick_motion_phase"] = "APPROACH"
+                ud["arm_motion_mode"] = "PICK_OBJECT"
+            produce_event(self.fsm.event_data, EventID.E_GO_MOVE_ARM)
+            ud["action_dispatched"] = True
+            return
+
         if cs == StateID.S_CLOSE_GRIPPER and not ud["action_dispatched"]:
+            ud["pick_motion_phase"] = "RETREAT"
+            ud["pre_place_phase"] = "WITH_OBJECT"
             self.send_gripper_command(
                 100.0,
                 EventID.E_GRIPPER_CLOSE_DONE,
@@ -321,34 +441,21 @@ class DoorDisassembleNode(Node):
             ud["action_dispatched"] = True
             return
 
-        if cs == StateID.S_RETREAT_ARM_WITH_OBJECT and not ud["action_dispatched"]:
-            self.get_logger().info("Retreating with grasped object...")
-            ud["arm_motion_mode"] = "RETREAT_WITH_OBJECT"
-            produce_event(self.fsm.event_data, EventID.E_GO_MOVE_ARM)
-            ud["action_dispatched"] = True
-            return
-
-        if cs == StateID.S_MOVE_TO_TABLE_DROP_POSE and not ud["action_dispatched"]:
-            self.get_logger().info("Moving to table drop pose...")
-            ud["arm_motion_mode"] = "MOVE_TO_TABLE_DROP"
+        if cs == StateID.S_MOVE_TO_PLACE_POSE and not ud["action_dispatched"]:
+            self.get_logger().info("Moving to place pose...")
+            ud["arm_motion_mode"] = "MOVE_TO_PLACE"
             produce_event(self.fsm.event_data, EventID.E_GO_MOVE_ARM)
             ud["action_dispatched"] = True
             return
 
         if cs == StateID.S_OPEN_GRIPPER and not ud["action_dispatched"]:
+            ud["pre_place_phase"] = "AFTER_DROP"
             self.send_gripper_command(
                 0.0,
                 EventID.E_GRIPPER_OPEN_DONE,
                 EventID.E_GRIPPER_FAIL,
                 "open gripper to drop object",
             )
-            ud["action_dispatched"] = True
-            return
-
-        if cs == StateID.S_RETURN_HOME_AFTER_DROP and not ud["action_dispatched"]:
-            self.get_logger().info("Returning to home/view pose after drop...")
-            ud["arm_motion_mode"] = "POST_DROP_HOME"
-            produce_event(self.fsm.event_data, EventID.E_GO_MOVE_ARM)
             ud["action_dispatched"] = True
             return
 
@@ -409,6 +516,76 @@ class DoorDisassembleNode(Node):
                 return object_class
         return None
 
+    def check_system_readiness(self) -> bool:
+        checks_ok = True
+
+        checks_ok &= self._check_action_server(
+            self.arm_client, "right_arm/arm_control"
+        )
+        checks_ok &= self._check_action_server(
+            self.gripper_client, "right_arm/gripper_control"
+        )
+        # checks_ok &= self._check_action_server(
+        #     self.gripper_client, "robotiq_gripper_controller/gripper_cmd"
+        # )
+        checks_ok &= self._check_action_server(
+            self.perception_client, self.perception_action_server
+        )
+
+        if self.enable_raster_scan:
+            checks_ok &= self._check_service(self.scan_client, "plan_scan_path")
+        else:
+            self.get_logger().info(
+                "Skipping plan_scan_path readiness check because raster scan is disabled."
+            )
+
+        required_frames = [self.base_frame, self.ee_frame, self.camera_frame]
+        for frame in required_frames:
+            if not frame:
+                self.get_logger().error("A required frame parameter is empty.")
+                checks_ok = False
+
+        checks_ok &= self._check_transform(self.base_frame, self.ee_frame)
+        checks_ok &= self._check_transform(self.base_frame, self.camera_frame)
+        return checks_ok
+
+    def _check_action_server(self, client, name: str) -> bool:
+        if client.wait_for_server(timeout_sec=2.0):
+            self.get_logger().info(f"Action server ready: {name}")
+            return True
+        self.get_logger().error(f"Action server not available: {name}")
+        return False
+
+    def _check_service(self, client, name: str) -> bool:
+        if client.wait_for_service(timeout_sec=2.0):
+            self.get_logger().info(f"Service ready: {name}")
+            return True
+        self.get_logger().error(f"Service not available: {name}")
+        return False
+
+    def _check_transform(self, target_frame: str, source_frame: str) -> bool:
+        try:
+            if self.tf_buffer.can_transform(
+                target_frame,
+                source_frame,
+                rclpy.time.Time(),
+                timeout=Duration(seconds=2.0),
+            ):
+                self.get_logger().info(
+                    f"Transform ready: {target_frame} <- {source_frame}"
+                )
+                return True
+        except Exception as e:
+            self.get_logger().error(
+                f"Transform check failed for {target_frame} <- {source_frame}: {e}"
+            )
+            return False
+
+        self.get_logger().error(
+            f"Transform not available: {target_frame} <- {source_frame}"
+        )
+        return False
+
     def select_next_car_object(self) -> bool:
         object_class = self.get_next_available_object_class()
         if object_class is None:
@@ -418,12 +595,15 @@ class DoorDisassembleNode(Node):
         self.user_data["active_object_class"] = object_class
         self.user_data["active_object_detection"] = active_object["pose"]
         self.user_data["active_object_radius"] = active_object["radius"]
+        self.user_data["pick_motion_phase"] = ""
         return True
 
     def clear_active_car_object(self):
         self.user_data["active_object_detection"] = None
         self.user_data["active_object_radius"] = 0.0
         self.user_data["active_object_class"] = ""
+        self.user_data["active_place_pose_global"] = None
+        self.user_data["pick_motion_phase"] = ""
 
     def transform_pose_stamped_to_base(self, pose_stamped: PoseStamped) -> PoseStamped | None:
         transformed_pose = self.relative_pose_to_global_pose(
@@ -458,6 +638,22 @@ class DoorDisassembleNode(Node):
         p.orientation.w = 1.0
         return p
 
+    def make_relative_orientation_pose(self, qx=0.0, qy=0.0, qz=0.0, qw=1.0) -> Pose:
+        p = Pose()
+        p.orientation.x = qx
+        p.orientation.y = qy
+        p.orientation.z = qz
+        p.orientation.w = qw
+        return p
+
+    def make_table_perceive_tilt_pose(self) -> Pose:
+        half_angle = math.radians(45.0) / 2.0
+        # Tilt the tool downward in place around the local X axis.
+        return self.make_relative_orientation_pose(
+            qx=math.sin(half_angle),
+            qw=math.cos(half_angle),
+        )
+
     def on_scan_response(self, future):
         try:
             resp = future.result()
@@ -485,7 +681,8 @@ class DoorDisassembleNode(Node):
                     pass
 
                 self.get_logger().info("Raster scan completed.")
-                produce_event(self.fsm.event_data, EventID.E_SCAN_DONE)
+                self.fsm.current_state_index = StateID.S_EXECUTE_SCREWDRIVER_PROBE
+                self.user_data["action_dispatched"] = False
             else:
                 self.get_logger().error(f"Raster scan failed: {resp.message}")
                 produce_event(self.fsm.event_data, EventID.E_SCAN_FAIL)
@@ -497,7 +694,7 @@ class DoorDisassembleNode(Node):
         self.get_logger().info("Screwdriver probe execution is currently disabled.")
         produce_event(self.fsm.event_data, EventID.E_SCREWDRIVER_PROBE_DONE)
 
-    def request_perception(self, task_name, object_class, result_callback):
+    def request_perception(self, task_name, object_class, result_callback, time_duration=0.0):
         if not self.perception_client.wait_for_server(timeout_sec=2.0):
             self.get_logger().error("Perception action server not available.")
             result_callback(None)
@@ -506,6 +703,7 @@ class DoorDisassembleNode(Node):
         goal = Perception.Goal()
         goal.task_name = task_name
         goal.object_class = object_class
+        goal.time_duration = float(time_duration)
         future = self.perception_client.send_goal_async(goal)
         future.add_done_callback(
             lambda fut: self._perception_goal_response(
@@ -541,6 +739,25 @@ class DoorDisassembleNode(Node):
         self.user_data["pending_object_classes"] = list(self.car_object_classes)
         self._request_next_car_object_class()
 
+    def request_place_pose(self):
+        # Temporary transport for object radius until the perception action gets
+        # a dedicated goal field for placement radius.
+        self.request_perception(
+            "place_object",
+            self.user_data["active_object_class"],
+            self.on_place_pose_result,
+            time_duration=self.user_data["active_object_radius"],
+        )
+
+    def send_table_perceive_tilt(self):
+        self._send_direct_arm_goal(
+            self.make_table_perceive_tilt_pose(),
+            None,
+            None,
+            "tilt end-effector down for table perceive",
+            result_callback=self._table_perceive_tilt_result,
+        )
+
     def _request_next_car_object_class(self):
         if not self.user_data["pending_object_classes"]:
             self.get_logger().info(
@@ -565,6 +782,27 @@ class DoorDisassembleNode(Node):
             EventID.E_SUBDOOR_DONE,
             EventID.E_SUBDOOR_FAIL,
         )
+
+    def on_place_pose_result(self, result):
+        if result is None or not result.success:
+            message = "no response" if result is None else result.message
+            self.get_logger().error(f"Place pose perception failed: {message}")
+            produce_event(self.fsm.event_data, EventID.E_TABLE_PERCEIVE_FAIL)
+            return
+
+        transformed_poses = self.transform_pose_array_to_base(result.poses)
+        if transformed_poses is None or len(transformed_poses) < 1:
+            self.get_logger().error("Place pose perception returned no valid poses.")
+            produce_event(self.fsm.event_data, EventID.E_TABLE_PERCEIVE_FAIL)
+            return
+
+        self.user_data["active_place_pose_global"] = transformed_poses[0].pose
+        self.user_data["pre_place_phase"] = "BEFORE_PICK"
+        self.get_logger().info(
+            f"Stored place pose in {self.base_frame} for "
+            f"class='{self.user_data['active_object_class']}'."
+        )
+        produce_event(self.fsm.event_data, EventID.E_TABLE_PERCEIVE_DONE)
 
     def _handle_car_object_result(self, object_class, result):
         if not self.store_car_object(object_class, result):
@@ -648,45 +886,66 @@ class DoorDisassembleNode(Node):
         goal.target_position = position
         goal.velocity = 20.0
         goal.force = 10.0
+        # goal = GripperCommand.Goal()
+        # goal.command.position = position
+        # goal.command.max_effort = 20.0
 
         future = self.gripper_client.send_goal_async(goal)
         future.add_done_callback(
             lambda fut: self._gripper_goal_response(fut, success_evt, fail_evt, context)
         )
 
-    def _send_direct_arm_goal(self, pose, success_evt, fail_evt, context):
+    def _send_direct_arm_goal(
+        self, pose, success_evt, fail_evt, context, result_callback=None
+    ):
         if not self.arm_client.wait_for_server(timeout_sec=1.0):
             self.get_logger().error(f"Arm action server not available during {context}.")
-            produce_event(self.fsm.event_data, fail_evt)
+            if result_callback is not None:
+                result_callback(None)
+            elif fail_evt is not None:
+                produce_event(self.fsm.event_data, fail_evt)
             return
         goal = ArmControl.Goal()
         goal.target_pose = pose
         future = self.arm_client.send_goal_async(goal)
         future.add_done_callback(
-            lambda fut: self._arm_goal_response(fut, success_evt, fail_evt, context)
+            lambda fut: self._arm_goal_response(
+                fut, success_evt, fail_evt, context, result_callback
+            )
         )
 
-    def _arm_goal_response(self, future, success_evt, fail_evt, context):
+    def _arm_goal_response(self, future, success_evt, fail_evt, context, result_callback=None):
         try:
             goal_handle = future.result()
             if not goal_handle.accepted:
                 self.get_logger().error(f"Arm goal rejected during {context}.")
-                produce_event(self.fsm.event_data, fail_evt)
+                if result_callback is not None:
+                    result_callback(None)
+                elif fail_evt is not None:
+                    produce_event(self.fsm.event_data, fail_evt)
                 return
             res_future = goal_handle.get_result_async()
             res_future.add_done_callback(
-                lambda fut: self._arm_result(fut, success_evt, fail_evt, context)
+                lambda fut: self._arm_result(
+                    fut, success_evt, fail_evt, context, result_callback
+                )
             )
         except Exception as e:
             self.get_logger().error(f"Arm goal exception during {context}: {e}")
-            produce_event(self.fsm.event_data, fail_evt)
+            if result_callback is not None:
+                result_callback(None)
+            elif fail_evt is not None:
+                produce_event(self.fsm.event_data, fail_evt)
 
-    def _arm_result(self, future, success_evt, fail_evt, context):
+    def _arm_result(self, future, success_evt, fail_evt, context, result_callback=None):
         try:
             result = future.result().result
             if result.result_code == ArmControl.Result.SUCCESS:
                 self.get_logger().info(f"Arm action succeeded during {context}.")
-                produce_event(self.fsm.event_data, success_evt)
+                if result_callback is not None:
+                    result_callback(result)
+                elif success_evt is not None:
+                    produce_event(self.fsm.event_data, success_evt)
             else:
                 msg = (
                     result.result_message
@@ -694,10 +953,30 @@ class DoorDisassembleNode(Node):
                     else result.message
                 )
                 self.get_logger().error(f"Arm action failed during {context}: {msg}")
-                produce_event(self.fsm.event_data, fail_evt)
+                if result_callback is not None:
+                    result_callback(None)
+                elif fail_evt is not None:
+                    produce_event(self.fsm.event_data, fail_evt)
         except Exception as e:
             self.get_logger().error(f"Arm result exception during {context}: {e}")
-            produce_event(self.fsm.event_data, fail_evt)
+            if result_callback is not None:
+                result_callback(None)
+            elif fail_evt is not None:
+                produce_event(self.fsm.event_data, fail_evt)
+
+    def _table_perceive_tilt_result(self, result):
+        if result is None:
+            produce_event(self.fsm.event_data, EventID.E_TABLE_PERCEIVE_FAIL)
+            return
+        self.request_place_pose()
+
+    def _pre_place_before_pick_result(self, result):
+        if result is None:
+            produce_event(self.fsm.event_data, EventID.E_ARM_MOVE_FAIL)
+            return
+        self.user_data["view_pose_phase"] = "BEFORE_PICK"
+        self.fsm.current_state_index = StateID.S_MOVE_TO_VIEW_POSE
+        self.user_data["action_dispatched"] = False
 
     def _pick_pre_pose_goal_response(self, future, pick_offset_pose, success_evt, fail_evt):
         try:
@@ -770,7 +1049,7 @@ class DoorDisassembleNode(Node):
                 msg = (
                     result.result_message
                     if hasattr(result, "result_message")
-                    else result.message
+                    else "unknown gripper failure"
                 )
                 self.get_logger().error(f"Gripper action failed during {context}: {msg}")
                 produce_event(self.fsm.event_data, fail_evt)

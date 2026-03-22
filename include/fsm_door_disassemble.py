@@ -35,17 +35,20 @@ class EventID(IntEnum):
     E_SUBDOOR_FAIL = auto()
     E_SCAN_DONE = auto()
     E_SCAN_FAIL = auto()
-    E_RETURN_HOME_DONE = auto()
-    E_RETURN_HOME_FAIL = auto()
     E_SCREWDRIVER_PROBE_DONE = auto()
     E_SCREWDRIVER_PROBE_FAIL = auto()
     E_OBJECT_READY = auto()
     E_NO_MORE_OBJECTS = auto()
+    E_PRE_PLACE_DONE = auto()
+    E_TABLE_PERCEIVE_DONE = auto()
+    E_TABLE_PERCEIVE_FAIL = auto()
+    E_PRE_PLACE_BEFORE_PICK_DONE = auto()
     E_PICK_OBJECT_DONE = auto()
-    E_RETREAT_WITH_OBJECT_DONE = auto()
-    E_MOVE_TO_TABLE_DONE = auto()
-    E_POST_DROP_HOME_DONE = auto()
-    E_POST_DROP_HOME_FAIL = auto()
+    E_PICK_OBJECT_RETREAT_DONE = auto()
+    E_PRE_PLACE_WITH_OBJECT_DONE = auto()
+    E_MOVE_TO_PLACE_DONE = auto()
+    E_PRE_PLACE_AFTER_DROP_DONE = auto()
+    E_PRE_PLACE_AFTER_DROP_FAIL = auto()
     E_ARM_MOVE_FAIL = auto()
     E_GRIPPER_CLOSE_DONE = auto()
     E_GRIPPER_OPEN_DONE = auto()
@@ -64,15 +67,15 @@ class StateID(IntEnum):
     S_GET_SUBDOOR = auto()
     S_RASTER_SCAN = auto()
     S_GET_OBJECTS = auto()
-    S_RETURN_TO_HOME_POSE = auto()
     S_MOVE_ARM = auto()
     S_EXECUTE_SCREWDRIVER_PROBE = auto()
     S_SELECT_NEXT_OBJECT = auto()
+    S_MOVE_TO_PRE_PLACE_POSE = auto()
+    S_TABLE_PERCEIVE = auto()
+    S_MOVE_TO_PICK_OBJECT = auto()
     S_CLOSE_GRIPPER = auto()
-    S_RETREAT_ARM_WITH_OBJECT = auto()
-    S_MOVE_TO_TABLE_DROP_POSE = auto()
+    S_MOVE_TO_PLACE_POSE = auto()
     S_OPEN_GRIPPER = auto()
-    S_RETURN_HOME_AFTER_DROP = auto()
     S_CONFIRM_DATA = auto()
     S_EXIT = auto()
 
@@ -93,43 +96,46 @@ class TransitionID(IntEnum):
     T_GET_OBJECTS_RASTER_SCAN = auto()
     T_GET_OBJECTS_EXIT = auto()
     T_GET_OBJECTS_ABORT_EXIT = auto()
-    T_RASTER_SCAN_RETURN_HOME = auto()
+    T_RASTER_SCAN_MOVE_TO_VIEW_POSE = auto()
     T_RASTER_SCAN_EXIT = auto()
     T_RASTER_SCAN_ABORT_EXIT = auto()
-    T_RETURN_HOME_MOVE_ARM = auto()
-    T_RETURN_HOME_EXIT = auto()
-    T_RETURN_HOME_ABORT_EXIT = auto()
     T_EXECUTE_SCREWDRIVER_PROBE_SELECT_NEXT_OBJECT = auto()
     T_EXECUTE_SCREWDRIVER_PROBE_EXIT = auto()
     T_EXECUTE_SCREWDRIVER_PROBE_ABORT_EXIT = auto()
     T_MOVE_ARM_GET_SUBDOOR = auto()
     T_MOVE_ARM_EXECUTE_SCREWDRIVER_PROBE = auto()
+    T_MOVE_ARM_TABLE_PERCEIVE = auto()
+    T_MOVE_ARM_MOVE_TO_PRE_PLACE_POSE = auto()
+    T_MOVE_ARM_MOVE_TO_PICK_OBJECT = auto()
     T_MOVE_ARM_CLOSE_GRIPPER = auto()
-    T_MOVE_ARM_MOVE_TO_TABLE_DROP_POSE = auto()
+    T_MOVE_ARM_MOVE_TO_PLACE_POSE = auto()
     T_MOVE_ARM_OPEN_GRIPPER = auto()
     T_MOVE_ARM_SELECT_NEXT_OBJECT = auto()
     T_MOVE_ARM_CONFIRM_DATA = auto()
     T_MOVE_ARM_EXIT = auto()
     T_MOVE_ARM_ABORT_EXIT = auto()
-    T_SELECT_NEXT_OBJECT_MOVE_ARM = auto()
+    T_SELECT_NEXT_OBJECT_MOVE_TO_PRE_PLACE_POSE = auto()
     T_SELECT_NEXT_OBJECT_CONFIRM_DATA = auto()
     T_SELECT_NEXT_OBJECT_EXIT = auto()
     T_SELECT_NEXT_OBJECT_ABORT_EXIT = auto()
+    T_MOVE_TO_PRE_PLACE_POSE_MOVE_ARM = auto()
+    T_MOVE_TO_PRE_PLACE_POSE_EXIT = auto()
+    T_MOVE_TO_PRE_PLACE_POSE_ABORT_EXIT = auto()
+    T_TABLE_PERCEIVE_MOVE_TO_PRE_PLACE_POSE = auto()
+    T_TABLE_PERCEIVE_EXIT = auto()
+    T_TABLE_PERCEIVE_ABORT_EXIT = auto()
+    T_MOVE_TO_PICK_OBJECT_MOVE_ARM = auto()
+    T_MOVE_TO_PICK_OBJECT_EXIT = auto()
+    T_MOVE_TO_PICK_OBJECT_ABORT_EXIT = auto()
     T_CLOSE_GRIPPER_RETREAT_ARM_WITH_OBJECT = auto()
     T_CLOSE_GRIPPER_EXIT = auto()
     T_CLOSE_GRIPPER_ABORT_EXIT = auto()
-    T_RETREAT_ARM_WITH_OBJECT_MOVE_ARM = auto()
-    T_RETREAT_ARM_WITH_OBJECT_EXIT = auto()
-    T_RETREAT_ARM_WITH_OBJECT_ABORT_EXIT = auto()
-    T_MOVE_TO_TABLE_DROP_POSE_MOVE_ARM = auto()
-    T_MOVE_TO_TABLE_DROP_POSE_EXIT = auto()
-    T_MOVE_TO_TABLE_DROP_POSE_ABORT_EXIT = auto()
-    T_OPEN_GRIPPER_RETURN_HOME_AFTER_DROP = auto()
+    T_MOVE_TO_PLACE_POSE_MOVE_ARM = auto()
+    T_MOVE_TO_PLACE_POSE_EXIT = auto()
+    T_MOVE_TO_PLACE_POSE_ABORT_EXIT = auto()
+    T_OPEN_GRIPPER_MOVE_TO_PRE_PLACE_POSE = auto()
     T_OPEN_GRIPPER_EXIT = auto()
     T_OPEN_GRIPPER_ABORT_EXIT = auto()
-    T_RETURN_HOME_AFTER_DROP_MOVE_ARM = auto()
-    T_RETURN_HOME_AFTER_DROP_EXIT = auto()
-    T_RETURN_HOME_AFTER_DROP_ABORT_EXIT = auto()
     T_CONFIRM_DATA_IDLE = auto()
     T_CONFIRM_DATA_ABORT_EXIT = auto()
 
@@ -142,15 +148,15 @@ class ReactionID(IntEnum):
     R_E_ABORT_MOVE_TO_VIEW_POSE = auto()
     R_E_ABORT_GET_SUBDOOR = auto()
     R_E_ABORT_RASTER_SCAN = auto()
-    R_E_ABORT_RETURN_HOME = auto()
     R_E_ABORT_MOVE_ARM = auto()
     R_E_ABORT_EXECUTE_SCREWDRIVER_PROBE = auto()
     R_E_ABORT_SELECT_NEXT_OBJECT = auto()
+    R_E_ABORT_MOVE_TO_PRE_PLACE_POSE = auto()
+    R_E_ABORT_TABLE_PERCEIVE = auto()
+    R_E_ABORT_MOVE_TO_PICK_OBJECT = auto()
     R_E_ABORT_CLOSE_GRIPPER = auto()
-    R_E_ABORT_RETREAT_ARM_WITH_OBJECT = auto()
-    R_E_ABORT_MOVE_TO_TABLE_DROP_POSE = auto()
+    R_E_ABORT_MOVE_TO_PLACE_POSE = auto()
     R_E_ABORT_OPEN_GRIPPER = auto()
-    R_E_ABORT_RETURN_HOME_AFTER_DROP = auto()
     R_E_ABORT_GET_OBJECTS = auto()
     R_E_ABORT_CONFIRM_DATA = auto()
     R_E_INIT_DONE = auto()
@@ -164,30 +170,30 @@ class ReactionID(IntEnum):
     R_E_OBJECTS_FAIL = auto()
     R_E_SCAN_DONE = auto()
     R_E_SCAN_FAIL = auto()
-    R_E_RETURN_HOME_DONE = auto()
-    R_E_RETURN_HOME_FAIL = auto()
-    R_E_RETURN_HOME_FAIL_MOVE_ARM = auto()
     R_E_SCREWDRIVER_PROBE_DONE = auto()
     R_E_SCREWDRIVER_PROBE_FAIL = auto()
     R_E_SCREWDRIVER_PROBE_FAIL_MOVE_ARM = auto()
     R_E_OBJECT_READY = auto()
     R_E_NO_MORE_OBJECTS = auto()
+    R_E_PRE_PLACE_DONE = auto()
+    R_E_TABLE_PERCEIVE_DONE = auto()
+    R_E_TABLE_PERCEIVE_FAIL = auto()
+    R_E_PRE_PLACE_BEFORE_PICK_DONE = auto()
     R_E_PICK_OBJECT_DONE = auto()
-    R_E_RETREAT_WITH_OBJECT_DONE = auto()
-    R_E_MOVE_TO_TABLE_DONE = auto()
-    R_E_POST_DROP_HOME_DONE = auto()
+    R_E_PICK_OBJECT_RETREAT_DONE = auto()
+    R_E_PRE_PLACE_WITH_OBJECT_DONE = auto()
+    R_E_MOVE_TO_PLACE_DONE = auto()
+    R_E_PRE_PLACE_AFTER_DROP_DONE = auto()
     R_E_ARM_MOVE_FAIL = auto()
     R_E_GRIPPER_CLOSE_DONE = auto()
     R_E_GRIPPER_CLOSE_FAIL = auto()
     R_E_GRIPPER_OPEN_DONE = auto()
     R_E_GRIPPER_OPEN_FAIL = auto()
     R_E_GO_MOVE_ARM_FROM_VIEW_POSE = auto()
-    R_E_GO_MOVE_ARM_FROM_RETURN_HOME = auto()
-    R_E_GO_MOVE_ARM_FROM_SELECT_NEXT_OBJECT = auto()
-    R_E_GO_MOVE_ARM_FROM_RETREAT_ARM_WITH_OBJECT = auto()
-    R_E_GO_MOVE_ARM_FROM_MOVE_TO_TABLE_DROP_POSE = auto()
-    R_E_GO_MOVE_ARM_FROM_RETURN_HOME_AFTER_DROP = auto()
-    R_E_POST_DROP_HOME_FAIL = auto()
+    R_E_GO_MOVE_ARM_FROM_MOVE_TO_PRE_PLACE_POSE = auto()
+    R_E_GO_MOVE_ARM_FROM_MOVE_TO_PICK_OBJECT = auto()
+    R_E_GO_MOVE_ARM_FROM_MOVE_TO_PLACE_POSE = auto()
+    R_E_PRE_PLACE_AFTER_DROP_FAIL = auto()
     R_E_CONFIRM_DONE = auto()
 
 
@@ -209,43 +215,46 @@ def create_fsm() -> FSMData:
         TransitionID.T_GET_OBJECTS_RASTER_SCAN: Transition(StateID.S_GET_OBJECTS, StateID.S_RASTER_SCAN),
         TransitionID.T_GET_OBJECTS_EXIT: Transition(StateID.S_GET_OBJECTS, StateID.S_EXIT),
         TransitionID.T_GET_OBJECTS_ABORT_EXIT: Transition(StateID.S_GET_OBJECTS, StateID.S_EXIT),
-        TransitionID.T_RASTER_SCAN_RETURN_HOME: Transition(StateID.S_RASTER_SCAN, StateID.S_RETURN_TO_HOME_POSE),
+        TransitionID.T_RASTER_SCAN_MOVE_TO_VIEW_POSE: Transition(StateID.S_RASTER_SCAN, StateID.S_MOVE_TO_VIEW_POSE),
         TransitionID.T_RASTER_SCAN_EXIT: Transition(StateID.S_RASTER_SCAN, StateID.S_EXIT),
         TransitionID.T_RASTER_SCAN_ABORT_EXIT: Transition(StateID.S_RASTER_SCAN, StateID.S_EXIT),
-        TransitionID.T_RETURN_HOME_MOVE_ARM: Transition(StateID.S_RETURN_TO_HOME_POSE, StateID.S_MOVE_ARM),
-        TransitionID.T_RETURN_HOME_EXIT: Transition(StateID.S_RETURN_TO_HOME_POSE, StateID.S_EXIT),
-        TransitionID.T_RETURN_HOME_ABORT_EXIT: Transition(StateID.S_RETURN_TO_HOME_POSE, StateID.S_EXIT),
         TransitionID.T_EXECUTE_SCREWDRIVER_PROBE_SELECT_NEXT_OBJECT: Transition(StateID.S_EXECUTE_SCREWDRIVER_PROBE, StateID.S_SELECT_NEXT_OBJECT),
         TransitionID.T_EXECUTE_SCREWDRIVER_PROBE_EXIT: Transition(StateID.S_EXECUTE_SCREWDRIVER_PROBE, StateID.S_EXIT),
         TransitionID.T_EXECUTE_SCREWDRIVER_PROBE_ABORT_EXIT: Transition(StateID.S_EXECUTE_SCREWDRIVER_PROBE, StateID.S_EXIT),
         TransitionID.T_MOVE_ARM_GET_SUBDOOR: Transition(StateID.S_MOVE_ARM, StateID.S_GET_SUBDOOR),
         TransitionID.T_MOVE_ARM_EXECUTE_SCREWDRIVER_PROBE: Transition(StateID.S_MOVE_ARM, StateID.S_EXECUTE_SCREWDRIVER_PROBE),
+        TransitionID.T_MOVE_ARM_TABLE_PERCEIVE: Transition(StateID.S_MOVE_ARM, StateID.S_TABLE_PERCEIVE),
+        TransitionID.T_MOVE_ARM_MOVE_TO_PRE_PLACE_POSE: Transition(StateID.S_MOVE_ARM, StateID.S_MOVE_TO_PRE_PLACE_POSE),
+        TransitionID.T_MOVE_ARM_MOVE_TO_PICK_OBJECT: Transition(StateID.S_MOVE_ARM, StateID.S_MOVE_TO_PICK_OBJECT),
         TransitionID.T_MOVE_ARM_CLOSE_GRIPPER: Transition(StateID.S_MOVE_ARM, StateID.S_CLOSE_GRIPPER),
-        TransitionID.T_MOVE_ARM_MOVE_TO_TABLE_DROP_POSE: Transition(StateID.S_MOVE_ARM, StateID.S_MOVE_TO_TABLE_DROP_POSE),
+        TransitionID.T_MOVE_ARM_MOVE_TO_PLACE_POSE: Transition(StateID.S_MOVE_ARM, StateID.S_MOVE_TO_PLACE_POSE),
         TransitionID.T_MOVE_ARM_OPEN_GRIPPER: Transition(StateID.S_MOVE_ARM, StateID.S_OPEN_GRIPPER),
         TransitionID.T_MOVE_ARM_SELECT_NEXT_OBJECT: Transition(StateID.S_MOVE_ARM, StateID.S_SELECT_NEXT_OBJECT),
         TransitionID.T_MOVE_ARM_CONFIRM_DATA: Transition(StateID.S_MOVE_ARM, StateID.S_CONFIRM_DATA),
         TransitionID.T_MOVE_ARM_EXIT: Transition(StateID.S_MOVE_ARM, StateID.S_EXIT),
         TransitionID.T_MOVE_ARM_ABORT_EXIT: Transition(StateID.S_MOVE_ARM, StateID.S_EXIT),
-        TransitionID.T_SELECT_NEXT_OBJECT_MOVE_ARM: Transition(StateID.S_SELECT_NEXT_OBJECT, StateID.S_MOVE_ARM),
+        TransitionID.T_SELECT_NEXT_OBJECT_MOVE_TO_PRE_PLACE_POSE: Transition(StateID.S_SELECT_NEXT_OBJECT, StateID.S_MOVE_TO_PRE_PLACE_POSE),
         TransitionID.T_SELECT_NEXT_OBJECT_CONFIRM_DATA: Transition(StateID.S_SELECT_NEXT_OBJECT, StateID.S_CONFIRM_DATA),
         TransitionID.T_SELECT_NEXT_OBJECT_EXIT: Transition(StateID.S_SELECT_NEXT_OBJECT, StateID.S_EXIT),
         TransitionID.T_SELECT_NEXT_OBJECT_ABORT_EXIT: Transition(StateID.S_SELECT_NEXT_OBJECT, StateID.S_EXIT),
-        TransitionID.T_CLOSE_GRIPPER_RETREAT_ARM_WITH_OBJECT: Transition(StateID.S_CLOSE_GRIPPER, StateID.S_RETREAT_ARM_WITH_OBJECT),
+        TransitionID.T_MOVE_TO_PRE_PLACE_POSE_MOVE_ARM: Transition(StateID.S_MOVE_TO_PRE_PLACE_POSE, StateID.S_MOVE_ARM),
+        TransitionID.T_MOVE_TO_PRE_PLACE_POSE_EXIT: Transition(StateID.S_MOVE_TO_PRE_PLACE_POSE, StateID.S_EXIT),
+        TransitionID.T_MOVE_TO_PRE_PLACE_POSE_ABORT_EXIT: Transition(StateID.S_MOVE_TO_PRE_PLACE_POSE, StateID.S_EXIT),
+        TransitionID.T_TABLE_PERCEIVE_MOVE_TO_PRE_PLACE_POSE: Transition(StateID.S_TABLE_PERCEIVE, StateID.S_MOVE_TO_PRE_PLACE_POSE),
+        TransitionID.T_TABLE_PERCEIVE_EXIT: Transition(StateID.S_TABLE_PERCEIVE, StateID.S_EXIT),
+        TransitionID.T_TABLE_PERCEIVE_ABORT_EXIT: Transition(StateID.S_TABLE_PERCEIVE, StateID.S_EXIT),
+        TransitionID.T_MOVE_TO_PICK_OBJECT_MOVE_ARM: Transition(StateID.S_MOVE_TO_PICK_OBJECT, StateID.S_MOVE_ARM),
+        TransitionID.T_MOVE_TO_PICK_OBJECT_EXIT: Transition(StateID.S_MOVE_TO_PICK_OBJECT, StateID.S_EXIT),
+        TransitionID.T_MOVE_TO_PICK_OBJECT_ABORT_EXIT: Transition(StateID.S_MOVE_TO_PICK_OBJECT, StateID.S_EXIT),
+        TransitionID.T_CLOSE_GRIPPER_RETREAT_ARM_WITH_OBJECT: Transition(StateID.S_CLOSE_GRIPPER, StateID.S_MOVE_TO_PICK_OBJECT),
         TransitionID.T_CLOSE_GRIPPER_EXIT: Transition(StateID.S_CLOSE_GRIPPER, StateID.S_EXIT),
         TransitionID.T_CLOSE_GRIPPER_ABORT_EXIT: Transition(StateID.S_CLOSE_GRIPPER, StateID.S_EXIT),
-        TransitionID.T_RETREAT_ARM_WITH_OBJECT_MOVE_ARM: Transition(StateID.S_RETREAT_ARM_WITH_OBJECT, StateID.S_MOVE_ARM),
-        TransitionID.T_RETREAT_ARM_WITH_OBJECT_EXIT: Transition(StateID.S_RETREAT_ARM_WITH_OBJECT, StateID.S_EXIT),
-        TransitionID.T_RETREAT_ARM_WITH_OBJECT_ABORT_EXIT: Transition(StateID.S_RETREAT_ARM_WITH_OBJECT, StateID.S_EXIT),
-        TransitionID.T_MOVE_TO_TABLE_DROP_POSE_MOVE_ARM: Transition(StateID.S_MOVE_TO_TABLE_DROP_POSE, StateID.S_MOVE_ARM),
-        TransitionID.T_MOVE_TO_TABLE_DROP_POSE_EXIT: Transition(StateID.S_MOVE_TO_TABLE_DROP_POSE, StateID.S_EXIT),
-        TransitionID.T_MOVE_TO_TABLE_DROP_POSE_ABORT_EXIT: Transition(StateID.S_MOVE_TO_TABLE_DROP_POSE, StateID.S_EXIT),
-        TransitionID.T_OPEN_GRIPPER_RETURN_HOME_AFTER_DROP: Transition(StateID.S_OPEN_GRIPPER, StateID.S_RETURN_HOME_AFTER_DROP),
+        TransitionID.T_MOVE_TO_PLACE_POSE_MOVE_ARM: Transition(StateID.S_MOVE_TO_PLACE_POSE, StateID.S_MOVE_ARM),
+        TransitionID.T_MOVE_TO_PLACE_POSE_EXIT: Transition(StateID.S_MOVE_TO_PLACE_POSE, StateID.S_EXIT),
+        TransitionID.T_MOVE_TO_PLACE_POSE_ABORT_EXIT: Transition(StateID.S_MOVE_TO_PLACE_POSE, StateID.S_EXIT),
+        TransitionID.T_OPEN_GRIPPER_MOVE_TO_PRE_PLACE_POSE: Transition(StateID.S_OPEN_GRIPPER, StateID.S_MOVE_TO_PRE_PLACE_POSE),
         TransitionID.T_OPEN_GRIPPER_EXIT: Transition(StateID.S_OPEN_GRIPPER, StateID.S_EXIT),
         TransitionID.T_OPEN_GRIPPER_ABORT_EXIT: Transition(StateID.S_OPEN_GRIPPER, StateID.S_EXIT),
-        TransitionID.T_RETURN_HOME_AFTER_DROP_MOVE_ARM: Transition(StateID.S_RETURN_HOME_AFTER_DROP, StateID.S_MOVE_ARM),
-        TransitionID.T_RETURN_HOME_AFTER_DROP_EXIT: Transition(StateID.S_RETURN_HOME_AFTER_DROP, StateID.S_EXIT),
-        TransitionID.T_RETURN_HOME_AFTER_DROP_ABORT_EXIT: Transition(StateID.S_RETURN_HOME_AFTER_DROP, StateID.S_EXIT),
         TransitionID.T_CONFIRM_DATA_IDLE: Transition(StateID.S_CONFIRM_DATA, StateID.S_IDLE),
         TransitionID.T_CONFIRM_DATA_ABORT_EXIT: Transition(StateID.S_CONFIRM_DATA, StateID.S_EXIT),
     }
@@ -283,11 +292,6 @@ def create_fsm() -> FSMData:
             transition_index=TransitionID.T_RASTER_SCAN_ABORT_EXIT,
             fired_event_indices=[],
         ),
-        ReactionID.R_E_ABORT_RETURN_HOME: EventReaction(
-            condition_event_index=EventID.E_ABORT,
-            transition_index=TransitionID.T_RETURN_HOME_ABORT_EXIT,
-            fired_event_indices=[],
-        ),
         ReactionID.R_E_ABORT_MOVE_ARM: EventReaction(
             condition_event_index=EventID.E_ABORT,
             transition_index=TransitionID.T_MOVE_ARM_ABORT_EXIT,
@@ -303,29 +307,34 @@ def create_fsm() -> FSMData:
             transition_index=TransitionID.T_SELECT_NEXT_OBJECT_ABORT_EXIT,
             fired_event_indices=[],
         ),
+        ReactionID.R_E_ABORT_MOVE_TO_PRE_PLACE_POSE: EventReaction(
+            condition_event_index=EventID.E_ABORT,
+            transition_index=TransitionID.T_MOVE_TO_PRE_PLACE_POSE_ABORT_EXIT,
+            fired_event_indices=[],
+        ),
+        ReactionID.R_E_ABORT_TABLE_PERCEIVE: EventReaction(
+            condition_event_index=EventID.E_ABORT,
+            transition_index=TransitionID.T_TABLE_PERCEIVE_ABORT_EXIT,
+            fired_event_indices=[],
+        ),
+        ReactionID.R_E_ABORT_MOVE_TO_PICK_OBJECT: EventReaction(
+            condition_event_index=EventID.E_ABORT,
+            transition_index=TransitionID.T_MOVE_TO_PICK_OBJECT_ABORT_EXIT,
+            fired_event_indices=[],
+        ),
         ReactionID.R_E_ABORT_CLOSE_GRIPPER: EventReaction(
             condition_event_index=EventID.E_ABORT,
             transition_index=TransitionID.T_CLOSE_GRIPPER_ABORT_EXIT,
             fired_event_indices=[],
         ),
-        ReactionID.R_E_ABORT_RETREAT_ARM_WITH_OBJECT: EventReaction(
+        ReactionID.R_E_ABORT_MOVE_TO_PLACE_POSE: EventReaction(
             condition_event_index=EventID.E_ABORT,
-            transition_index=TransitionID.T_RETREAT_ARM_WITH_OBJECT_ABORT_EXIT,
-            fired_event_indices=[],
-        ),
-        ReactionID.R_E_ABORT_MOVE_TO_TABLE_DROP_POSE: EventReaction(
-            condition_event_index=EventID.E_ABORT,
-            transition_index=TransitionID.T_MOVE_TO_TABLE_DROP_POSE_ABORT_EXIT,
+            transition_index=TransitionID.T_MOVE_TO_PLACE_POSE_ABORT_EXIT,
             fired_event_indices=[],
         ),
         ReactionID.R_E_ABORT_OPEN_GRIPPER: EventReaction(
             condition_event_index=EventID.E_ABORT,
             transition_index=TransitionID.T_OPEN_GRIPPER_ABORT_EXIT,
-            fired_event_indices=[],
-        ),
-        ReactionID.R_E_ABORT_RETURN_HOME_AFTER_DROP: EventReaction(
-            condition_event_index=EventID.E_ABORT,
-            transition_index=TransitionID.T_RETURN_HOME_AFTER_DROP_ABORT_EXIT,
             fired_event_indices=[],
         ),
         ReactionID.R_E_ABORT_GET_OBJECTS: EventReaction(
@@ -385,27 +394,12 @@ def create_fsm() -> FSMData:
         ),
         ReactionID.R_E_SCAN_DONE: EventReaction(
             condition_event_index=EventID.E_SCAN_DONE,
-            transition_index=TransitionID.T_RASTER_SCAN_RETURN_HOME,
+            transition_index=TransitionID.T_RASTER_SCAN_MOVE_TO_VIEW_POSE,
             fired_event_indices=[],
         ),
         ReactionID.R_E_SCAN_FAIL: EventReaction(
             condition_event_index=EventID.E_SCAN_FAIL,
             transition_index=TransitionID.T_RASTER_SCAN_EXIT,
-            fired_event_indices=[],
-        ),
-        ReactionID.R_E_RETURN_HOME_DONE: EventReaction(
-            condition_event_index=EventID.E_RETURN_HOME_DONE,
-            transition_index=TransitionID.T_MOVE_ARM_EXECUTE_SCREWDRIVER_PROBE,
-            fired_event_indices=[],
-        ),
-        ReactionID.R_E_RETURN_HOME_FAIL: EventReaction(
-            condition_event_index=EventID.E_RETURN_HOME_FAIL,
-            transition_index=TransitionID.T_RETURN_HOME_EXIT,
-            fired_event_indices=[],
-        ),
-        ReactionID.R_E_RETURN_HOME_FAIL_MOVE_ARM: EventReaction(
-            condition_event_index=EventID.E_RETURN_HOME_FAIL,
-            transition_index=TransitionID.T_MOVE_ARM_EXIT,
             fired_event_indices=[],
         ),
         ReactionID.R_E_SCREWDRIVER_PROBE_DONE: EventReaction(
@@ -425,7 +419,7 @@ def create_fsm() -> FSMData:
         ),
         ReactionID.R_E_OBJECT_READY: EventReaction(
             condition_event_index=EventID.E_OBJECT_READY,
-            transition_index=TransitionID.T_SELECT_NEXT_OBJECT_MOVE_ARM,
+            transition_index=TransitionID.T_SELECT_NEXT_OBJECT_MOVE_TO_PRE_PLACE_POSE,
             fired_event_indices=[],
         ),
         ReactionID.R_E_NO_MORE_OBJECTS: EventReaction(
@@ -433,23 +427,48 @@ def create_fsm() -> FSMData:
             transition_index=TransitionID.T_SELECT_NEXT_OBJECT_CONFIRM_DATA,
             fired_event_indices=[],
         ),
+        ReactionID.R_E_PRE_PLACE_DONE: EventReaction(
+            condition_event_index=EventID.E_PRE_PLACE_DONE,
+            transition_index=TransitionID.T_MOVE_ARM_TABLE_PERCEIVE,
+            fired_event_indices=[],
+        ),
+        ReactionID.R_E_TABLE_PERCEIVE_DONE: EventReaction(
+            condition_event_index=EventID.E_TABLE_PERCEIVE_DONE,
+            transition_index=TransitionID.T_TABLE_PERCEIVE_MOVE_TO_PRE_PLACE_POSE,
+            fired_event_indices=[],
+        ),
+        ReactionID.R_E_TABLE_PERCEIVE_FAIL: EventReaction(
+            condition_event_index=EventID.E_TABLE_PERCEIVE_FAIL,
+            transition_index=TransitionID.T_TABLE_PERCEIVE_EXIT,
+            fired_event_indices=[],
+        ),
+        ReactionID.R_E_PRE_PLACE_BEFORE_PICK_DONE: EventReaction(
+            condition_event_index=EventID.E_PRE_PLACE_BEFORE_PICK_DONE,
+            transition_index=TransitionID.T_MOVE_ARM_MOVE_TO_PICK_OBJECT,
+            fired_event_indices=[],
+        ),
         ReactionID.R_E_PICK_OBJECT_DONE: EventReaction(
             condition_event_index=EventID.E_PICK_OBJECT_DONE,
             transition_index=TransitionID.T_MOVE_ARM_CLOSE_GRIPPER,
             fired_event_indices=[],
         ),
-        ReactionID.R_E_RETREAT_WITH_OBJECT_DONE: EventReaction(
-            condition_event_index=EventID.E_RETREAT_WITH_OBJECT_DONE,
-            transition_index=TransitionID.T_MOVE_ARM_MOVE_TO_TABLE_DROP_POSE,
+        ReactionID.R_E_PICK_OBJECT_RETREAT_DONE: EventReaction(
+            condition_event_index=EventID.E_PICK_OBJECT_RETREAT_DONE,
+            transition_index=TransitionID.T_MOVE_ARM_MOVE_TO_PRE_PLACE_POSE,
             fired_event_indices=[],
         ),
-        ReactionID.R_E_MOVE_TO_TABLE_DONE: EventReaction(
-            condition_event_index=EventID.E_MOVE_TO_TABLE_DONE,
+        ReactionID.R_E_PRE_PLACE_WITH_OBJECT_DONE: EventReaction(
+            condition_event_index=EventID.E_PRE_PLACE_WITH_OBJECT_DONE,
+            transition_index=TransitionID.T_MOVE_ARM_MOVE_TO_PLACE_POSE,
+            fired_event_indices=[],
+        ),
+        ReactionID.R_E_MOVE_TO_PLACE_DONE: EventReaction(
+            condition_event_index=EventID.E_MOVE_TO_PLACE_DONE,
             transition_index=TransitionID.T_MOVE_ARM_OPEN_GRIPPER,
             fired_event_indices=[],
         ),
-        ReactionID.R_E_POST_DROP_HOME_DONE: EventReaction(
-            condition_event_index=EventID.E_POST_DROP_HOME_DONE,
+        ReactionID.R_E_PRE_PLACE_AFTER_DROP_DONE: EventReaction(
+            condition_event_index=EventID.E_PRE_PLACE_AFTER_DROP_DONE,
             transition_index=TransitionID.T_MOVE_ARM_SELECT_NEXT_OBJECT,
             fired_event_indices=[],
         ),
@@ -470,7 +489,7 @@ def create_fsm() -> FSMData:
         ),
         ReactionID.R_E_GRIPPER_OPEN_DONE: EventReaction(
             condition_event_index=EventID.E_GRIPPER_OPEN_DONE,
-            transition_index=TransitionID.T_OPEN_GRIPPER_RETURN_HOME_AFTER_DROP,
+            transition_index=TransitionID.T_OPEN_GRIPPER_MOVE_TO_PRE_PLACE_POSE,
             fired_event_indices=[],
         ),
         ReactionID.R_E_GRIPPER_OPEN_FAIL: EventReaction(
@@ -483,34 +502,24 @@ def create_fsm() -> FSMData:
             transition_index=TransitionID.T_MOVE_TO_VIEW_POSE_MOVE_ARM,
             fired_event_indices=[],
         ),
-        ReactionID.R_E_GO_MOVE_ARM_FROM_RETURN_HOME: EventReaction(
+        ReactionID.R_E_GO_MOVE_ARM_FROM_MOVE_TO_PRE_PLACE_POSE: EventReaction(
             condition_event_index=EventID.E_GO_MOVE_ARM,
-            transition_index=TransitionID.T_RETURN_HOME_MOVE_ARM,
+            transition_index=TransitionID.T_MOVE_TO_PRE_PLACE_POSE_MOVE_ARM,
             fired_event_indices=[],
         ),
-        ReactionID.R_E_GO_MOVE_ARM_FROM_SELECT_NEXT_OBJECT: EventReaction(
+        ReactionID.R_E_GO_MOVE_ARM_FROM_MOVE_TO_PICK_OBJECT: EventReaction(
             condition_event_index=EventID.E_GO_MOVE_ARM,
-            transition_index=TransitionID.T_SELECT_NEXT_OBJECT_MOVE_ARM,
+            transition_index=TransitionID.T_MOVE_TO_PICK_OBJECT_MOVE_ARM,
             fired_event_indices=[],
         ),
-        ReactionID.R_E_GO_MOVE_ARM_FROM_RETREAT_ARM_WITH_OBJECT: EventReaction(
+        ReactionID.R_E_GO_MOVE_ARM_FROM_MOVE_TO_PLACE_POSE: EventReaction(
             condition_event_index=EventID.E_GO_MOVE_ARM,
-            transition_index=TransitionID.T_RETREAT_ARM_WITH_OBJECT_MOVE_ARM,
+            transition_index=TransitionID.T_MOVE_TO_PLACE_POSE_MOVE_ARM,
             fired_event_indices=[],
         ),
-        ReactionID.R_E_GO_MOVE_ARM_FROM_MOVE_TO_TABLE_DROP_POSE: EventReaction(
-            condition_event_index=EventID.E_GO_MOVE_ARM,
-            transition_index=TransitionID.T_MOVE_TO_TABLE_DROP_POSE_MOVE_ARM,
-            fired_event_indices=[],
-        ),
-        ReactionID.R_E_GO_MOVE_ARM_FROM_RETURN_HOME_AFTER_DROP: EventReaction(
-            condition_event_index=EventID.E_GO_MOVE_ARM,
-            transition_index=TransitionID.T_RETURN_HOME_AFTER_DROP_MOVE_ARM,
-            fired_event_indices=[],
-        ),
-        ReactionID.R_E_POST_DROP_HOME_FAIL: EventReaction(
-            condition_event_index=EventID.E_POST_DROP_HOME_FAIL,
-            transition_index=TransitionID.T_RETURN_HOME_AFTER_DROP_EXIT,
+        ReactionID.R_E_PRE_PLACE_AFTER_DROP_FAIL: EventReaction(
+            condition_event_index=EventID.E_PRE_PLACE_AFTER_DROP_FAIL,
+            transition_index=TransitionID.T_MOVE_TO_PRE_PLACE_POSE_EXIT,
             fired_event_indices=[],
         ),
         ReactionID.R_E_CONFIRM_DONE: EventReaction(

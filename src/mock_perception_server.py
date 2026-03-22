@@ -21,6 +21,7 @@ class MockPerceptionServer(Node):
         self.action_name = self.get_parameter("action_name").value
         self.base_frame = self.get_parameter("base_frame").value
         self.camera_frame = self.get_parameter("camera_frame").value
+        self.place_request_index = 0
 
         self.server = ActionServer(
             self,
@@ -76,10 +77,21 @@ class MockPerceptionServer(Node):
             goal_handle.succeed()
             return result
 
+        if task_name == "place_object":
+            poses = self.mock_place_object_poses(goal_handle.request.time_duration)
+            result.success = True
+            result.message = (
+                f"Returned {len(poses)} mock place poses for class '{object_class}' "
+                f"with requested radius {goal_handle.request.time_duration:.4f}."
+            )
+            result.poses = poses
+            goal_handle.succeed()
+            return result
+
         result.success = False
         result.message = (
             f"Unsupported mock perception task '{task_name}'. "
-            "Supported tasks: subdoor, car_objects."
+            "Supported tasks: subdoor, car_objects, place_object."
         )
         result.poses = []
         goal_handle.abort()
@@ -97,7 +109,7 @@ class MockPerceptionServer(Node):
         if object_class == "motor":
             return (
                 [
-                    self.make_pose_stamped(self.base_frame, 0.75, 0.348875, 0.433091),
+                    self.make_pose_stamped(self.base_frame, 0.75, 0.248875, 0.433091),
                 ],
                 0.045,
             )
@@ -112,17 +124,44 @@ class MockPerceptionServer(Node):
 
         return None
 
-    def make_pose_stamped(self, frame_id: str, x: float, y: float, z: float) -> PoseStamped:
+    def mock_place_object_poses(self, radius: float):
+        placements = [
+            (0.62, -0.60, 0.343951),
+            (0.62, -0.73, 0.343951),
+            (0.74, -0.60, 0.343951),
+            (0.74, -0.73, 0.343951),
+        ]
+
+        index = self.place_request_index % len(placements)
+        self.place_request_index += 1
+        x, y, z = placements[index]
+
+        if radius > 0.0:
+            z += min(radius, 0.1)
+
+        return [self.make_pose_stamped(self.base_frame, x, y, z)]
+
+    def make_pose_stamped(
+        self,
+        frame_id: str,
+        x: float,
+        y: float,
+        z: float,
+        qx: float = 0.0,
+        qy: float = 0.0,
+        qz: float = 0.0,
+        qw: float = 1.0,
+    ) -> PoseStamped:
         msg = PoseStamped()
         msg.header.frame_id = frame_id
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.pose.position.x = x
         msg.pose.position.y = y
         msg.pose.position.z = z
-        msg.pose.orientation.x = 0.0
-        msg.pose.orientation.y = 0.0
-        msg.pose.orientation.z = 0.0
-        msg.pose.orientation.w = 1.0
+        msg.pose.orientation.x = qx
+        msg.pose.orientation.y = qy
+        msg.pose.orientation.z = qz
+        msg.pose.orientation.w = qw
         return msg
 
 
