@@ -105,7 +105,7 @@ class MockPerceptionServer(Node):
         if object_class == "unit":
             return (
                 [
-                    self.make_pose_stamped(self.base_frame, 0.75, 0.000823, 0.426174),
+                    self.make_pose_stamped(self.base_frame, 0.866072, 0.170529, 0.76108),
                 ],
                 0.065,
             )

@@ -22,7 +22,7 @@ class PregraspKnotRecorder(Node):
     def __init__(self):
         super().__init__("pregrasp_knot_recorder")
 
-        self.declare_parameter("base_frame", "eddie_base_link")
+        self.declare_parameter("base_frame", "eddie_base_footprint")
         self.declare_parameter("camera_frame", "eddie_right_arm_camera_link")
         self.declare_parameter("record_frame", "eddie_right_arm_robotiq_85_grasp_link")
         self.declare_parameter("arm_action_server", "right_arm/arm_control")
