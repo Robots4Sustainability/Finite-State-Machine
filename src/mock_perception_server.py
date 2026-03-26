@@ -7,14 +7,14 @@ from geometry_msgs.msg import PoseStamped
 from rclpy.action import ActionServer
 from rclpy.node import Node
 
-from pick_place_fsm.action import Perception
+from my_robot_interfaces.action import RunVision
 
 
 class MockPerceptionServer(Node):
     def __init__(self):
         super().__init__("mock_perception_server")
 
-        self.declare_parameter("action_name", "perception")
+        self.declare_parameter("action_name", "run_perception_pipeline")
         self.declare_parameter("base_frame", "eddie_base_link")
         self.declare_parameter("camera_frame", "eddie_right_arm_camera_link")
 
@@ -25,7 +25,7 @@ class MockPerceptionServer(Node):
 
         self.server = ActionServer(
             self,
-            Perception,
+            RunVision,
             self.action_name,
             execute_callback=self.execute_callback,
         )
@@ -45,10 +45,10 @@ class MockPerceptionServer(Node):
         self.get_logger().info(f"Mock perception delay: sleeping for {delay:.2f}s.")
         time.sleep(delay)
 
-        result = Perception.Result()
+        result = RunVision.Result()
         result.estimated_value = 0.0
 
-        if task_name == "subdoor":
+        if task_name in ("subdoor", "subdoor_pose"):
             result.success = True
             result.message = "Returned 4 mock subdoor poses"
             result.poses = self.mock_subdoor_poses()
@@ -91,7 +91,7 @@ class MockPerceptionServer(Node):
         result.success = False
         result.message = (
             f"Unsupported mock perception task '{task_name}'. "
-            "Supported tasks: subdoor, car_objects, place_object."
+            "Supported tasks: subdoor_pose, car_objects, place_object."
         )
         result.poses = []
         goal_handle.abort()
