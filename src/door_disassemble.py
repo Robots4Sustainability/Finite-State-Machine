@@ -16,7 +16,7 @@ from tf2_ros import Buffer, TransformListener
 
 from eddie_ros.action import ArmControl
 from cartesian_planner.srv import PlanScanPath
-from pick_place_fsm.action import Perception
+from my_robot_interfaces.action import RunVision
 from coord_dsl.fsm import fsm_step
 from coord_dsl.event_loop import reconfig_event_buffers, produce_event
 from fsm_door_disassemble import create_fsm, StateID, EventID
@@ -46,7 +46,7 @@ class DoorDisassembleNode(Node):
         self.declare_parameter("base_frame", "eddie_base_footprint")
         self.declare_parameter("ee_frame", "eddie_right_arm_robotiq_85_grasp_link")
         self.declare_parameter("camera_frame", "eddie_base_footprint")
-        self.declare_parameter("perception_action_server", "perception")
+        self.declare_parameter("perception_action_server", "run_perception_pipeline")
         self.declare_parameter("car_object_classes", ["unit"])
 
         self.base_frame = self.get_parameter("base_frame").value
@@ -70,7 +70,7 @@ class DoorDisassembleNode(Node):
             callback_group=self.cb_group,
         )
         self.perception_client = ActionClient(
-            self, Perception, self.perception_action_server, callback_group=self.cb_group
+            self, RunVision, self.perception_action_server, callback_group=self.cb_group
         )
         self.scan_client = self.create_client(
             PlanScanPath, "plan_scan_path", callback_group=self.cb_group
@@ -175,7 +175,7 @@ class DoorDisassembleNode(Node):
 
         if cs == StateID.S_GET_SUBDOOR and not ud["action_dispatched"]:
             self.get_logger().info("Requesting subdoor poses from perception action...")
-            self.request_perception("subdoor", "", self.on_subdoor_result)
+            self.request_perception("subdoor_pose", "", self.on_subdoor_result)
             ud["action_dispatched"] = True
             return
 
@@ -507,7 +507,7 @@ class DoorDisassembleNode(Node):
             result_callback(None)
             return
 
-        goal = Perception.Goal()
+        goal = RunVision.Goal()
         goal.task_name = task_name
         goal.object_class = object_class
         future = self.perception_client.send_goal_async(goal)
