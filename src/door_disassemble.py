@@ -174,10 +174,11 @@ class DoorDisassembleNode(Node):
             return
 
         if cs == StateID.S_GET_SUBDOOR and not ud["action_dispatched"]:
-            self.get_logger().info("Requesting subdoor poses from perception action...")
-            self.request_perception("subdoor_pose", "", self.on_subdoor_result)
+            self.get_logger().info("Skipping subdoor request for now.")
+            produce_event(self.fsm.event_data, EventID.E_SUBDOOR_DONE)
             ud["action_dispatched"] = True
             return
+
 
         if cs == StateID.S_GET_OBJECTS and not ud["action_dispatched"]:
             self.get_logger().info(
