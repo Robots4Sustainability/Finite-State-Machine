@@ -436,8 +436,14 @@ class DoorDisassembleNode(Node):
         self.user_data["active_object_class"] = ""
 
     def transform_pose_stamped_to_base(self, pose_stamped: PoseStamped) -> PoseStamped | None:
+        source_frame = pose_stamped.header.frame_id
+        if (
+            source_frame and not source_frame.startswith("eddie_right_arm_")
+        ):
+            source_frame = f"eddie_right_arm_{source_frame}"
+
         transformed_pose = self.relative_pose_to_global_pose(
-            pose_stamped.pose, pose_stamped.header.frame_id, self.base_frame
+            pose_stamped.pose, source_frame, self.base_frame
         )
         if transformed_pose is None:
             return None
