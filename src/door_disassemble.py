@@ -93,13 +93,13 @@ class DoorDisassembleNode(Node):
 
     def get_default_view_pose_global(self) -> Pose:
         p = Pose()
-        p.position.x = 0.749
-        p.position.y = 0.003
-        p.position.z = 0.339
-        p.orientation.x = 0.475857
-        p.orientation.y = 0.493639
-        p.orientation.z = 0.546011
-        p.orientation.w = 0.481407
+        p.position.x = 0.729990
+        p.position.y = -0.285972
+        p.position.z = 0.575513
+        p.orientation.x = 0.461884
+        p.orientation.y = 0.469245
+        p.orientation.z = 0.549966
+        p.orientation.w = 0.513819
         return p
 
     def get_default_table_drop_pose_global(self) -> Pose:
