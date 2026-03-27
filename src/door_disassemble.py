@@ -47,7 +47,7 @@ class DoorDisassembleNode(Node):
         self.declare_parameter("ee_frame", "eddie_right_arm_robotiq_85_grasp_link")
         self.declare_parameter("camera_frame", "eddie_right_arm_camera_link")
         self.declare_parameter("perception_action_server", "run_perception_pipeline")
-        self.declare_parameter("car_object_classes", ["unit"])
+        self.declare_parameter("car_object_classes", ["motor_grip"])
 
         self.base_frame = self.get_parameter("base_frame").value
         self.ee_frame = self.get_parameter("ee_frame").value
