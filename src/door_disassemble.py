@@ -43,9 +43,9 @@ class DoorDisassembleNode(Node):
             "pending_object_classes": [],
         }
 
-        self.declare_parameter("base_frame", "eddie_base_footprint")
+        self.declare_parameter("base_frame", "eddie_base_link")
         self.declare_parameter("ee_frame", "eddie_right_arm_robotiq_85_grasp_link")
-        self.declare_parameter("camera_frame", "eddie_base_footprint")
+        self.declare_parameter("camera_frame", "eddie_right_arm_camera_link")
         self.declare_parameter("perception_action_server", "run_perception_pipeline")
         self.declare_parameter("car_object_classes", ["unit"])
 
@@ -93,24 +93,24 @@ class DoorDisassembleNode(Node):
 
     def get_default_view_pose_global(self) -> Pose:
         p = Pose()
-        p.position.x = 0.692104
-        p.position.y = 0.136207
-        p.position.z = 1.048240
-        p.orientation.x = 0.464718
-        p.orientation.y = 0.464930
-        p.orientation.z = 0.549034
-        p.orientation.w = 0.516177
+        p.position.x = 0.749
+        p.position.y = 0.003
+        p.position.z = 0.339
+        p.orientation.x = 0.475857
+        p.orientation.y = 0.493639
+        p.orientation.z = 0.546011
+        p.orientation.w = 0.481407
         return p
 
     def get_default_table_drop_pose_global(self) -> Pose:
         p = Pose()
-        p.position.x = 0.762414
-        p.position.y = -0.396815
-        p.position.z = 0.821892
-        p.orientation.x = 0.416930
-        p.orientation.y = 0.580473
-        p.orientation.z = 0.140962
-        p.orientation.w = 0.685091
+        p.position.x = 0.60
+        p.position.y = -0.66
+        p.position.z = 0.343951
+        p.orientation.x = 0.475857
+        p.orientation.y = 0.493639
+        p.orientation.z = 0.546011
+        p.orientation.w = 0.481407
         return p
 
     def abort_callback(self, msg: Bool):
