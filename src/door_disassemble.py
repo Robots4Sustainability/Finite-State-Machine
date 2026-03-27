@@ -190,6 +190,11 @@ class DoorDisassembleNode(Node):
             return
 
         if cs == StateID.S_RASTER_SCAN and not ud["action_dispatched"]:
+            self.get_logger().info("Skipping raster scan for now.")
+            produce_event(self.fsm.event_data, EventID.E_SCAN_DONE)
+            ud["action_dispatched"] = True
+            return
+
             self.get_logger().info("Calling raster scan service /plan_scan_path ...")
             if not self.scan_client.wait_for_service(timeout_sec=2.0):
                 self.get_logger().error("Raster scan service not available.")
