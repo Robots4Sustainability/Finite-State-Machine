@@ -15,7 +15,7 @@ class MockPerceptionServer(Node):
         super().__init__("mock_perception_server")
 
         self.declare_parameter("action_name", "run_perception_pipeline")
-        self.declare_parameter("base_frame", "eddie_base_link")
+        self.declare_parameter("base_frame", "eddie_base_footprint")
         self.declare_parameter("camera_frame", "eddie_right_arm_camera_link")
 
         self.action_name = self.get_parameter("action_name").value
