@@ -15,8 +15,8 @@ from std_msgs.msg import Bool
 from tf2_geometry_msgs import do_transform_pose
 from tf2_ros import Buffer, TransformListener
 
-from eddie_ros.action import ArmControl, GripperControl
-# from control_msgs.action import GripperCommand
+from eddie_ros.action import ArmControl
+from control_msgs.action import GripperCommand
 from cartesian_planner.srv import PlanScanPath
 from my_robot_interfaces.action import RunVision
 from coord_dsl.fsm import fsm_step
@@ -53,7 +53,7 @@ class DoorDisassembleNode(Node):
         self.declare_parameter("ee_frame", "eddie_right_arm_robotiq_85_grasp_link")
         self.declare_parameter("camera_frame", "eddie_right_arm_camera_link")
         self.declare_parameter("perception_action_server", "run_perception_pipeline")
-        self.declare_parameter("car_object_classes", ["motor", "unit"])
+        self.declare_parameter("car_object_classes", ["motor_grip", "unit"])
         self.declare_parameter("enable_raster_scan", False)
 
         self.base_frame = self.get_parameter("base_frame").value
@@ -71,15 +71,15 @@ class DoorDisassembleNode(Node):
         self.arm_client = ActionClient(
             self, ArmControl, "right_arm/arm_control", callback_group=self.cb_group
         )
-        self.gripper_client = ActionClient(
-            self, GripperControl, "right_arm/gripper_control", callback_group=self.cb_group
-        )
         # self.gripper_client = ActionClient(
-        #     self,
-        #     GripperCommand,
-        #     "robotiq_gripper_controller/gripper_cmd",
-        #     callback_group=self.cb_group,
+        #     self, GripperControl, "right_arm/gripper_control", callback_group=self.cb_group
         # )
+        self.gripper_client = ActionClient(
+            self,
+            GripperCommand,
+            "robotiq_gripper_controller/gripper_cmd",
+            callback_group=self.cb_group,
+        )
         self.perception_client = ActionClient(
             self, RunVision, self.perception_action_server, callback_group=self.cb_group
         )
@@ -104,13 +104,13 @@ class DoorDisassembleNode(Node):
 
     def get_default_view_pose_global(self) -> Pose:
         p = Pose()
-        p.position.x = 0.749
-        p.position.y = 0.003
-        p.position.z = 0.339
-        p.orientation.x = 0.475857
-        p.orientation.y = 0.493639
-        p.orientation.z = 0.546011
-        p.orientation.w = 0.481407
+        p.position.x = 0.729990
+        p.position.y = -0.285972
+        p.position.z = 0.575513
+        p.orientation.x = 0.461884
+        p.orientation.y = 0.469245
+        p.orientation.z = 0.549966
+        p.orientation.w = 0.513819
         return p
 
     def get_default_table_drop_pose_global(self) -> Pose:
@@ -606,8 +606,14 @@ class DoorDisassembleNode(Node):
         self.user_data["pick_motion_phase"] = ""
 
     def transform_pose_stamped_to_base(self, pose_stamped: PoseStamped) -> PoseStamped | None:
+        source_frame = pose_stamped.header.frame_id
+        if (
+            source_frame and not source_frame.startswith("eddie_right_arm_")
+        ):
+            source_frame = f"eddie_right_arm_{source_frame}"
+
         transformed_pose = self.relative_pose_to_global_pose(
-            pose_stamped.pose, pose_stamped.header.frame_id, self.base_frame
+            pose_stamped.pose, source_frame, self.base_frame
         )
         if transformed_pose is None:
             return None
@@ -882,13 +888,13 @@ class DoorDisassembleNode(Node):
             produce_event(self.fsm.event_data, fail_evt)
             return
 
-        goal = GripperControl.Goal()
-        goal.target_position = position
-        goal.velocity = 20.0
-        goal.force = 10.0
-        # goal = GripperCommand.Goal()
-        # goal.command.position = position
-        # goal.command.max_effort = 20.0
+        # goal = GripperControl.Goal()
+        # goal.target_position = position
+        # goal.velocity = 20.0
+        # goal.force = 10.0
+        goal = GripperCommand.Goal()
+        goal.command.position = position
+        goal.command.max_effort = 20.0
 
         future = self.gripper_client.send_goal_async(goal)
         future.add_done_callback(
