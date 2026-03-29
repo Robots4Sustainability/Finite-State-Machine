@@ -174,13 +174,18 @@ class DoorDisassembleNode(Node):
             return
 
         if cs == StateID.S_GET_SUBDOOR and not ud["action_dispatched"]:
+            # self.get_logger().info("Requesting subdoor poses from perception action...")
+            # self.request_perception("subdoor_pose", "", self.on_subdoor_result)
+            ############################
             self.get_logger().info("Skipping subdoor request for now.")
             produce_event(self.fsm.event_data, EventID.E_SUBDOOR_DONE)
+            #############################################
             ud["action_dispatched"] = True
             return
 
 
         if cs == StateID.S_GET_OBJECTS and not ud["action_dispatched"]:
+            ############################
             self.get_logger().info(
                 "Requesting car object poses from perception action for classes "
                 f"{self.car_object_classes}..."
@@ -188,7 +193,7 @@ class DoorDisassembleNode(Node):
             self.request_car_objects()
             ud["action_dispatched"] = True
             return
-
+            ############################
         if cs == StateID.S_RASTER_SCAN and not ud["action_dispatched"]:
             self.get_logger().info("Skipping raster scan for now.")
             produce_event(self.fsm.event_data, EventID.E_SCAN_DONE)
@@ -474,6 +479,12 @@ class DoorDisassembleNode(Node):
         p.orientation.w = 1.0
         return p
 
+    def make_motor_grip_rotation_pose(self, sign=1.0) -> Pose:
+        p = Pose()
+        p.orientation.z = sign * 0.7071068
+        p.orientation.w = 0.7071068
+        return p
+
     def on_scan_response(self, future):
         try:
             resp = future.result()
@@ -701,6 +712,17 @@ class DoorDisassembleNode(Node):
             result = future.result().result
             if result.result_code == ArmControl.Result.SUCCESS:
                 self.get_logger().info(f"Arm action succeeded during {context}.")
+                if (
+                    context == "retreat with grasped object"
+                    and self.user_data["active_object_class"] == "motor_grip"
+                ):
+                    self._send_direct_arm_goal(
+                        self.make_motor_grip_rotation_pose(sign=-1.0),
+                        success_evt,
+                        fail_evt,
+                        "rotate back 90 degrees after retreat",
+                    )
+                    return
                 produce_event(self.fsm.event_data, success_evt)
             else:
                 msg = (
@@ -736,6 +758,11 @@ class DoorDisassembleNode(Node):
             result = future.result().result
             if result.result_code == ArmControl.Result.SUCCESS:
                 self.get_logger().info("Arm action succeeded during object pre-pick.")
+                if self.user_data["active_object_class"] == "motor_grip":
+                    self._send_motor_grip_pre_advance_rotation(
+                        pick_offset_pose, success_evt, fail_evt
+                    )
+                    return
                 self._send_direct_arm_goal(
                     pick_offset_pose,
                     success_evt,
@@ -752,6 +779,77 @@ class DoorDisassembleNode(Node):
                 produce_event(self.fsm.event_data, fail_evt)
         except Exception as e:
             self.get_logger().error(f"Arm result exception during object pre-pick: {e}")
+            produce_event(self.fsm.event_data, fail_evt)
+
+    def _send_motor_grip_pre_advance_rotation(self, pick_offset_pose, success_evt, fail_evt):
+        if not self.arm_client.wait_for_server(timeout_sec=1.0):
+            self.get_logger().error(
+                "Arm action server not available during motor_grip pre-advance rotation."
+            )
+            produce_event(self.fsm.event_data, fail_evt)
+            return
+
+        goal = ArmControl.Goal()
+        goal.target_pose = self.make_motor_grip_rotation_pose(sign=1.0)
+        future = self.arm_client.send_goal_async(goal)
+        future.add_done_callback(
+            lambda fut: self._motor_grip_pre_advance_rotation_goal_response(
+                fut, pick_offset_pose, success_evt, fail_evt
+            )
+        )
+
+    def _motor_grip_pre_advance_rotation_goal_response(
+        self, future, pick_offset_pose, success_evt, fail_evt
+    ):
+        try:
+            goal_handle = future.result()
+            if not goal_handle.accepted:
+                self.get_logger().error(
+                    "Arm goal rejected during motor_grip pre-advance rotation."
+                )
+                produce_event(self.fsm.event_data, fail_evt)
+                return
+            res_future = goal_handle.get_result_async()
+            res_future.add_done_callback(
+                lambda fut: self._motor_grip_pre_advance_rotation_result(
+                    fut, pick_offset_pose, success_evt, fail_evt
+                )
+            )
+        except Exception as e:
+            self.get_logger().error(
+                f"Arm goal exception during motor_grip pre-advance rotation: {e}"
+            )
+            produce_event(self.fsm.event_data, fail_evt)
+
+    def _motor_grip_pre_advance_rotation_result(
+        self, future, pick_offset_pose, success_evt, fail_evt
+    ):
+        try:
+            result = future.result().result
+            if result.result_code == ArmControl.Result.SUCCESS:
+                self.get_logger().info(
+                    "Arm action succeeded during motor_grip pre-advance rotation."
+                )
+                self._send_direct_arm_goal(
+                    pick_offset_pose,
+                    success_evt,
+                    fail_evt,
+                    "advance to object pick pose",
+                )
+            else:
+                msg = (
+                    result.result_message
+                    if hasattr(result, "result_message")
+                    else result.message
+                )
+                self.get_logger().error(
+                    f"Arm action failed during motor_grip pre-advance rotation: {msg}"
+                )
+                produce_event(self.fsm.event_data, fail_evt)
+        except Exception as e:
+            self.get_logger().error(
+                f"Arm result exception during motor_grip pre-advance rotation: {e}"
+            )
             produce_event(self.fsm.event_data, fail_evt)
 
     def _gripper_goal_response(self, future, success_evt, fail_evt, context):
