@@ -402,8 +402,14 @@ class DoorDisassembleNode(Node):
             return
 
         if cs == StateID.S_CLOSE_GRIPPER and not ud["action_dispatched"]:
+            position = 0.0
+            current_object_to_grasp = self.user_data["active_object_class"]
+            if current_object_to_grasp == "unit":
+                position = 0.08
+            elif current_object_to_grasp == "motor_grip":
+                position = 0.45    
             self.send_gripper_command(
-                0.79,
+                position,
                 EventID.E_GRIPPER_CLOSE_DONE,
                 EventID.E_GRIPPER_FAIL,
                 "close gripper on object",
