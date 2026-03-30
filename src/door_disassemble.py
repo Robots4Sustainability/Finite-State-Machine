@@ -921,6 +921,8 @@ class DoorDisassembleNode(Node):
                 #         pick_offset_pose, success_evt, fail_evt
                 #     )
                 #     return
+
+                time.sleep(3.0) 
                 self._send_direct_arm_goal(
                     pick_offset_pose,
                     success_evt,
