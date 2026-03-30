@@ -2,6 +2,7 @@
 import json
 import threading
 import time
+from pathlib import Path
 
 import rclpy
 from rclpy.action import ActionClient
@@ -27,6 +28,26 @@ class DoorDisassembleNode(Node):
         super().__init__("door_disassemble_fsm_py")
 
         self.fsm = create_fsm()
+
+        self.declare_parameter("base_frame", "eddie_base_link")
+        self.declare_parameter("ee_frame", "eddie_right_arm_robotiq_85_grasp_link")
+        self.declare_parameter("camera_frame", "eddie_right_arm_camera_link")
+        self.declare_parameter("perception_action_server", "run_perception_pipeline")
+        self.declare_parameter("car_object_classes", ["motor_grip"])
+        self.declare_parameter(
+            "pose_store_path",
+            str(Path(__file__).resolve().with_name("named_poses.json")),
+        )
+
+        self.base_frame = self.get_parameter("base_frame").value
+        self.ee_frame = self.get_parameter("ee_frame").value
+        self.camera_frame = self.get_parameter("camera_frame").value
+        self.perception_action_server = self.get_parameter("perception_action_server").value
+        self.car_object_classes = list(self.get_parameter("car_object_classes").value)
+        self.pose_store_path = Path(self.get_parameter("pose_store_path").value).expanduser()
+        self.named_poses = self.load_named_poses()
+        self.object_pick_z_offset = 0.1
+
         self.user_data = {
             "last_state": StateID.S_IDLE,
             "action_dispatched": False,
@@ -42,19 +63,6 @@ class DoorDisassembleNode(Node):
             "arm_motion_mode": "",
             "pending_object_classes": [],
         }
-
-        self.declare_parameter("base_frame", "eddie_base_link")
-        self.declare_parameter("ee_frame", "eddie_right_arm_robotiq_85_grasp_link")
-        self.declare_parameter("camera_frame", "eddie_right_arm_camera_link")
-        self.declare_parameter("perception_action_server", "run_perception_pipeline")
-        self.declare_parameter("car_object_classes", ["motor_grip"])
-
-        self.base_frame = self.get_parameter("base_frame").value
-        self.ee_frame = self.get_parameter("ee_frame").value
-        self.camera_frame = self.get_parameter("camera_frame").value
-        self.perception_action_server = self.get_parameter("perception_action_server").value
-        self.car_object_classes = list(self.get_parameter("car_object_classes").value)
-        self.object_pick_z_offset = 0.1
 
         self.cb_group = ReentrantCallbackGroup()
         self.tf_buffer = Buffer()
@@ -91,7 +99,66 @@ class DoorDisassembleNode(Node):
         self.get_logger().info("Door disassemble node ready.")
         self.get_logger().info("Press Enter to start. Type 'a' + Enter to abort.")
 
+    def load_named_poses(self):
+        if not self.pose_store_path.exists():
+            self.get_logger().info(
+                f"Named pose file not found at {self.pose_store_path}. Using hardcoded defaults."
+            )
+            return {}
+
+        try:
+            data = json.loads(self.pose_store_path.read_text())
+            if not isinstance(data, dict):
+                raise ValueError("named pose file root is not an object")
+            self.get_logger().info(f"Loaded named poses from {self.pose_store_path}.")
+            return data
+        except Exception as exc:
+            self.get_logger().warn(
+                f"Could not load named poses from {self.pose_store_path}: {exc}. "
+                "Using hardcoded defaults."
+            )
+            return {}
+
+    def pose_from_dict(self, pose_data) -> Pose | None:
+        try:
+            pose = Pose()
+            position = pose_data["position"]
+            orientation = pose_data["orientation"]
+            pose.position.x = float(position["x"])
+            pose.position.y = float(position["y"])
+            pose.position.z = float(position["z"])
+            pose.orientation.x = float(orientation["x"])
+            pose.orientation.y = float(orientation["y"])
+            pose.orientation.z = float(orientation["z"])
+            pose.orientation.w = float(orientation["w"])
+            return pose
+        except Exception:
+            return None
+
+    def get_named_pose(self, key: str) -> Pose | None:
+        pose_data = self.named_poses.get(key)
+        if not isinstance(pose_data, dict):
+            return None
+
+        frame_id = pose_data.get("frame_id")
+        if frame_id and frame_id != self.base_frame:
+            self.get_logger().warn(
+                f"Named pose '{key}' uses frame '{frame_id}', expected '{self.base_frame}'. "
+                "Ignoring it."
+            )
+            return None
+
+        pose = self.pose_from_dict(pose_data)
+        if pose is None:
+            self.get_logger().warn(f"Named pose '{key}' is malformed. Ignoring it.")
+        return pose
+
     def get_default_view_pose_global(self) -> Pose:
+        named_pose = self.get_named_pose("home_pose")
+        if named_pose is not None:
+            self.get_logger().info("Using home_pose from named poses for home/view pose.")
+            return named_pose
+
         p = Pose()
         p.position.x = 0.729990
         p.position.y = -0.285972
@@ -103,6 +170,11 @@ class DoorDisassembleNode(Node):
         return p
 
     def get_default_table_drop_pose_global(self) -> Pose:
+        named_pose = self.get_named_pose("table_drop_pose")
+        if named_pose is not None:
+            self.get_logger().info("Using table_drop_pose from named poses.")
+            return named_pose
+
         p = Pose()
         p.position.x = 0.60
         p.position.y = -0.66
@@ -443,7 +515,9 @@ class DoorDisassembleNode(Node):
     def transform_pose_stamped_to_base(self, pose_stamped: PoseStamped) -> PoseStamped | None:
         source_frame = pose_stamped.header.frame_id
         if (
-            source_frame and not source_frame.startswith("eddie_right_arm_")
+            source_frame
+            and source_frame != self.base_frame
+            and not source_frame.startswith("eddie_right_arm_")
         ):
             source_frame = f"eddie_right_arm_{source_frame}"
 

@@ -94,7 +94,7 @@ class MockPerceptionServer(Node):
         ]
 
     def mock_car_object_result(self, object_class: str):
-        if object_class == "motor":
+        if object_class == "motor_grip":
             return (
                 [
                     self.make_pose_stamped(self.base_frame, 0.75, 0.348875, 0.433091),
