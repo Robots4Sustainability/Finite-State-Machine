@@ -483,10 +483,11 @@ class DoorDisassembleNode(Node):
         if transformed_pose is None:
             return None
 
-        transformed_pose.orientation.x = 0.0
-        transformed_pose.orientation.y = 0.0
-        transformed_pose.orientation.z = 0.0
-        transformed_pose.orientation.w = 1.0
+        # Preserve the orientation coming from perception after TF transforms.
+        # transformed_pose.orientation.x = 0.0
+        # transformed_pose.orientation.y = 0.0
+        # transformed_pose.orientation.z = 0.0
+        # transformed_pose.orientation.w = 1.0
         transformed_pose.position.z -= z_offset
         return transformed_pose
 
@@ -786,17 +787,17 @@ class DoorDisassembleNode(Node):
             result = future.result().result
             if result.result_code == ArmControl.Result.SUCCESS:
                 self.get_logger().info(f"Arm action succeeded during {context}.")
-                if (
-                    context == "retreat with grasped object"
-                    and self.user_data["active_object_class"] == "motor_grip"
-                ):
-                    self._send_direct_arm_goal(
-                        self.make_motor_grip_rotation_pose(sign=-1.0),
-                        success_evt,
-                        fail_evt,
-                        "rotate back 90 degrees after retreat",
-                    )
-                    return
+                # if (
+                #     context == "retreat with grasped object"
+                #     and self.user_data["active_object_class"] == "motor_grip"
+                # ):
+                #     self._send_direct_arm_goal(
+                #         self.make_motor_grip_rotation_pose(sign=-1.0),
+                #         success_evt,
+                #         fail_evt,
+                #         "rotate back 90 degrees after retreat",
+                #     )
+                #     return
                 produce_event(self.fsm.event_data, success_evt)
             else:
                 msg = (
@@ -832,11 +833,11 @@ class DoorDisassembleNode(Node):
             result = future.result().result
             if result.result_code == ArmControl.Result.SUCCESS:
                 self.get_logger().info("Arm action succeeded during object pre-pick.")
-                if self.user_data["active_object_class"] == "motor_grip":
-                    self._send_motor_grip_pre_advance_rotation(
-                        pick_offset_pose, success_evt, fail_evt
-                    )
-                    return
+                # if self.user_data["active_object_class"] == "motor_grip":
+                #     self._send_motor_grip_pre_advance_rotation(
+                #         pick_offset_pose, success_evt, fail_evt
+                #     )
+                #     return
                 self._send_direct_arm_goal(
                     pick_offset_pose,
                     success_evt,
