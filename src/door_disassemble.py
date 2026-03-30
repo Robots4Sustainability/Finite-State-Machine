@@ -33,7 +33,7 @@ class DoorDisassembleNode(Node):
         self.declare_parameter("ee_frame", "eddie_right_arm_robotiq_85_grasp_link")
         self.declare_parameter("camera_frame", "eddie_right_arm_camera_link")
         self.declare_parameter("perception_action_server", "run_perception_pipeline")
-        self.declare_parameter("car_object_classes", ["motor_grip", "unit"])
+        self.declare_parameter("car_object_classes", ["motor_grip", "unit", "speaker"])
         self.declare_parameter(
             "pose_store_path",
             str(Path(__file__).resolve().with_name("named_poses.json")),
@@ -406,7 +406,8 @@ class DoorDisassembleNode(Node):
             current_object_to_grasp = self.user_data["active_object_class"]
             if current_object_to_grasp == "unit":
                 position = 0.08
-            elif current_object_to_grasp == "motor_grip":
+            #dummy value for speaker, will add new gripper close value later
+            elif current_object_to_grasp in ("motor_grip","speaker"):
                 position = 0.45    
             self.send_gripper_command(
                 position,
