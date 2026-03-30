@@ -15,7 +15,7 @@ from std_msgs.msg import Bool
 from tf2_geometry_msgs import do_transform_pose
 from tf2_ros import Buffer, TransformListener
 
-from eddie_ros.action import ArmControl
+from eddie_ros.action import ArmControl, ForceControl
 from cartesian_planner.srv import PlanScanPath
 from my_robot_interfaces.action import RunVision
 from coord_dsl.fsm import fsm_step
@@ -33,7 +33,7 @@ class DoorDisassembleNode(Node):
         self.declare_parameter("ee_frame", "eddie_right_arm_robotiq_85_grasp_link")
         self.declare_parameter("camera_frame", "eddie_right_arm_camera_link")
         self.declare_parameter("perception_action_server", "run_perception_pipeline")
-        self.declare_parameter("car_object_classes", ["motor_grip"])
+        self.declare_parameter("car_object_classes", ["motor_grip", "unit"])
         self.declare_parameter(
             "pose_store_path",
             str(Path(__file__).resolve().with_name("named_poses.json")),
@@ -70,6 +70,9 @@ class DoorDisassembleNode(Node):
 
         self.arm_client = ActionClient(
             self, ArmControl, "right_arm/arm_control", callback_group=self.cb_group
+        )
+        self.force_client = ActionClient(
+            self, ForceControl, "right_arm/force_control", callback_group=self.cb_group
         )
         self.gripper_client = ActionClient(
             self,
@@ -176,13 +179,13 @@ class DoorDisassembleNode(Node):
             return named_pose
 
         p = Pose()
-        p.position.x = 0.60
-        p.position.y = -0.66
-        p.position.z = 0.343951
-        p.orientation.x = 0.475857
-        p.orientation.y = 0.493639
-        p.orientation.z = 0.546011
-        p.orientation.w = 0.481407
+        p.position.x = 0.6868436717045381
+        p.position.y = -0.6640234230853236
+        p.position.z = 0.6367270013545705
+        p.orientation.x = 0.4164021626826885
+        p.orientation.y = 0.44715784297954336
+        p.orientation.z = 0.5321460442259297
+        p.orientation.w = 0.5860714034908688
         return p
 
     def abort_callback(self, msg: Bool):
@@ -755,6 +758,80 @@ class DoorDisassembleNode(Node):
             lambda fut: self._gripper_goal_response(fut, success_evt, fail_evt, context)
         )
 
+    def send_unit_pull_wrench(self, success_evt, fail_evt):
+        if not self.force_client.wait_for_server(timeout_sec=1.0):
+            self.get_logger().error("Force action server not available during unit pull.")
+            produce_event(self.fsm.event_data, fail_evt)
+            return
+
+        goal = ForceControl.Goal()
+
+        # vvv IMPORTANT:
+        # Tune these values on hardware.
+        # interface.cpp checks Fx for tension/release, so start by pulling on X.
+        goal.wrench.force.x = 10.0
+        goal.wrench.force.y = 0.0
+        goal.wrench.force.z = 0.0
+        goal.wrench.torque.x = 0.0
+        goal.wrench.torque.y = 0.0
+        goal.wrench.torque.z = 0.0
+        goal.duration = 3.0
+
+        self.get_logger().info(
+            "Sending unit pull wrench goal: "
+            f"Fx={goal.wrench.force.x:.2f}, "
+            f"Fy={goal.wrench.force.y:.2f}, "
+            f"Fz={goal.wrench.force.z:.2f}, "
+            f"duration={goal.duration:.2f}s"
+        )
+
+        future = self.force_client.send_goal_async(goal)
+        future.add_done_callback(
+            lambda fut: self._unit_pull_goal_response(fut, success_evt, fail_evt)
+        )
+
+
+    def _unit_pull_goal_response(self, future, success_evt, fail_evt):
+        try:
+            goal_handle = future.result()
+            if goal_handle is None or not goal_handle.accepted:
+                self.get_logger().error("Force control goal rejected during unit pull.")
+                produce_event(self.fsm.event_data, fail_evt)
+                return
+
+            res_future = goal_handle.get_result_async()
+            res_future.add_done_callback(
+                lambda fut: self._unit_pull_result(fut, success_evt, fail_evt)
+            )
+        except Exception as e:
+            self.get_logger().error(f"Force goal exception during unit pull: {e}")
+            produce_event(self.fsm.event_data, fail_evt)
+
+
+    def _unit_pull_result(self, future, success_evt, fail_evt):
+        try:
+            wrapped_result = future.result()
+            if wrapped_result is None:
+                self.get_logger().error("Force control returned no result during unit pull.")
+                produce_event(self.fsm.event_data, fail_evt)
+                return
+
+            result = wrapped_result.result
+            if result.result_code == ForceControl.Result.SUCCESS:
+                self.get_logger().info("Force control succeeded during unit pull.")
+                produce_event(self.fsm.event_data, success_evt)
+            else:
+                msg = (
+                    result.result_message
+                    if hasattr(result, "result_message")
+                    else "unknown force-control failure"
+                )
+                self.get_logger().error(f"Force control failed during unit pull: {msg}")
+                produce_event(self.fsm.event_data, fail_evt)
+        except Exception as e:
+            self.get_logger().error(f"Force result exception during unit pull: {e}")
+            produce_event(self.fsm.event_data, fail_evt)
+
     def _send_direct_arm_goal(self, pose, success_evt, fail_evt, context):
         if not self.arm_client.wait_for_server(timeout_sec=1.0):
             self.get_logger().error(f"Arm action server not available during {context}.")
@@ -947,6 +1024,22 @@ class DoorDisassembleNode(Node):
             result = future.result().result
             if result.reached_goal or result.stalled:
                 self.get_logger().info(f"Gripper action succeeded during {context}.")
+
+                #special case: after closing on "unit", do the pull action before continuing FSM.
+                if (
+                    context == "close gripper on object"
+                    and success_evt == EventID.E_GRIPPER_CLOSE_DONE
+                    and self.user_data["active_object_class"] == "unit"
+                ):
+                    self.get_logger().info(
+                        "Unit grasped. Starting force-control pull before continuing FSM."
+                    )
+                    self.send_unit_pull_wrench(
+                        EventID.E_GRIPPER_CLOSE_DONE,
+                        EventID.E_GRIPPER_FAIL,
+                    )
+                    return
+
                 if success_evt == EventID.E_GRIPPER_OPEN_DONE and self.user_data["active_object_class"]:
                     self.user_data["car_objects"].pop(self.user_data["active_object_class"], None)
                     self.get_logger().info(
