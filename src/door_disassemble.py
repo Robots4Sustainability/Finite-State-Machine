@@ -163,13 +163,13 @@ class DoorDisassembleNode(Node):
             return named_pose
 
         p = Pose()
-        p.position.x = 0.729990
-        p.position.y = -0.285972
-        p.position.z = 0.575513
-        p.orientation.x = 0.461884
-        p.orientation.y = 0.469245
-        p.orientation.z = 0.549966
-        p.orientation.w = 0.513819
+        p.position.x = 0.684225
+        p.position.y = -0.228704
+        p.position.z = 0.561060
+        p.orientation.x = 0.492322
+        p.orientation.y = 0.471536
+        p.orientation.z = 0.527013
+        p.orientation.w = 0.507474
         return p
 
     def get_default_table_drop_pose_global(self) -> Pose:
@@ -179,13 +179,13 @@ class DoorDisassembleNode(Node):
             return named_pose
 
         p = Pose()
-        p.position.x = 0.6868436717045381
-        p.position.y = -0.6640234230853236
-        p.position.z = 0.6367270013545705
-        p.orientation.x = 0.4164021626826885
-        p.orientation.y = 0.44715784297954336
-        p.orientation.z = 0.5321460442259297
-        p.orientation.w = 0.5860714034908688
+        p.position.x = 0.682204
+        p.position.y = -0.689161
+        p.position.z = 0.534721
+        p.orientation.x = 0.632828
+        p.orientation.y = 0.256093
+        p.orientation.z = 0.238890
+        p.orientation.w = 0.690562
         return p
 
     def abort_callback(self, msg: Bool):
@@ -407,8 +407,10 @@ class DoorDisassembleNode(Node):
             if current_object_to_grasp == "unit":
                 position = 0.08
             #dummy value for speaker, will add new gripper close value later
-            elif current_object_to_grasp in ("motor_grip","speaker"):
-                position = 0.45    
+            elif current_object_to_grasp == "motor_grip":
+                position = 0.45
+            elif current_object_to_grasp == "speaker":
+                position = 0.47    
             self.send_gripper_command(
                 position,
                 EventID.E_GRIPPER_CLOSE_DONE,
@@ -1035,20 +1037,20 @@ class DoorDisassembleNode(Node):
                 self.get_logger().info(f"Gripper action succeeded during {context}.")
 
                 #special case: after closing on "unit", do the pull action before continuing FSM.
-                if (
-                    context == "close gripper on object"
-                    and success_evt == EventID.E_GRIPPER_CLOSE_DONE
-                    and self.user_data["active_object_class"] == "unit"
-                ):
-                    self.get_logger().info(
-                        "Unit grasped. Starting force-control pull before continuing FSM."
-                    )
-                    self.send_unit_pull_wrench(
-                        EventID.E_GRIPPER_CLOSE_DONE,
-                        EventID.E_GRIPPER_FAIL,
-                    )
-                    return
-
+                # Wrench part tested and works but decided not to include in final demo as 'unit' is replaced by dummy unit
+                # if (
+                #     context == "close gripper on object"
+                #     and success_evt == EventID.E_GRIPPER_CLOSE_DONE
+                #     and self.user_data["active_object_class"] == "unit"
+                # ):
+                #     self.get_logger().info(
+                #         "Unit grasped. Starting force-control pull before continuing FSM."
+                #     )
+                #     self.send_unit_pull_wrench(
+                #         EventID.E_GRIPPER_CLOSE_DONE,
+                #         EventID.E_GRIPPER_FAIL,
+                #     )
+                #     return
                 if success_evt == EventID.E_GRIPPER_OPEN_DONE and self.user_data["active_object_class"]:
                     self.user_data["car_objects"].pop(self.user_data["active_object_class"], None)
                     self.get_logger().info(

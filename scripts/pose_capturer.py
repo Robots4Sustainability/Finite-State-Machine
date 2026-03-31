@@ -30,9 +30,17 @@ class PoseCapturer(Node):
         self.declare_parameter("arm_action_server", "right_arm/arm_control")
         self.declare_parameter("marker_name", "pose_capturer_marker")
         self.declare_parameter("marker_scale", 0.18)
+
+        script_path = Path(__file__).resolve()
+        workspace_root = next(
+            (parent.parent for parent in script_path.parents if parent.name == "install"),
+            script_path.parents[3],
+        )
+        default_pose_store_path = workspace_root / "src" / "FSM" / "src" / "named_poses.json"
+
         self.declare_parameter(
-            "pose_store_path",
-            str(Path(__file__).resolve().parents[1] / "src" / "named_poses.json"),
+        "pose_store_path",
+            str(default_pose_store_path),
         )
 
         self.base_frame = self.get_parameter("base_frame").value
