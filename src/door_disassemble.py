@@ -655,73 +655,21 @@ class DoorDisassembleNode(Node):
         self.user_data["pending_object_classes"] = list(self.car_object_classes)
         self._request_next_car_object_class()
 
-def _request_next_car_object_class(self):
-    if not self.user_data["pending_object_classes"]:
-        self.get_logger().info(
-            f"Stored car objects in {self.base_frame}: "
-            f"{list(self.user_data['car_objects'].keys())}."
-        )
-        produce_event(self.fsm.event_data, EventID.E_OBJECTS_DONE)
-        return
-
-    object_class = self.user_data["pending_object_classes"][0]
-
-    if object_class == "speaker":
-        self.get_logger().info("Moving left by 15cm before speaker perception...")
-        offset_pose = self.make_relative_offset_pose(dx=-0.15)
-        if not self.arm_client.wait_for_server(timeout_sec=1.0):
-            self.get_logger().error("Arm action server not available for speaker offset.")
-            produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
+    def _request_next_car_object_class(self):
+        if not self.user_data["pending_object_classes"]:
+            self.get_logger().info(
+                f"Stored car objects in {self.base_frame}: "
+                f"{list(self.user_data['car_objects'].keys())}."
+            )
+            produce_event(self.fsm.event_data, EventID.E_OBJECTS_DONE)
             return
-        goal = ArmControl.Goal()
-        goal.target_pose = offset_pose
-        future = self.arm_client.send_goal_async(goal)
-        future.add_done_callback(
-            lambda fut: self._speaker_offset_goal_response(fut, object_class)
-        )
-    else:
+
+        object_class = self.user_data["pending_object_classes"][0]
         self.request_perception(
             "car_objects",
             object_class,
             lambda result: self._handle_car_object_result(object_class, result),
         )
-
-def _speaker_offset_goal_response(self, future, object_class):
-    try:
-        goal_handle = future.result()
-        if not goal_handle.accepted:
-            self.get_logger().error("Arm goal rejected during speaker offset move.")
-            produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
-            return
-        res_future = goal_handle.get_result_async()
-        res_future.add_done_callback(
-            lambda fut: self._speaker_offset_result(fut, object_class)
-        )
-    except Exception as e:
-        self.get_logger().error(f"Arm goal exception during speaker offset: {e}")
-        produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
-
-def _speaker_offset_result(self, future, object_class):
-    try:
-        result = future.result().result
-        if result.result_code == ArmControl.Result.SUCCESS:
-            self.get_logger().info("Speaker offset move succeeded. Requesting perception...")
-            self.request_perception(
-                "car_objects",
-                object_class,
-                lambda result: self._handle_car_object_result(object_class, result),
-            )
-        else:
-            msg = (
-                result.result_message
-                if hasattr(result, "result_message")
-                else result.message
-            )
-            self.get_logger().error(f"Arm action failed during speaker offset: {msg}")
-            produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
-    except Exception as e:
-        self.get_logger().error(f"Arm result exception during speaker offset: {e}")
-        produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
 
     def on_subdoor_result(self, result):
         self._store_perception_poses(
