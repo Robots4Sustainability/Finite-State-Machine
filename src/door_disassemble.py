@@ -188,6 +188,15 @@ class DoorDisassembleNode(Node):
         p.orientation.w = 0.690562
         return p
 
+    def get_view_pose_for_object_class(self, object_class: str) -> Pose:
+        named_pose = self.get_named_pose(f"view_pose_{object_class}")
+        if named_pose is not None:
+            self.get_logger().info(
+                f"Using view_pose_{object_class} from named poses for perception."
+            )
+            return named_pose
+        return self.user_data["view_pose_global"]
+
     def abort_callback(self, msg: Bool):
         if msg.data:
             self.get_logger().warn("Abort message received.")
@@ -665,11 +674,85 @@ class DoorDisassembleNode(Node):
             return
 
         object_class = self.user_data["pending_object_classes"][0]
-        self.request_perception(
-            "car_objects",
-            object_class,
-            lambda result: self._handle_car_object_result(object_class, result),
+        view_pose = self.get_view_pose_for_object_class(object_class)
+        target = self.global_pose_to_relative_pose(
+            view_pose, self.base_frame, self.ee_frame
         )
+        if target is None:
+            self.get_logger().error(
+                f"Failed to resolve view pose for object class '{object_class}'."
+            )
+            produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
+            return
+
+        self.get_logger().info(
+            f"Moving to view pose before requesting perception for class '{object_class}'."
+        )
+        self._send_object_view_pose_goal(target, object_class)
+
+    def _send_object_view_pose_goal(self, pose, object_class):
+        if not self.arm_client.wait_for_server(timeout_sec=1.0):
+            self.get_logger().error(
+                f"Arm action server not available for object view pose '{object_class}'."
+            )
+            produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
+            return
+
+        goal = ArmControl.Goal()
+        goal.target_pose = pose
+        future = self.arm_client.send_goal_async(goal)
+        future.add_done_callback(
+            lambda fut: self._object_view_pose_goal_response(fut, object_class)
+        )
+
+    def _object_view_pose_goal_response(self, future, object_class):
+        try:
+            goal_handle = future.result()
+            if goal_handle is None or not goal_handle.accepted:
+                self.get_logger().error(
+                    f"Arm goal rejected during object view move for '{object_class}'."
+                )
+                produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
+                return
+
+            res_future = goal_handle.get_result_async()
+            res_future.add_done_callback(
+                lambda fut: self._object_view_pose_result(fut, object_class)
+            )
+        except Exception as e:
+            self.get_logger().error(
+                f"Arm goal exception during object view move for '{object_class}': {e}"
+            )
+            produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
+
+    def _object_view_pose_result(self, future, object_class):
+        try:
+            result = future.result().result
+            if result.result_code != ArmControl.Result.SUCCESS:
+                msg = (
+                    result.result_message
+                    if hasattr(result, "result_message")
+                    else result.message
+                )
+                self.get_logger().error(
+                    f"Arm action failed during object view move for '{object_class}': {msg}"
+                )
+                produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
+                return
+
+            self.get_logger().info(
+                f"Object view pose reached. Requesting perception for class '{object_class}'."
+            )
+            self.request_perception(
+                "car_objects",
+                object_class,
+                lambda result: self._handle_car_object_result(object_class, result),
+            )
+        except Exception as e:
+            self.get_logger().error(
+                f"Arm result exception during object view move for '{object_class}': {e}"
+            )
+            produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
 
     def on_subdoor_result(self, result):
         self._store_perception_poses(

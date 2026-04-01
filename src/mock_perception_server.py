@@ -97,32 +97,41 @@ class MockPerceptionServer(Node):
         if object_class == "motor_grip":
             return (
                 [
-                    self.make_pose_stamped(self.base_frame, 0.75, 0.348875, 0.433091),
+
+                    self.make_pose_stamped(self.base_frame, 0.689018, 0.100537, 0.531908, 0.680738, 0.007456, 0.731865, 0.030235),
                 ],
                 0.045,
             )
 
-        if object_class == "unit":
+        elif object_class == "unit":
             return (
                 [
-                    self.make_pose_stamped(self.base_frame, 0.75, 0.000823, 0.426174),
+
+                    self.make_pose_stamped(self.base_frame, 0.691119, -0.137204, 0.403723, 0.418785, 0.536685, 0.432927, 0.590900),
                 ],
                 0.065,
+            )
+        elif object_class == "speaker":
+            return (
+                [
+                    self.make_pose_stamped(self.base_frame, 0.703098, -0.348875, 0.433091, 0.487408, 0.475228, 0.508764, 0.527022),
+                ],
+                0.055,
             )
 
         return None
 
-    def make_pose_stamped(self, frame_id: str, x: float, y: float, z: float) -> PoseStamped:
+    def make_pose_stamped(self, frame_id: str, x: float, y: float, z: float , ox: float=0.0, oy: float=0.0, oz: float=0.0, ow: float=1.0) -> PoseStamped:
         msg = PoseStamped()
         msg.header.frame_id = frame_id
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.pose.position.x = x
         msg.pose.position.y = y
         msg.pose.position.z = z
-        msg.pose.orientation.x = 0.0
-        msg.pose.orientation.y = 0.0
-        msg.pose.orientation.z = 0.0
-        msg.pose.orientation.w = 1.0
+        msg.pose.orientation.x = ox
+        msg.pose.orientation.y = oy
+        msg.pose.orientation.z = oz
+        msg.pose.orientation.w = ow
         return msg
 
 

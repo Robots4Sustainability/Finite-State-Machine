@@ -36,7 +36,7 @@ class PoseCapturer(Node):
             (parent.parent for parent in script_path.parents if parent.name == "install"),
             script_path.parents[3],
         )
-        default_pose_store_path = workspace_root / "src" / "FSM" / "src" / "named_poses.json"
+        default_pose_store_path = workspace_root / "src" / "Finite-State-Machine" / "src" / "named_poses.json"
 
         self.declare_parameter(
         "pose_store_path",
@@ -92,6 +92,10 @@ class PoseCapturer(Node):
         self.get_logger().info(
             "Press 'h' to save home_pose, 't' to save table_drop_pose, "
             "'s' to save screwdriver_pose."
+        )
+        self.get_logger().info(
+            "Press 'u' to save view_pose_unit, 'm' to save view_pose_motor_grip, "
+            "'p' to save view_pose_speaker."
         )
         self.get_logger().info(
             f"Named poses will be written to: {self.pose_store_path}"
@@ -315,6 +319,12 @@ class PoseCapturer(Node):
                 self.save_named_pose("table_drop_pose")
             elif cmd == "s":
                 self.save_named_pose("screwdriver_pose")
+            elif cmd == "u":
+                self.save_named_pose("view_pose_unit")
+            elif cmd == "m":
+                self.save_named_pose("view_pose_motor_grip")
+            elif cmd == "p":
+                self.save_named_pose("view_pose_speaker")
 
     def on_marker_feedback(self, feedback):
         if feedback.event_type == InteractiveMarkerFeedback.POSE_UPDATE:
