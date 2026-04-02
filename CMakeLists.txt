@@ -30,9 +30,9 @@ install(PROGRAMS
 )
 
 install(PROGRAMS
-  scripts/record_pregrasp_knots.py
+  scripts/pose_capturer.py
   DESTINATION lib/${PROJECT_NAME}
-  RENAME record_pregrasp_knots
+  RENAME pose_capturer
 )
 
 install(PROGRAMS

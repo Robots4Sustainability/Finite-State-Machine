@@ -61,7 +61,7 @@ class MockPerceptionServer(Node):
                 result.success = False
                 result.message = (
                     f"Unsupported mock object_class '{object_class}' for task '{task_name}'. "
-                    "Supported classes: motor, unit."
+                    "Supported classes: motor_grip, unit, speaker."
                 )
                 result.poses = []
                 goal_handle.abort()
@@ -106,10 +106,19 @@ class MockPerceptionServer(Node):
         ]
 
     def mock_car_object_result(self, object_class: str):
-        if object_class == "motor":
+        if object_class == "motor_grip":
             return (
                 [
-                    self.make_pose_stamped(self.base_frame, 0.75, 0.248875, 0.433091),
+                    self.make_pose_stamped(
+                        self.base_frame,
+                        0.689018,
+                        0.100537,
+                        0.531908,
+                        0.680738,
+                        0.007456,
+                        0.731865,
+                        0.030235,
+                    ),
                 ],
                 0.045,
             )
@@ -117,9 +126,35 @@ class MockPerceptionServer(Node):
         if object_class == "unit":
             return (
                 [
-                    self.make_pose_stamped(self.base_frame, 0.75, 0.000823, 0.426174),
+                    self.make_pose_stamped(
+                        self.base_frame,
+                        0.691119,
+                        -0.137204,
+                        0.403723,
+                        0.418785,
+                        0.536685,
+                        0.432927,
+                        0.590900,
+                    ),
                 ],
                 0.065,
+            )
+
+        if object_class == "speaker":
+            return (
+                [
+                    self.make_pose_stamped(
+                        self.base_frame,
+                        0.703098,
+                        -0.348875,
+                        0.433091,
+                        0.487408,
+                        0.475228,
+                        0.508764,
+                        0.527022,
+                    ),
+                ],
+                0.055,
             )
 
         return None
