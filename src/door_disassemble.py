@@ -3,6 +3,7 @@ import json
 import math
 import threading
 import time
+from pathlib import Path
 
 import rclpy
 from rclpy.action import ActionClient
@@ -14,8 +15,8 @@ from geometry_msgs.msg import Pose, PoseStamped
 from std_msgs.msg import Bool
 from tf2_geometry_msgs import do_transform_pose
 from tf2_ros import Buffer, TransformListener
-
-from eddie_ros.action import ArmControl
+from eddie_ros.action import GripperControl
+from eddie_ros.action import ArmControl, ForceControl
 from control_msgs.action import GripperCommand
 from cartesian_planner.srv import PlanScanPath
 from my_robot_interfaces.action import RunVision
@@ -29,6 +30,31 @@ class DoorDisassembleNode(Node):
         super().__init__("door_disassemble_fsm_py")
 
         self.fsm = create_fsm()
+
+        self.declare_parameter("base_frame", "eddie_base_link")
+        self.declare_parameter("ee_frame", "eddie_right_arm_robotiq_85_grasp_link")
+        self.declare_parameter("camera_frame", "eddie_right_arm_camera_link")
+        self.declare_parameter("perception_action_server", "run_perception_pipeline")
+        self.declare_parameter("car_object_classes", ["unit", "speaker", "motor_grip"])
+        self.declare_parameter("enable_raster_scan", False)
+        self.declare_parameter(
+            "pose_store_path",
+            str(Path(__file__).resolve().with_name("named_poses.json")),
+        )
+        
+        self.screwdriver_done = None
+        self.screwdriver_wait_timer = None
+        self.screwdriver_wait_deadline = None
+        self.base_frame = self.get_parameter("base_frame").value
+        self.ee_frame = self.get_parameter("ee_frame").value
+        self.camera_frame = self.get_parameter("camera_frame").value
+        self.perception_action_server = self.get_parameter("perception_action_server").value
+        self.car_object_classes = list(self.get_parameter("car_object_classes").value)
+        self.enable_raster_scan = bool(self.get_parameter("enable_raster_scan").value)
+        self.pose_store_path = Path(self.get_parameter("pose_store_path").value).expanduser()
+        self.named_poses = self.load_named_poses()
+        self.object_pick_z_offset = 0.1
+
         self.user_data = {
             "last_state": StateID.S_IDLE,
             "action_dispatched": False,
@@ -49,27 +75,15 @@ class DoorDisassembleNode(Node):
             "pending_object_classes": [],
         }
 
-        self.declare_parameter("base_frame", "eddie_base_link")
-        self.declare_parameter("ee_frame", "eddie_right_arm_robotiq_85_grasp_link")
-        self.declare_parameter("camera_frame", "eddie_right_arm_camera_link")
-        self.declare_parameter("perception_action_server", "run_perception_pipeline")
-        self.declare_parameter("car_object_classes", ["motor_grip", "unit"])
-        self.declare_parameter("enable_raster_scan", False)
-
-        self.base_frame = self.get_parameter("base_frame").value
-        self.ee_frame = self.get_parameter("ee_frame").value
-        self.camera_frame = self.get_parameter("camera_frame").value
-        self.perception_action_server = self.get_parameter("perception_action_server").value
-        self.car_object_classes = list(self.get_parameter("car_object_classes").value)
-        self.enable_raster_scan = bool(self.get_parameter("enable_raster_scan").value)
-        self.object_pick_z_offset = 0.1
-
         self.cb_group = ReentrantCallbackGroup()
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
 
         self.arm_client = ActionClient(
             self, ArmControl, "right_arm/arm_control", callback_group=self.cb_group
+        )
+        self.force_client = ActionClient(
+            self, ForceControl, "right_arm/force_control", callback_group=self.cb_group
         )
         # self.gripper_client = ActionClient(
         #     self, GripperControl, "right_arm/gripper_control", callback_group=self.cb_group
@@ -93,6 +107,16 @@ class DoorDisassembleNode(Node):
             10,
             callback_group=self.cb_group,
         )
+        self.screwdriver_start_pub = self.create_publisher(
+           Bool, "/screwdriver_pick/start", 10
+        )
+        self.create_subscription(
+           Bool,
+            "/screwdriver_pick/done",
+            self.screwdriver_done_callback,
+            10,
+            callback_group=self.cb_group,
+        )
 
         self.fsm_timer = self.create_timer(0.1, self.fsm_loop, callback_group=self.cb_group)
 
@@ -102,7 +126,66 @@ class DoorDisassembleNode(Node):
         self.get_logger().info("Door disassemble node ready.")
         self.get_logger().info("Press Enter to start. Type 'a' + Enter to abort.")
 
+    def load_named_poses(self):
+        if not self.pose_store_path.exists():
+            self.get_logger().info(
+                f"Named pose file not found at {self.pose_store_path}. Using hardcoded defaults."
+            )
+            return {}
+
+        try:
+            data = json.loads(self.pose_store_path.read_text())
+            if not isinstance(data, dict):
+                raise ValueError("named pose file root is not an object")
+            self.get_logger().info(f"Loaded named poses from {self.pose_store_path}.")
+            return data
+        except Exception as exc:
+            self.get_logger().warn(
+                f"Could not load named poses from {self.pose_store_path}: {exc}. "
+                "Using hardcoded defaults."
+            )
+            return {}
+
+    def pose_from_dict(self, pose_data) -> Pose | None:
+        try:
+            pose = Pose()
+            position = pose_data["position"]
+            orientation = pose_data["orientation"]
+            pose.position.x = float(position["x"])
+            pose.position.y = float(position["y"])
+            pose.position.z = float(position["z"])
+            pose.orientation.x = float(orientation["x"])
+            pose.orientation.y = float(orientation["y"])
+            pose.orientation.z = float(orientation["z"])
+            pose.orientation.w = float(orientation["w"])
+            return pose
+        except Exception:
+            return None
+
+    def get_named_pose(self, key: str) -> Pose | None:
+        pose_data = self.named_poses.get(key)
+        if not isinstance(pose_data, dict):
+            return None
+
+        frame_id = pose_data.get("frame_id")
+        if frame_id and frame_id != self.base_frame:
+            self.get_logger().warn(
+                f"Named pose '{key}' uses frame '{frame_id}', expected '{self.base_frame}'. "
+                "Ignoring it."
+            )
+            return None
+
+        pose = self.pose_from_dict(pose_data)
+        if pose is None:
+            self.get_logger().warn(f"Named pose '{key}' is malformed. Ignoring it.")
+        return pose
+
     def get_default_view_pose_global(self) -> Pose:
+        named_pose = self.get_named_pose("home_pose")
+        if named_pose is not None:
+            self.get_logger().info("Using home_pose from named poses for home/view pose.")
+            return named_pose
+
         p = Pose()
         p.position.x = 0.729990
         p.position.y = -0.285972
@@ -114,6 +197,11 @@ class DoorDisassembleNode(Node):
         return p
 
     def get_default_table_drop_pose_global(self) -> Pose:
+        named_pose = self.get_named_pose("table_drop_pose")
+        if named_pose is not None:
+            self.get_logger().info("Using table_drop_pose from named poses.")
+            return named_pose
+
         p = Pose()
         p.position.x = 0.60
         p.position.y = -0.66
@@ -123,6 +211,15 @@ class DoorDisassembleNode(Node):
         p.orientation.z = 0.546011
         p.orientation.w = 0.481407
         return p
+
+    def get_view_pose_for_object_class(self, object_class: str) -> Pose:
+        named_pose = self.get_named_pose(f"view_pose_{object_class}")
+        if named_pose is not None:
+            self.get_logger().info(
+                f"Using view_pose_{object_class} from named poses for perception."
+            )
+            return named_pose
+        return self.user_data["view_pose_global"]
 
     def get_place_target_pose_global(self) -> Pose | None:
         active_place_pose = self.user_data["active_place_pose_global"]
@@ -149,6 +246,9 @@ class DoorDisassembleNode(Node):
         p.orientation.z = 0.546011
         p.orientation.w = 0.481407
         return p
+    
+    def screwdriver_done_callback(self, msg: Bool):
+        self.screwdriver_done = bool(msg.data)
 
     def abort_callback(self, msg: Bool):
         if msg.data:
@@ -233,6 +333,13 @@ class DoorDisassembleNode(Node):
                 ud["action_dispatched"] = False
                 self.fsm.current_state_index = StateID.S_MOVE_TO_PICK_OBJECT
                 return
+            if not self.enable_raster_scan:
+                self.get_logger().info(
+                    "Raster scan disabled. Skipping subdoor pose request."
+                )
+                produce_event(self.fsm.event_data, EventID.E_SUBDOOR_DONE)
+                ud["action_dispatched"] = True
+                return
             self.get_logger().info("Requesting subdoor poses from perception action...")
             self.request_perception("subdoor_pose", "", self.on_subdoor_result)
             ud["action_dispatched"] = True
@@ -272,11 +379,9 @@ class DoorDisassembleNode(Node):
             req.top_right = ud["subdoor_poses"][1]
             req.bottom_right = ud["subdoor_poses"][2]
             req.bottom_left = ud["subdoor_poses"][3]
-            # Uncomment below two lines and comment out produce event line to enable raster scan
-            # future = self.scan_client.call_async(req)
-            # future.add_done_callback(self.on_scan_response)
-            self.fsm.current_state_index = StateID.S_EXECUTE_SCREWDRIVER_PROBE
-            ud["action_dispatched"] = False
+            future = self.scan_client.call_async(req)
+            future.add_done_callback(self.on_scan_response)
+            ud["action_dispatched"] = True
             return
 
         if cs == StateID.S_MOVE_ARM and not ud["action_dispatched"]:
@@ -432,8 +537,16 @@ class DoorDisassembleNode(Node):
         if cs == StateID.S_CLOSE_GRIPPER and not ud["action_dispatched"]:
             ud["pick_motion_phase"] = "RETREAT"
             ud["pre_place_phase"] = "WITH_OBJECT"
+            position = 0.0
+            current_object_to_grasp = self.user_data["active_object_class"]
+            if current_object_to_grasp == "unit":
+                position = 0.08
+            elif current_object_to_grasp == "motor_grip":
+                position = 0.45
+            elif current_object_to_grasp == "speaker":
+                position = 0.47
             self.send_gripper_command(
-                100.0,
+                position,
                 EventID.E_GRIPPER_CLOSE_DONE,
                 EventID.E_GRIPPER_FAIL,
                 "close gripper on object",
@@ -503,10 +616,11 @@ class DoorDisassembleNode(Node):
         if transformed_pose is None:
             return None
 
-        transformed_pose.orientation.x = 0.0
-        transformed_pose.orientation.y = 0.0
-        transformed_pose.orientation.z = 0.0
-        transformed_pose.orientation.w = 1.0
+        # Preserve the orientation coming from perception after TF transforms.
+        # transformed_pose.orientation.x = 0.0
+        # transformed_pose.orientation.y = 0.0
+        # transformed_pose.orientation.z = 0.0
+        # transformed_pose.orientation.w = 1.0
         transformed_pose.position.z -= z_offset
         return transformed_pose
 
@@ -522,12 +636,12 @@ class DoorDisassembleNode(Node):
         checks_ok &= self._check_action_server(
             self.arm_client, "right_arm/arm_control"
         )
-        checks_ok &= self._check_action_server(
-            self.gripper_client, "right_arm/gripper_control"
-        )
         # checks_ok &= self._check_action_server(
-        #     self.gripper_client, "robotiq_gripper_controller/gripper_cmd"
+        #     self.gripper_client, "right_arm/gripper_control"
         # )
+        checks_ok &= self._check_action_server(
+            self.gripper_client, "robotiq_gripper_controller/gripper_cmd"
+        )
         checks_ok &= self._check_action_server(
             self.perception_client, self.perception_action_server
         )
@@ -608,7 +722,9 @@ class DoorDisassembleNode(Node):
     def transform_pose_stamped_to_base(self, pose_stamped: PoseStamped) -> PoseStamped | None:
         source_frame = pose_stamped.header.frame_id
         if (
-            source_frame and not source_frame.startswith("eddie_right_arm_")
+            source_frame
+            and source_frame != self.base_frame
+            and not source_frame.startswith("eddie_right_arm_")
         ):
             source_frame = f"eddie_right_arm_{source_frame}"
 
@@ -697,8 +813,52 @@ class DoorDisassembleNode(Node):
             produce_event(self.fsm.event_data, EventID.E_SCAN_FAIL)
 
     def execute_screwdriver_probe(self):
-        self.get_logger().info("Screwdriver probe execution is currently disabled.")
-        produce_event(self.fsm.event_data, EventID.E_SCREWDRIVER_PROBE_DONE)
+        self.get_logger().info("Checking for manually started screwdriver node...")
+
+        pub_count = self.screwdriver_start_pub.get_subscription_count()
+
+        if pub_count < 1:
+            self.get_logger().warn(
+                "No subscriber on /screwdriver_pick/start. "
+                "Please run screwdriver_pick.py in another terminal first."
+            )
+            produce_event(self.fsm.event_data, EventID.E_ARM_MOVE_FAIL)
+            return
+
+        self.screwdriver_done = None
+
+        trigger = Bool()
+        trigger.data = True
+        self.screwdriver_start_pub.publish(trigger)
+
+        self.get_logger().info("Sent trigger to screwdriver node. Waiting for completion...")
+
+        if hasattr(self, "screwdriver_wait_timer") and self.screwdriver_wait_timer is not None:
+            self.screwdriver_wait_timer.cancel()
+
+        self.screwdriver_wait_timer = self.create_timer(
+            0.2,
+            self._poll_screwdriver_done,
+            callback_group=self.cb_group,
+        )
+
+    def _poll_screwdriver_done(self):
+        if self.screwdriver_done is None:
+            return
+
+        if self.screwdriver_wait_timer is not None:
+            self.screwdriver_wait_timer.cancel()
+            self.screwdriver_wait_timer = None
+
+        if self.screwdriver_done:
+            self.get_logger().info("Screwdriver routine completed successfully.")
+            produce_event(self.fsm.event_data, EventID.E_SCREWDRIVER_PROBE_DONE)
+        else:
+            self.get_logger().error("Screwdriver routine reported failure.")
+            produce_event(self.fsm.event_data, EventID.E_ARM_MOVE_FAIL)
+
+        self.screwdriver_done = None
+
 
     def request_perception(self, task_name, object_class, result_callback, time_duration=0.0):
         if not self.perception_client.wait_for_server(timeout_sec=2.0):
@@ -774,11 +934,85 @@ class DoorDisassembleNode(Node):
             return
 
         object_class = self.user_data["pending_object_classes"][0]
-        self.request_perception(
-            "car_objects",
-            object_class,
-            lambda result: self._handle_car_object_result(object_class, result),
+        view_pose = self.get_view_pose_for_object_class(object_class)
+        target = self.global_pose_to_relative_pose(
+            view_pose, self.base_frame, self.ee_frame
         )
+        if target is None:
+            self.get_logger().error(
+                f"Failed to resolve view pose for object class '{object_class}'."
+            )
+            produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
+            return
+
+        self.get_logger().info(
+            f"Moving to view pose before requesting perception for class '{object_class}'."
+        )
+        self._send_object_view_pose_goal(target, object_class)
+
+    def _send_object_view_pose_goal(self, pose, object_class):
+        if not self.arm_client.wait_for_server(timeout_sec=1.0):
+            self.get_logger().error(
+                f"Arm action server not available for object view pose '{object_class}'."
+            )
+            produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
+            return
+
+        goal = ArmControl.Goal()
+        goal.target_pose = pose
+        future = self.arm_client.send_goal_async(goal)
+        future.add_done_callback(
+            lambda fut: self._object_view_pose_goal_response(fut, object_class)
+        )
+
+    def _object_view_pose_goal_response(self, future, object_class):
+        try:
+            goal_handle = future.result()
+            if goal_handle is None or not goal_handle.accepted:
+                self.get_logger().error(
+                    f"Arm goal rejected during object view move for '{object_class}'."
+                )
+                produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
+                return
+
+            res_future = goal_handle.get_result_async()
+            res_future.add_done_callback(
+                lambda fut: self._object_view_pose_result(fut, object_class)
+            )
+        except Exception as e:
+            self.get_logger().error(
+                f"Arm goal exception during object view move for '{object_class}': {e}"
+            )
+            produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
+
+    def _object_view_pose_result(self, future, object_class):
+        try:
+            result = future.result().result
+            if result.result_code != ArmControl.Result.SUCCESS:
+                msg = (
+                    result.result_message
+                    if hasattr(result, "result_message")
+                    else result.message
+                )
+                self.get_logger().error(
+                    f"Arm action failed during object view move for '{object_class}': {msg}"
+                )
+                produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
+                return
+
+            self.get_logger().info(
+                f"Object view pose reached. Requesting perception for class '{object_class}'."
+            )
+            self.request_perception(
+                "car_objects",
+                object_class,
+                lambda result: self._handle_car_object_result(object_class, result),
+            )
+        except Exception as e:
+            self.get_logger().error(
+                f"Arm result exception during object view move for '{object_class}': {e}"
+            )
+            produce_event(self.fsm.event_data, EventID.E_OBJECTS_FAIL)
 
     def on_subdoor_result(self, result):
         self._store_perception_poses(
@@ -900,6 +1134,74 @@ class DoorDisassembleNode(Node):
         future.add_done_callback(
             lambda fut: self._gripper_goal_response(fut, success_evt, fail_evt, context)
         )
+
+    def send_unit_pull_wrench(self, success_evt, fail_evt):
+        if not self.force_client.wait_for_server(timeout_sec=1.0):
+            self.get_logger().error("Force action server not available during unit pull.")
+            produce_event(self.fsm.event_data, fail_evt)
+            return
+
+        goal = ForceControl.Goal()
+        goal.wrench.force.x = 10.0
+        goal.wrench.force.y = 0.0
+        goal.wrench.force.z = 0.0
+        goal.wrench.torque.x = 0.0
+        goal.wrench.torque.y = 0.0
+        goal.wrench.torque.z = 0.0
+        goal.duration = 3.0
+
+        self.get_logger().info(
+            "Sending unit pull wrench goal: "
+            f"Fx={goal.wrench.force.x:.2f}, "
+            f"Fy={goal.wrench.force.y:.2f}, "
+            f"Fz={goal.wrench.force.z:.2f}, "
+            f"duration={goal.duration:.2f}s"
+        )
+
+        future = self.force_client.send_goal_async(goal)
+        future.add_done_callback(
+            lambda fut: self._unit_pull_goal_response(fut, success_evt, fail_evt)
+        )
+
+    def _unit_pull_goal_response(self, future, success_evt, fail_evt):
+        try:
+            goal_handle = future.result()
+            if goal_handle is None or not goal_handle.accepted:
+                self.get_logger().error("Force control goal rejected during unit pull.")
+                produce_event(self.fsm.event_data, fail_evt)
+                return
+
+            res_future = goal_handle.get_result_async()
+            res_future.add_done_callback(
+                lambda fut: self._unit_pull_result(fut, success_evt, fail_evt)
+            )
+        except Exception as e:
+            self.get_logger().error(f"Force goal exception during unit pull: {e}")
+            produce_event(self.fsm.event_data, fail_evt)
+
+    def _unit_pull_result(self, future, success_evt, fail_evt):
+        try:
+            wrapped_result = future.result()
+            if wrapped_result is None:
+                self.get_logger().error("Force control returned no result during unit pull.")
+                produce_event(self.fsm.event_data, fail_evt)
+                return
+
+            result = wrapped_result.result
+            if result.result_code == ForceControl.Result.SUCCESS:
+                self.get_logger().info("Force control succeeded during unit pull.")
+                produce_event(self.fsm.event_data, success_evt)
+            else:
+                msg = (
+                    result.result_message
+                    if hasattr(result, "result_message")
+                    else "unknown force-control failure"
+                )
+                self.get_logger().error(f"Force control failed during unit pull: {msg}")
+                produce_event(self.fsm.event_data, fail_evt)
+        except Exception as e:
+            self.get_logger().error(f"Force result exception during unit pull: {e}")
+            produce_event(self.fsm.event_data, fail_evt)
 
     def _send_direct_arm_goal(
         self, pose, success_evt, fail_evt, context, result_callback=None
@@ -1042,8 +1344,23 @@ class DoorDisassembleNode(Node):
     def _gripper_result(self, future, success_evt, fail_evt, context):
         try:
             result = future.result().result
-            if result.result_code == GripperControl.Result.SUCCESS:
+            if result.reached_goal or result.stalled:
                 self.get_logger().info(f"Gripper action succeeded during {context}.")
+                #special case: after closing on "unit", do the pull action before continuing FSM.
+                # Wrench part (Wasim) tested and works but decided not to include in final demo as 'unit' is replaced by dummy unit
+                # if (
+                #     context == "close gripper on object"
+                #     and success_evt == EventID.E_GRIPPER_CLOSE_DONE
+                #     and self.user_data["active_object_class"] == "unit"
+                # ):
+                #     self.get_logger().info(
+                #         "Unit grasped. Starting force-control pull before continuing FSM."
+                #     )
+                #     self.send_unit_pull_wrench(
+                #         EventID.E_GRIPPER_CLOSE_DONE,
+                #         EventID.E_GRIPPER_FAIL,
+                #     )
+                #     return
                 if success_evt == EventID.E_GRIPPER_OPEN_DONE and self.user_data["active_object_class"]:
                     self.user_data["car_objects"].pop(self.user_data["active_object_class"], None)
                     self.get_logger().info(
@@ -1053,9 +1370,10 @@ class DoorDisassembleNode(Node):
                 produce_event(self.fsm.event_data, success_evt)
             else:
                 msg = (
-                    result.result_message
-                    if hasattr(result, "result_message")
-                    else "unknown gripper failure"
+                    f"reached_goal={result.reached_goal}, "
+                    f"stalled={result.stalled}, "
+                    f"position={result.position:.4f}, "
+                    f"effort={result.effort:.4f}"
                 )
                 self.get_logger().error(f"Gripper action failed during {context}: {msg}")
                 produce_event(self.fsm.event_data, fail_evt)
