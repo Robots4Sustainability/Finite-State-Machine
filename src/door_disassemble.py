@@ -35,7 +35,7 @@ class DoorDisassembleNode(Node):
         self.declare_parameter("ee_frame", "eddie_right_arm_robotiq_85_grasp_link")
         self.declare_parameter("camera_frame", "eddie_right_arm_camera_link")
         self.declare_parameter("perception_action_server", "run_perception_pipeline")
-        self.declare_parameter("car_object_classes", ["motor_grip", "unit", "speaker"])
+        self.declare_parameter("car_object_classes", ["unit", "speaker", "motor_grip"])
         self.declare_parameter("enable_raster_scan", False)
         self.declare_parameter(
             "pose_store_path",
@@ -82,15 +82,15 @@ class DoorDisassembleNode(Node):
         self.force_client = ActionClient(
             self, ForceControl, "right_arm/force_control", callback_group=self.cb_group
         )
-        self.gripper_client = ActionClient(
-            self, GripperControl, "right_arm/gripper_control", callback_group=self.cb_group
-        )
         # self.gripper_client = ActionClient(
-        #     self,
-        #     GripperCommand,
-        #     "robotiq_gripper_controller/gripper_cmd",
-        #     callback_group=self.cb_group,
+        #     self, GripperControl, "right_arm/gripper_control", callback_group=self.cb_group
         # )
+        self.gripper_client = ActionClient(
+            self,
+            GripperCommand,
+            "robotiq_gripper_controller/gripper_cmd",
+            callback_group=self.cb_group,
+        )
         self.perception_client = ActionClient(
             self, RunVision, self.perception_action_server, callback_group=self.cb_group
         )
@@ -620,12 +620,12 @@ class DoorDisassembleNode(Node):
         checks_ok &= self._check_action_server(
             self.arm_client, "right_arm/arm_control"
         )
-        checks_ok &= self._check_action_server(
-            self.gripper_client, "right_arm/gripper_control"
-        )
         # checks_ok &= self._check_action_server(
-        #     self.gripper_client, "robotiq_gripper_controller/gripper_cmd"
+        #     self.gripper_client, "right_arm/gripper_control"
         # )
+        checks_ok &= self._check_action_server(
+            self.gripper_client, "robotiq_gripper_controller/gripper_cmd"
+        )
         checks_ok &= self._check_action_server(
             self.perception_client, self.perception_action_server
         )
