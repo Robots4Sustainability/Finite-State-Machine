@@ -38,6 +38,7 @@ install(PROGRAMS
 install(PROGRAMS
   include/fsm_pick_place.py
   include/fsm_door_disassemble.py
+  src/common.py
   src/error_handling.py
   DESTINATION lib/${PROJECT_NAME}
 )
