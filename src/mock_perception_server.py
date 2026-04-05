@@ -88,10 +88,17 @@ class MockPerceptionServer(Node):
             goal_handle.succeed()
             return result
 
+        if task_name == "detect_screwdriver":
+            result.success = True
+            result.message = "Returned 1 mock screwdriver pose."
+            result.poses = [self.mock_screwdriver_pose()]
+            goal_handle.succeed()
+            return result
+
         result.success = False
         result.message = (
             f"Unsupported mock perception task '{task_name}'. "
-            "Supported tasks: subdoor_pose, car_objects, place_object."
+            "Supported tasks: subdoor_pose, car_objects, place_object, detect_screwdriver."
         )
         result.poses = []
         goal_handle.abort()
@@ -175,6 +182,18 @@ class MockPerceptionServer(Node):
             z += min(radius, 0.1)
 
         return [self.make_pose_stamped(self.base_frame, x, y, z)]
+
+    def mock_screwdriver_pose(self):
+        return self.make_pose_stamped(
+            self.base_frame,
+            0.605,
+            -0.655,
+            0.410,
+            0.0,
+            0.7071068,
+            0.0,
+            0.7071068,
+        )
 
     def make_pose_stamped(
         self,

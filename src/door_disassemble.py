@@ -17,6 +17,7 @@ from tf2_ros import Buffer, TransformListener
 from eddie_ros.action import ArmControl, ForceControl
 from cartesian_planner.srv import PlanScanPath
 from my_robot_interfaces.action import RunVision
+from pick_place_fsm.srv import RunScrewdriverRoutine
 from coord_dsl.fsm import fsm_step
 from coord_dsl.event_loop import reconfig_event_buffers, produce_event
 from common import FlowLogger, NamedPoseStore, PoseUtils, RobotActionHelper, PerceptionHelper, gripper_action_name, gripper_action_type
@@ -35,18 +36,20 @@ class DoorDisassembleNode(Node):
         self.declare_parameter("perception_action_server", "run_perception_pipeline")
         self.declare_parameter("car_object_classes", ["unit", "speaker", "motor_grip"])
         self.declare_parameter("enable_raster_scan", False)
-        self.declare_parameter("pose_store_path", str(Path(__file__).resolve().with_name("named_poses.json")),
-        )
-
+        self.declare_parameter("screwdriver_probe", True)
+        self.declare_parameter("pose_store_path", str("/home/r4s/r4s-ws/src/Finite-State-Machine/src/named_poses.json"))        
+        
         self.base_frame = self.get_parameter("base_frame").value
         self.ee_frame = self.get_parameter("ee_frame").value
         self.camera_frame = self.get_parameter("camera_frame").value
         self.perception_action_server = self.get_parameter("perception_action_server").value
         self.car_object_classes = list(self.get_parameter("car_object_classes").value)
         self.enable_raster_scan = bool(self.get_parameter("enable_raster_scan").value)
+        self.enable_screwdriver_probe = bool(self.get_parameter("screwdriver_probe").value)
         self.pose_store_path = Path(self.get_parameter("pose_store_path").value).expanduser()
         self.object_pick_z_offset = 0.1
         self.named_pose_store = NamedPoseStore(self, self.base_frame, self.pose_store_path)
+        self.screwdriver_probe_pending = False
 
         self.user_data = {
             "last_state": StateID.S_IDLE,
@@ -81,7 +84,11 @@ class DoorDisassembleNode(Node):
         self.perception_helper = PerceptionHelper(self, self.perception_client, self.pose_utils, self.base_frame)
         self.flow_logger = FlowLogger(self)
         self.scan_client = self.create_client(PlanScanPath, "plan_scan_path", callback_group=self.cb_group)
+        self.screwdriver_client = self.create_client(
+            RunScrewdriverRoutine, "/screwdriver_pick/run", callback_group=self.cb_group
+        )
         self.create_subscription(Bool, "/door_disassemble/abort", self.abort_callback, 10, callback_group=self.cb_group)
+        self.create_subscription(Bool, "/screwdriver_pick/done", self.screwdriver_done_callback, 10, callback_group=self.cb_group)
 
         self.fsm_timer = self.create_timer(0.1, self.fsm_loop, callback_group=self.cb_group)
 
@@ -152,6 +159,16 @@ class DoorDisassembleNode(Node):
         if msg.data:
             self.get_logger().warn("Abort message received.")
             produce_event(self.fsm.event_data, EventID.E_ABORT)
+
+    def screwdriver_done_callback(self, msg: Bool):
+        if not self.screwdriver_probe_pending:
+            return
+        self.screwdriver_probe_pending = False
+        if not msg.data:
+            self.get_logger().error("Screwdriver routine reported failure. Continuing anyway.")
+        else:
+            self.get_logger().info("Screwdriver routine completed.")
+        produce_event(self.fsm.event_data, EventID.E_SCREWDRIVER_PROBE_DONE)
 
     def input_loop(self):
         while rclpy.ok():
@@ -484,6 +501,8 @@ class DoorDisassembleNode(Node):
             checks_ok &= self._check_service(self.scan_client, "plan_scan_path")
         else:
             self.get_logger().info("Skipping plan_scan_path readiness check because raster scan is disabled.")
+        if self.enable_screwdriver_probe:
+            checks_ok &= self._check_service(self.screwdriver_client, "/screwdriver_pick/run")
 
         required_frames = [self.base_frame, self.ee_frame, self.camera_frame]
         for frame in required_frames:
@@ -591,15 +610,35 @@ class DoorDisassembleNode(Node):
             produce_event(self.fsm.event_data, EventID.E_SCAN_FAIL)
 
     def execute_screwdriver_probe(self):
-        if self.enable_raster_scan and len(self.user_data["scan_screw_poses"]) == 0:
-            self.get_logger().error(
-                "Screwdriver probe cannot run because no screw poses available"
-            )
+        if not self.enable_screwdriver_probe:
+            self.get_logger().info("Screwdriver probe disabled. Skipping routine.")
             produce_event(self.fsm.event_data, EventID.E_SCREWDRIVER_PROBE_DONE)
             return
 
-        self.get_logger().info("Screwdriver probe execution completed.")
-        produce_event(self.fsm.event_data, EventID.E_SCREWDRIVER_PROBE_DONE)
+        if not self.screwdriver_client.wait_for_service(timeout_sec=2.0):
+            self.get_logger().error("Screwdriver routine service not available.")
+            produce_event(self.fsm.event_data, EventID.E_SCREWDRIVER_PROBE_FAIL)
+            return
+
+        request = RunScrewdriverRoutine.Request()
+        request.request_json = json.dumps({"screw_poses": self.user_data["scan_screw_poses"]})
+        self.screwdriver_probe_pending = True
+        future = self.screwdriver_client.call_async(request)
+        future.add_done_callback(self._screwdriver_run_response)
+        self.get_logger().info(f"Triggered screwdriver routine with {len(self.user_data['scan_screw_poses'])} screw poses.")
+
+    def _screwdriver_run_response(self, future):
+        try:
+            response = future.result()
+            if response is None or not response.accepted:
+                self.screwdriver_probe_pending = False
+                message = "no response" if response is None else response.message
+                self.get_logger().error(f"Screwdriver routine request rejected: {message}")
+                produce_event(self.fsm.event_data, EventID.E_SCREWDRIVER_PROBE_FAIL)
+        except Exception as exc:
+            self.screwdriver_probe_pending = False
+            self.get_logger().error(f"Screwdriver routine service call failed: {exc}")
+            produce_event(self.fsm.event_data, EventID.E_SCREWDRIVER_PROBE_FAIL)
 
     def request_perception(self, task_name, object_class, result_callback, time_duration=0.0):
         self.perception_helper.send_request(task_name, object_class, result_callback, time_duration=time_duration)

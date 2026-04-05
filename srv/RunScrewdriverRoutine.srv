@@ -1,0 +1,4 @@
+string request_json
+---
+bool accepted
+string message
