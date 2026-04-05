@@ -96,11 +96,11 @@ def build_dot(states, start_state, end_state, transitions, transition_events, ti
         "digraph door_fsm {",
         '  graph [rankdir=LR, splines=true, overlap=false, pad="0.8", nodesep="1.3", ranksep="1.9"];',
         '  node [shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#334155", '
-        'fontname="Helvetica", fontsize=20, penwidth=1.6, margin="0.35,0.25", width=2.6, height=1.2];',
-        '  edge [color="#475569", fontname="Helvetica", fontsize=13, penwidth=1.5, arrowsize=1.1];',
+        'fontname="Helvetica", fontsize=24, penwidth=1.6, margin="0.35,0.25", width=2.6, height=1.2];',
+        '  edge [color="#475569", fontname="Helvetica", fontsize=16, penwidth=1.5, arrowsize=1.1];',
         f'  labelloc="t";',
         f'  label="{title}";',
-        '  fontsize=22;',
+        '  fontsize=28;',
         '  start [shape=point, width=0.22, color="#16A34A"];',
     ]
 
