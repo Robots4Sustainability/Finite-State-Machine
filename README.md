@@ -1,85 +1,175 @@
-# Finite State Machine Package
+# Finite-State-Machine
 
-# Door Disassemble FSM
+ROS 2 package for the Eddie door-disassembly workflows.
 
-This document covers the `door_disassemble` workflow and the helper nodes used with it.
+## Package
 
-## Main Files
+- package name: `pick_place_fsm`
+- workspace path: `/r4s/src/Finite-State-Machine`
+
+## Main nodes
 
 - [door_disassemble.py](src/door_disassemble.py)
-  Python FSM node for the door workflow.
-- [door_disassemble.fsm](include/door_disassemble.fsm)
-  Source FSM definition.
-- [fsm_door_disassemble.py](include/fsm_door_disassemble.py)
-  Generated Python FSM datastructures.
+  Main door disassembly FSM.
+- [pick_place.py](src/pick_place.py)
+  Pick-and-place FSM.
 - [mock_perception_server.py](src/mock_perception_server.py)
-  Mock perception action server used during testing.
-- [Perception.action](action/Perception.action)
-  Mock Perception action definition used by the FSM.
+  Mock `RunVision` action server for local testing.
+- [screwdriver_pick.py](src/screwdriver_pick.py)
+  Helper node used by `door_disassemble` for screwdriver pickup and probing.
+- [pose_capturer.py](scripts/pose_capturer.py)
+  Captures and saves named poses into JSON.
 
-## Flow
+## Interfaces used
 
-The `door_disassemble` FSM currently runs this loop:
+This package currently uses:
 
-1. Initialize.
-2. Move to the default view pose.
-3. Request subdoor poses from perception.
-4. Request car object poses from perception.
-5. Execute raster scan for screw detection (Needs raster scanner node to be running).
-6. Return to the default home/view pose.
-7. Select the next object.
-8. Move to the object pre-pick pose.
-9. Advance to the object pick pose.
-10. Close gripper.
-11. Retreat with object.
-12. Move to the table drop pose.
-13. Open gripper.
-14. Return to home/view pose.
-15. Repeat until no objects remain.
+- `my_robot_interfaces/action/RunVision`
+- `pick_place_fsm/srv/CaptureReference`
+- `pick_place_fsm/srv/RunScrewdriverRoutine`
 
-## Mock Perception
+The door disassembly flow expects the perception action server on:
 
-`mock_perception_server` provides a mock action server on `perception`.
+- `/run_perception_pipeline`
 
-Supported task names:
-- `subdoor`
-- `car_objects`
+## Named poses
 
-Run it with:
+Named poses are stored in:
 
-```bash
-ros2 run pick_place_fsm mock_perception_server
-```
+- [named_poses.json](src/named_poses.json)
 
-Example calls:
+Common keys:
 
-```bash
-ros2 action send_goal /perception pick_place_fsm/action/Perception "{task_name: subdoor}"
-ros2 action send_goal /perception pick_place_fsm/action/Perception "{task_name: car_objects}"
-```
-## Dependencies
-Ensure coord-dsl(main branch) is present in r4s/src/
+- `home_pose`
+- `table_drop_pose`
+- `screwdriver_pose`
+- `view_pose_unit`
+- `view_pose_motor_grip`
+- `view_pose_speaker`
+
+## Build
+
 ```bash
 cd ~/r4s
-pip install src/coord-dsl
-pip install PyYAML
-```
-## Quick Start
-
-```bash
-colcon build
 source /opt/ros/jazzy/setup.bash
+colcon build
 source ~/r4s/install/setup.bash
 ```
 
-Run the door workflow:
-Preferrably run each command in a new terminal
+## Executables
 
 ```bash
-ros2 run rmw_zenoh_cpp rmw_zenohd
-ros2 launch eddie_ros eddie.launch.py use_sim:=true arm_select:=right
-ros2 launch eddie_ros rviz.launch.py
-ros2 run cartesian_planner spline_planner
-ros2 run pick_place_fsm mock_perception_server
 ros2 run pick_place_fsm door_disassemble
+ros2 run pick_place_fsm pick_place
+ros2 run pick_place_fsm mock_perception_server
+ros2 run pick_place_fsm screwdriver_pick
+ros2 run pick_place_fsm pose_capturer
 ```
+
+## Behaviour
+
+At a high level, `door_disassemble` runs the door workflow as a state machine.
+
+Typical runtime behavior:
+
+1. waits in `IDLE` until the operator presses `Enter`
+2. performs startup checks for action servers, services, and TF
+3. moves to the configured view pose and object view poses
+4. requests perception results for the target objects pose
+5. optionally requests subdoor poses and raster-scan results for screw poses, depending on parameters
+6. optionally triggers the screwdriver helper routine
+7. selects the next detected object to pick
+8. moves to a pre-pick pose for that object
+9. advances to the pick pose using the perception result
+10. closes the gripper to grasp the object
+11. retreats with the grasped object
+12. moves toward the table place , requests for place pose by tilting 45 degrees to preceive table to drop the object
+13. opens the gripper to release the object
+14. returns toward the view/home pose and repeats for the next object
+
+## Door disassemble FSM
+
+The door disassembly workflow is defined in three layers:
+
+- [door_disassemble.fsm](include/door_disassemble.fsm)
+  Source FSM definition containing states, events, transitions, and reactions.
+- [fsm_door_disassemble.py](include/fsm_door_disassemble.py)
+  Generated Python FSM representation used by the runtime node.
+- [door_disassemble.py](src/door_disassemble.py)
+  ROS 2 runtime node that executes the behavior associated with each FSM state.
+
+In short:
+
+- `door_disassemble.fsm` describes the FSM structure
+- `fsm_door_disassemble.py` is the generated FSM code
+- `door_disassemble.py` runs the robot logic on top of that FSM
+
+Some important states in the workflow:
+
+- `S_INITIALIZE`
+  Checks required action servers, services, and TF before starting the workflow.
+- `S_MOVE_TO_VIEW_POSE`
+  Moves the arm to the configured home/view pose or object-specific view pose before perception.
+- `S_GET_SUBDOOR`
+  Requests subdoor poses when raster-scan flow is enabled.
+- `S_GET_OBJECTS`
+  Requests perception results for the target classes such as `unit`, `speaker`, and `motor_grip`.
+- `S_RASTER_SCAN`
+  Calls the raster scanner to obtain screw poses when enabled.
+- `S_EXECUTE_SCREWDRIVER_PROBE`
+  Triggers the screwdriver helper routine for pickup and probing behavior.
+- `S_SELECT_NEXT_OBJECT`
+  Chooses the next detected object to pick.
+- `S_MOVE_TO_PICK_OBJECT`
+  Builds the pre-pick and final pick motion from the perceived object pose.
+- `S_CLOSE_GRIPPER`
+  Grasps the selected object.
+- `S_MOVE_TO_PLACE_POSE`
+  Moves toward the placement area and uses table perception when that flow is enabled.
+- `S_OPEN_GRIPPER`
+  Releases the object at the place pose.
+- `S_EXIT`
+  Terminates the FSM after completion or abort.
+
+## Diagram generation
+
+Generate the door disassembly FSM diagram:
+
+```bash
+cd ~/r4s
+python3 src/Finite-State-Machine/scripts/generate_fsm_diagram.py src/Finite-State-Machine/include/door_disassemble.fsm
+```
+
+Current diagram image:
+
+- [door_disassemble_diagram.png](images/door_disassemble_diagram.png)
+
+![Door disassemble FSM](images/door_disassemble_diagram.png)
+
+## Screwdriver pick helper
+
+[screwdriver_pick.py](src/screwdriver_pick.py) is a helper node used by `door_disassemble` for screwdriver-related behavior.
+
+What it does:
+
+- exposes the service `/screwdriver_pick/run`
+- requests screwdriver pose from perception when needed
+- picks the screwdriver from the configured table-drop area
+- if screw poses are provided, moves to probe poses derived from those screw poses
+- publishes completion on `/screwdriver_pick/done`
+
+
+## Running
+
+Detailed run instructions are in:
+
+- [how_to_run.md](how_to_run.md)
+
+That document covers:
+
+- simulation flow
+- real robot flow
+- perception dependency
+- raster scanner dependency
+- screwdriver helper node
+- pose capture workflow
