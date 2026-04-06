@@ -49,6 +49,18 @@ install(PROGRAMS
   DESTINATION lib/${PROJECT_NAME}
 )
 
+install(PROGRAMS
+  src/ros2_control_panel.py
+  DESTINATION lib/${PROJECT_NAME}
+  RENAME ros2_control_panel
+)
+
+install(PROGRAMS
+  src/error_handling.py
+  DESTINATION lib/${PROJECT_NAME}
+  RENAME error_handling
+)
+
 install(
   DIRECTORY include/
   DESTINATION include

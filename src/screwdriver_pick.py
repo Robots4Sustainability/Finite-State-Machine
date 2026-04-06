@@ -44,7 +44,7 @@ class ScrewdriverPickupFromJson(Node):
         self.declare_parameter("arm_action_server", "right_arm/arm_control")
         self.declare_parameter("gripper_action_server", gripper_action_name())
         self.declare_parameter("perception_action_server", "run_perception_pipeline")
-        self.declare_parameter("pose_store_path", str("/home/ashlesh/r4s/src/Finite-State-Machine/src/named_poses.json"))
+        self.declare_parameter("pose_store_path", str("/home/r4s/r4s-ws/src/Finite-State-Machine/src/named_poses.json"))
         self.declare_parameter("pickup_z_offset", 0.10)
         self.declare_parameter("probe_z_offset", 0.15)
         self.declare_parameter("gripper_close_position", 0.30)

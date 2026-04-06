@@ -1,110 +1,236 @@
 #!/usr/bin/env python3
-"""
-Listens to /joint_states and waits for a service call that tells it
-the gripper-action is finished; only then is the encoder value latched.
-"""
+
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import JointState
-from std_msgs.msg import Bool, Float32
-from pick_place_fsm.srv import CaptureReference
+from std_msgs.msg import Bool
+
 
 class GripperSlipDetector(Node):
     def __init__(self):
-        super().__init__('gripper_slip_detector')
+        super().__init__("gripper_slip_detector")
 
-        # ---------------- parameters ----------------
-        self.declare_parameter('drift_thresh_percent', 5.0)   # %
-        self.declare_parameter('min_cmd_for_check',   10.0)   # %
-        self.declare_parameter('joint_name',
-                               'eddie_right_arm_robotiq_85_left_knuckle_joint')
-        # self.declare_parameter('cmd_topic', '/right_arm/gripper_pos_cmd')
-        self.declare_parameter('slip_topic', '/gripper_slip')
+        self.declare_parameter(
+            "joint_name",
+            "eddie_right_arm_robotiq_85_left_knuckle_joint",
+        )
+        self.declare_parameter("joint_states_topic", "/joint_states")
+        self.declare_parameter("slip_topic", "/gripper_slip")
+        self.declare_parameter("abort_topic", "/door_disassemble/abort")
 
-        self.thresh = self.get_parameter('drift_thresh_percent').value / 100.0
-        self.min_cmd = self.get_parameter('min_cmd_for_check').value
-        self.joint_name = self.get_parameter('joint_name').value
+        # Slip threshold after reference is latched - I need to reconfirm this again
+        self.declare_parameter("drift_thresh_percent", 1.0)
 
-        # ---------------- state ----------------
+        # Ignore tiny values gripper considered open / not grasping
+        self.declare_parameter("closed_min_percent", 2.0)
+
+        # Number of settled cycles required before latching reference
+        self.declare_parameter("stable_cycles_required", 8)
+
+        # How close the measured value must be to one of the known object values
+        self.declare_parameter("object_match_tolerance_percent", 1.0)
+
+        # How little the measured value must change between samples
+        # to be considered "settled"
+        self.declare_parameter("settle_delta_percent", 0.2)
+
+        self.declare_parameter("monitor_rate_hz", 20.0)
+
+        self.joint_name = self.get_parameter("joint_name").value
+        self.joint_states_topic = self.get_parameter("joint_states_topic").value
+        self.slip_topic = self.get_parameter("slip_topic").value
+        self.abort_topic = self.get_parameter("abort_topic").value
+
+        self.drift_thresh = float(self.get_parameter("drift_thresh_percent").value)
+        self.closed_min = float(self.get_parameter("closed_min_percent").value)
+        self.stable_cycles_required = int(
+            self.get_parameter("stable_cycles_required").value
+        )
+        self.object_match_tolerance = float(
+            self.get_parameter("object_match_tolerance_percent").value
+        )
+        self.settle_delta = float(
+            self.get_parameter("settle_delta_percent").value
+        )
+        self.monitor_rate_hz = float(self.get_parameter("monitor_rate_hz").value)
+
+        # Current door_disassemble.py close commands:
+        # unit = 0.08, motor_grip -> 0.45, speaker -> 0.47
+        # We track them here in percent form.
+        self.object_close_targets = {
+            "unit": 8.0,
+            "motor_grip": 45.0,
+            "speaker": 47.0,
+        }
+
         self.msr_percent = None
-        self.ref_percent = None          # will be set only after service call
-        self.cmd_percent = None
-        # ---------------- publishers ----------------
-        self.slip_pub = self.create_publisher(Bool,
-                                              self.get_parameter('slip_topic').value,
-                                              10)
+        self.prev_msr_percent = None
+        self.ref_percent = None
+        self.active_object = None
+        self.candidate_object = None
+        self.candidate_count = 0
+        self.slip_latched = False
+        self.last_reported_slip = False
 
-        # ---- subscribers ----
-        self.create_subscription(JointState, '/joint_states',
-                               self.on_joint_states, 10)
-        self.create_subscription(Float32, '/right_arm/gripper_pos_cmd',
-                               self.on_cmd, 10)
+        self.slip_pub = self.create_publisher(Bool, self.slip_topic, 10)
+        self.abort_pub = self.create_publisher(Bool, self.abort_topic, 10)
 
-        # ---- NEW service ----
-        self.srv = self.create_service(CaptureReference,
-                                      '/gripper_slip/capture_reference',
-                                      self.capture_reference_callback)
+        self.create_subscription(
+            JointState,
+            self.joint_states_topic,
+            self.on_joint_states,
+            10,
+        )
 
-        self.get_logger().info('Slip detector ready (reference captured on service call).')
+        timer_period = 1.0 / max(self.monitor_rate_hz, 1.0)
+        self.timer = self.create_timer(timer_period, self.monitor)
 
-    # ---------------- callbacks ----------------
+        self.get_logger().info("Gripper slip detector started.")
+        self.get_logger().info(f"Listening to joint states on: {self.joint_states_topic}")
+        self.get_logger().info(f"Using gripper joint: {self.joint_name}")
+        self.get_logger().info(f"Slip topic: {self.slip_topic}")
+        self.get_logger().info(f"Abort topic: {self.abort_topic}")
+        self.get_logger().info(
+            f"Targets: {self.object_close_targets}, "
+            f"drift_thresh={self.drift_thresh:.2f}%, "
+            f"match_tol={self.object_match_tolerance:.2f}%, "
+            f"settle_delta={self.settle_delta:.2f}%"
+        )
+
     def on_joint_states(self, msg: JointState):
         try:
             idx = msg.name.index(self.joint_name)
-            rad = msg.position[idx]
-            self.msr_percent = rad * 100.0 / 0.8  # 0-100 %
         except ValueError:
-            # joint not in message – ignore
-            pass
+            return
 
-    def on_cmd(self, msg: Float32):
-        self.cmd_percent = msg.data  # 0-100 %
-        
-    # ------------ NEW service ------------
-    def capture_reference_callback(self, request, response):
-        if self.msr_percent is None:
-            self.get_logger().warn('No joint data yet, cannot capture reference.')
-            response.success = False
-            return response
+        joint_rad = msg.position[idx]
 
-        self.ref_percent = self.msr_percent
-        self.get_logger().info(f'Reference captured: {self.ref_percent:.1f} %')
-        response.success = True
-        return response
+        new_percent = joint_rad * 100.0 / 0.8
 
+        self.prev_msr_percent = self.msr_percent
+        self.msr_percent = new_percent
 
-    # ------------ main loop ------------
-    def publish_slip(self):
-        if self.ref_percent is None or self.msr_percent is None:
-            return  # no reference yet → silent
+    def infer_object_from_measurement(self, msr_percent: float):
+        best_name = None
+        best_error = float("inf")
 
-        ref = self.ref_percent
-        msr = self.msr_percent
+        for name, target in self.object_close_targets.items():
+            err = abs(msr_percent - target)
+            if err < best_error:
+                best_error = err
+                best_name = name
 
-        # ignore tiny commands (optional)
-        if self.cmd_percent is not None and self.cmd_percent < self.min_cmd:
-            slip = False
-        else:
-            drift = abs(msr - ref) / max(ref, 1e-3)
-            slip = drift > self.thresh
+        if best_error <= self.object_match_tolerance:
+            return best_name
 
+        return None
+
+    def reset_grasp_state(self):
+        if self.active_object is not None or self.ref_percent is not None:
+            self.get_logger().info("Gripper opened or grasp reset. Clearing reference.")
+
+        self.prev_msr_percent = None
+        self.ref_percent = None
+        self.active_object = None
+        self.candidate_object = None
+        self.candidate_count = 0
+        self.slip_latched = False
+
+    def publish_slip_state(self, slip: bool):
+        self.last_reported_slip = slip
         self.slip_pub.publish(Bool(data=slip))
 
+    def trigger_abort(self, reason: str):
+        self.get_logger().error(reason)
+        self.publish_slip_state(True)
+        self.abort_pub.publish(Bool(data=True))
+        self.slip_latched = True
 
-def main():
-    rclpy.init()
+    def try_capture_reference(self, msr_percent: float):
+        detected_object = self.infer_object_from_measurement(msr_percent)
+
+        if detected_object is None:
+            self.candidate_object = None
+            self.candidate_count = 0
+            return
+
+        if self.prev_msr_percent is None:
+            self.candidate_object = None
+            self.candidate_count = 0
+            return
+
+        delta = abs(msr_percent - self.prev_msr_percent)
+
+        # Do not latch while the gripper is still moving noticeably.
+        if delta > self.settle_delta:
+            if detected_object != self.candidate_object:
+                self.candidate_object = detected_object
+            self.candidate_count = 0
+            return
+
+        if detected_object != self.candidate_object:
+            self.candidate_object = detected_object
+            self.candidate_count = 1
+            return
+
+        self.candidate_count += 1
+
+        if self.candidate_count >= self.stable_cycles_required:
+            self.active_object = detected_object
+            self.ref_percent = msr_percent
+            self.get_logger().info(
+                f"Captured reference for object '{self.active_object}' "
+                f"at gripper value {self.ref_percent:.2f}%"
+            )
+
+    def monitor(self):
+        if self.msr_percent is None:
+            return
+
+        msr = self.msr_percent
+
+        # If gripper is basically open, clear everything.
+        if msr < self.closed_min:
+            self.reset_grasp_state()
+            self.publish_slip_state(False)
+            return
+
+        # No reference yet: keep waiting until close value is both
+        # near an object target and settled.
+        if self.ref_percent is None or self.active_object is None:
+            self.try_capture_reference(msr)
+            self.publish_slip_state(False)
+            return
+
+        # Once slip is latched, keep reporting it until reset/open.
+        if self.slip_latched:
+            self.publish_slip_state(True)
+            return
+
+        drift = abs(msr - self.ref_percent)
+
+        if drift > self.drift_thresh:
+            self.trigger_abort(
+                f"Slip detected for '{self.active_object}': "
+                f"reference={self.ref_percent:.2f}% current={msr:.2f}% "
+                f"drift={drift:.2f}% threshold={self.drift_thresh:.2f}%"
+            )
+        else:
+            self.publish_slip_state(False)
+
+
+def main(args=None):
+    rclpy.init(args=args)
     node = GripperSlipDetector()
-    # run at 20 Hz
-    import threading
-    def spin():
-        while rclpy.ok():
-            node.publish_slip()
-            rclpy.spin_once(node, timeout_sec=0.05)
-    threading.Thread(target=spin, daemon=True).start()
-    rclpy.spin(node)
-    node.destroy_node()
-    rclpy.shutdown()
+
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
