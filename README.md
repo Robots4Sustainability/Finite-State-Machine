@@ -181,6 +181,12 @@ What it does:
 
 ![Collision Detected](images/Collision_detected.png)
 
+## Control Panel
+All info [here](https://github.com/Robots4Sustainability/Finite-State-Machine/wiki/Control-Panel)
+
+## Object Slip Detection
+All info [here](https://github.com/Robots4Sustainability/Finite-State-Machine/wiki/Object-Slip-Detection)
+
 ## Running
 
 Detailed run instructions are in:
