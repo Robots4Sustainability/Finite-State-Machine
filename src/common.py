@@ -10,7 +10,7 @@ from control_msgs.action import GripperCommand
 from eddie_ros.action import ArmControl, ForceControl, GripperControl
 from my_robot_interfaces.action import RunVision
 
-USE_SIM = True # Set to True to use GripperControl action, False to use GripperCommand action
+USE_SIM = False # Set to True to use GripperControl action, False to use GripperCommand action
 
 
 def gripper_action_type():
