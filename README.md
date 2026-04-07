@@ -12,7 +12,7 @@ ROS 2 package for the Eddie door-disassembly workflows.
 - [door_disassemble.py](src/door_disassemble.py)
   Main door disassembly FSM.
 - [control_panel.py](src/control_panel.py)
-  GUI launcher for FSM to control all nodes and packages
+  GUI launcher for FSM to control all nodes and packages. All info [here](https://github.com/Robots4Sustainability/Finite-State-Machine/wiki/Control-Panel)
 - [pick_place.py](src/pick_place.py)
   Pick-and-place FSM.
 - [mock_perception_server.py](src/mock_perception_server.py)
@@ -24,7 +24,7 @@ ROS 2 package for the Eddie door-disassembly workflows.
 - [tf_collision_guardian.py](src/tf_collision_guardian.py)
   Standalone safety node to prevent self-collisions of the arm with the robot's base and torso.
 - [error_handling.py](src/error_handling.py)
-  Object Slip detection node
+  Object Slip detection node, all info [here](https://github.com/Robots4Sustainability/Finite-State-Machine/wiki/Object-Slip-Detection)
 
 ## Interfaces used
 
