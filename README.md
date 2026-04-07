@@ -61,12 +61,14 @@ source ~/r4s/install/setup.bash
 ## Executables
 
 ```bash
+ros2 run pick_place_fsm control_panel
 ros2 run pick_place_fsm door_disassemble
 ros2 run pick_place_fsm pick_place
 ros2 run pick_place_fsm mock_perception_server
 ros2 run pick_place_fsm screwdriver_pick
 ros2 run pick_place_fsm pose_capturer
 ros2 run pick_place_fsm eddie_safety
+ros2 run pick_place_fsm error_handling
 ```
 
 ## Behaviour
