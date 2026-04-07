@@ -36,6 +36,12 @@ cd ~/r4s
 source /opt/ros/jazzy/setup.bash
 source ~/r4s/install/setup.bash
 ```
+## Control Panel
+
+```bash
+ros2 run pick_place_fsm control_panel
+```
+This runs the main GUI control panel which you can use to run all the nodes. Alternativly you ran run each package/node in a differnt terminal, details below
 
 ## Named poses
 
