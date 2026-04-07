@@ -50,9 +50,9 @@ install(PROGRAMS
 )
 
 install(PROGRAMS
-  src/ros2_control_panel.py
+  src/control_panel.py
   DESTINATION lib/${PROJECT_NAME}
-  RENAME ros2_control_panel
+  RENAME control_panel
 )
 
 install(PROGRAMS

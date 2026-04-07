@@ -55,10 +55,10 @@ class GripperSlipDetector(Node):
         self.monitor_rate_hz = float(self.get_parameter("monitor_rate_hz").value)
 
         # Current door_disassemble.py close commands:
-        # unit = 0.08, motor_grip -> 0.45, speaker -> 0.47
+        # unit = 0.25, motor_grip -> 0.45, speaker -> 0.47
         # We track them here in percent form.
         self.object_close_targets = {
-            "unit": 8.0,
+            "unit": 25.0,
             "motor_grip": 45.0,
             "speaker": 47.0,
         }

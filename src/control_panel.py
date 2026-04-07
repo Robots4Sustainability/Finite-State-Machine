@@ -140,7 +140,7 @@ class ControlPanelApp:
     def __init__(self, root: tk.Tk):
         self.root = root
         self.root.title("ROS 2 Control Panel")
-        self.root.geometry("1680x900") # Not sure about the aspect ratio yet :( 
+        self.root.geometry("1680x900") #need to check the resolution once :(
 
         self.ws_default = self._find_workspace_root()
         self.setup_default = str(Path(self.ws_default) / "install" / "setup.bash")
@@ -161,7 +161,7 @@ class ControlPanelApp:
             ProcessSpec(
                 key="planner",
                 label="Cartesian Planner",
-                command="ros2 run cartesian_planner spline_planner",
+                command="ros2 run cartesian_planner raster_scanner",
                 category="Core",
             ),
             ProcessSpec(
@@ -201,6 +201,12 @@ class ControlPanelApp:
                 key="slip_detection",
                 label="Object Slip Detection",
                 command="ros2 run pick_place_fsm error_handling",
+                category="Tools",
+            ),
+            ProcessSpec(
+                key="tf_collision_guardian",
+                label="TF Collision Guardian",
+                command="ros2 run pick_place_fsm eddie_safety",
                 category="Tools",
             ),
         ]

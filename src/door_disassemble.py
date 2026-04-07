@@ -455,7 +455,7 @@ class DoorDisassembleNode(Node):
         position = 0.0
         current_object_to_grasp = ud["active_object_class"]
         if current_object_to_grasp == "unit":
-            position = 0.08
+            position = 0.25
         elif current_object_to_grasp == "motor_grip":
             position = 0.45
         elif current_object_to_grasp == "speaker":

@@ -47,7 +47,7 @@ class ScrewdriverPickupFromJson(Node):
         self.declare_parameter("pose_store_path", str("/home/r4s/r4s-ws/src/Finite-State-Machine/src/named_poses.json"))
         self.declare_parameter("pickup_z_offset", 0.10)
         self.declare_parameter("probe_z_offset", 0.15)
-        self.declare_parameter("gripper_close_position", 0.30)
+        self.declare_parameter("gripper_close_position", 0.50)
         self.declare_parameter("gripper_max_effort", 20.0)
         self.declare_parameter("perception_wait_timeout_sec", 8.0)
         # self.declare_parameter("auto_run", True)
@@ -173,13 +173,13 @@ class ScrewdriverPickupFromJson(Node):
             return pose
 
         pose = Pose()
-        pose.position.x = 0.60
-        pose.position.y = -0.66
-        pose.position.z = 0.343951
-        pose.orientation.x = 0.475857
-        pose.orientation.y = 0.493639
-        pose.orientation.z = 0.546011
-        pose.orientation.w = 0.481407
+        pose.position.x = 0.7075234663633757
+        pose.position.y = -0.4755375034910837
+        pose.position.z = 0.5417997454074746
+        pose.orientation.x = 0.6503356673266113
+        pose.orientation.y = 0.3579112217838999
+        pose.orientation.z = 0.34213024371480316
+        pose.orientation.w = 0.5761162846679969
         self.get_logger().warn("No table_drop_pose found in JSON. Using hardcoded fallback table pose.")
         return pose
 
