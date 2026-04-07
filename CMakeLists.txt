@@ -61,6 +61,12 @@ install(PROGRAMS
   RENAME error_handling
 )
 
+install(PROGRAMS
+  src/tf_collision_guardian.py
+  DESTINATION lib/${PROJECT_NAME}
+  RENAME eddie_safety
+)
+
 install(
   DIRECTORY include/
   DESTINATION include

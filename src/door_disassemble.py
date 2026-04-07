@@ -89,6 +89,7 @@ class DoorDisassembleNode(Node):
         )
         self.create_subscription(Bool, "/door_disassemble/abort", self.abort_callback, 10, callback_group=self.cb_group)
         self.create_subscription(Bool, "/screwdriver_pick/done", self.screwdriver_done_callback, 10, callback_group=self.cb_group)
+        self.safety_sub = None
 
         self.fsm_timer = self.create_timer(0.1, self.fsm_loop, callback_group=self.cb_group)
 
@@ -158,6 +159,11 @@ class DoorDisassembleNode(Node):
     def abort_callback(self, msg: Bool):
         if msg.data:
             self.get_logger().warn("Abort message received.")
+            produce_event(self.fsm.event_data, EventID.E_ABORT)
+
+    def safety_status_callback(self, msg: Bool):
+        if not msg.data:
+            self.get_logger().fatal("COLLISION DETECTED! Aborting FSM immediately.")
             produce_event(self.fsm.event_data, EventID.E_ABORT)
 
     def screwdriver_done_callback(self, msg: Bool):
@@ -503,6 +509,20 @@ class DoorDisassembleNode(Node):
             self.get_logger().info("Skipping plan_scan_path readiness check because raster scan is disabled.")
         if self.enable_screwdriver_probe:
             checks_ok &= self._check_service(self.screwdriver_client, "/screwdriver_pick/run")
+
+        publishers = self.get_publishers_info_by_topic("/robot_safety/status")
+        if len(publishers) > 0:
+            self.get_logger().info("Eddie Safety node detected. Enabling collision detetction")
+            if self.safety_sub is None:
+                self.safety_sub = self.create_subscription(
+                    Bool, 
+                    "/robot_safety/status", 
+                    self.safety_status_callback, 
+                    10, 
+                    callback_group=self.cb_group
+                )
+        else:
+            self.get_logger().warn("Eddie Safety node NOT detected. Running WITHOUT collision monitoring.")
 
         required_frames = [self.base_frame, self.ee_frame, self.camera_frame]
         for frame in required_frames:

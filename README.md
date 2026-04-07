@@ -19,6 +19,8 @@ ROS 2 package for the Eddie door-disassembly workflows.
   Helper node used by `door_disassemble` for screwdriver pickup and probing.
 - [pose_capturer.py](scripts/pose_capturer.py)
   Captures and saves named poses into JSON.
+- [tf_collision_guardian.py](src/tf_collision_guardian.py)
+  Standalone safety node to prevent self-collisions of the arm with the robot's base and torso.
 
 ## Interfaces used
 
@@ -64,6 +66,7 @@ ros2 run pick_place_fsm pick_place
 ros2 run pick_place_fsm mock_perception_server
 ros2 run pick_place_fsm screwdriver_pick
 ros2 run pick_place_fsm pose_capturer
+ros2 run pick_place_fsm eddie_safety
 ```
 
 ## Behaviour
@@ -158,6 +161,19 @@ What it does:
 - if screw poses are provided, moves to probe poses derived from those screw poses
 - publishes completion on `/screwdriver_pick/done`
 
+## Eddie Safety Guardian
+
+[tf_collision_guardian.py](src/tf_collision_guardian.py) (executable name `eddie_safety`) is a standalone safety node designed to prevent self-collisions for the Eddie robot.
+
+What it does:
+
+- Monitors the TF tree for frames containing a specific filter (e.g., `right_arm`), ignoring base and attachment links.
+- Defines geometric restricted zones (a Base bounding box and an Upper Torso cylinder).
+- Calculates if arm frames intrude into the restricted zones.
+- Publishes a safety status boolean (`True` for safe, `False` for collision) to the `/robot_safety/status` topic.
+- Publishes visualization markers to the `/robot_safety/torso_zones` topic for RViz debugging.
+
+![Collision Detected](images/Collision_detected.png)
 
 ## Running
 
