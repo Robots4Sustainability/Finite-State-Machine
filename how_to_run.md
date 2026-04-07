@@ -170,6 +170,13 @@ Then run the FSM:
 ros2 run pick_place_fsm door_disassemble
 ```
 
+### Terminal 6: Object Slip detection
+Run object Slip detection :
+```bash
+ros2 run pick_place_fsm error_handling
+```
+
+
 At minimum, the following must already be available from Eddie ROS and perception:
 
 - arm action server:
